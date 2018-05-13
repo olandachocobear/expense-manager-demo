@@ -138,6 +138,7 @@
 
     </vaadin-grid>
 
+    <!-- CHANGES HERE! david -->
     <paper-icon-button-light on-click="_showExpenseEditor" id="add-button">
       <button aria-label="Add expense">
         <iron-icon icon="expense-manager:add"></iron-icon>
@@ -178,6 +179,10 @@
 
         _showExpenseEditor() {
           this.dispatch('editExpense');
+        }
+
+        _showInfoDialog() {
+          this.dispatch('showInfoDialog');
         }
 
         /**

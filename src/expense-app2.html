@@ -5,13 +5,27 @@
 <link rel="import" href="data/store.html">
 <link rel="import" href="login-page.html">
 
-<link rel="import" href="../bower_components/app-route/app-location.html">
-<link rel="import" href="../bower_components/app-route/app-route.html">
-<link rel="import" href="./view-1.html">
+
+<link rel=import href="../bower_components/app-route/app-location.html">
+<link rel=import href="../bower_components/app-route/app-route.html">
+
 
 <dom-module id="expense-app">
   <link rel="lazy-import" group="overview" href="overview-page.html">
-  
+  <link rel="lazy-import" group="redeem" href="redeem-page.html">
+
+  <app-location
+    route="{{route}}"
+    url-space-regex="^[[rootPath]]">
+  </app-location>
+
+  <app-route
+    route="{{route}}"
+    pattern="[[rootPath]]:page"
+    data="{{routeData}}"
+    tail="{{subroute}}">
+  </app-route>
+
   <template>
     <style include="lumo-color">
       :host {
@@ -28,20 +42,14 @@
       }
     </style>
 
-    <app-location
-      route="{{route}}">
-    </app-location>
+    <!-- <iron-pages id="pages" selected="[[activePage]]">
+      <login-page theme="dark"></login-page>
+      <overview-page></overview-page>
+    </iron-pages> -->
 
-    <app-route
-      route="{{route}}"
-      pattern="/:page"
-      data="{{routeData}}">
-    </app-route>
-
-    <iron-pages id="pages" selected="[[routeData.page]]" attr-for-selected="name" fallback-selection="view1">
-      <overview-page name="ee"> </overview-page>
-      <login-page name="doo" route="{{subroute}}" theme="light" /> </login-page>
-      <my-view1 name="login" route="{{subroute}}" theme="dark" /> </my-view1>
+    <iron-pages id="pages" selected=1 attr-for-selected="name">
+      <login-page name="login" theme="dark" ></login-page>
+      <redeem-page name="redeem" theme="dark" ></login-page>
     </iron-pages>
   </template>
 
@@ -73,18 +81,10 @@
               observer: '_updatePage'
             },
             
-            /* for Router purpose */
-            page: {
-              type: String,
-            },
-            routeData: Object,
-            subroute: Object,
-            // This shouldn't be neccessary, but the Analyzer isn't picking up
-            // Polymer.Element#rootPath
-            rootPath: String,
+            
           };
         }
-        
+
         /**
          * @param {string} authenticated whether the user is authenticated or not.
          */
@@ -104,24 +104,9 @@
               Polymer.importHref(this.importPath + 'overview-page.html', null, null, true), 0);
           });
         }
-        
-        // new...
-        static get observers() {
-          return [
-            '_routeChanged(route.*)',
-            '_viewChanged(routeData.view)'
-          ]
-        }
 
-        _routeChanged(changeRecord) {
-          if (changeRecord.path === 'path') {
-            console.log('Path changed!');
-          }
-        }
-        _viewChanged(view) {
-          console.log('rend')
-          // load data for view
-        }
+        // new router thingy..
+        
       }
 
       customElements.define(ExpenseAppElement.is, ExpenseAppElement);

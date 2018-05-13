@@ -5,6 +5,9 @@
 <link rel="import" href="../bower_components/vaadin-lumo-styles/spacing.html">
 <link rel="import" href="../bower_components/vaadin-lumo-styles/typography.html">
 
+<link rel="import" href="../bower_components/vaadin-lumo-styles/icons.html">
+<link rel="import" href="../bower_components/iron-icon/iron-icon.html">
+
 <link rel="import" href="data/store.html">
 
 <dom-module id="nav-bar">
@@ -30,11 +33,17 @@
         flex-shrink: 0;
       }
     </style>
+    <!-- <h1></h1> -->
+    <vaadin-button on-click="_showInfoDialog" theme="primary">
+      New Transaction
+    </vaadin-button>
+   
 
-    <h1>Expense Manager</h1>
-
-    <vaadin-button on-click="_showInfoDialog" theme="small">Info</vaadin-button>
-    <vaadin-button on-click="_logout" theme="small">Logout</vaadin-button>
+    <vaadin-button on-click="_logout" theme="small">
+      Transaction List
+      <!-- <iron-icon icon="lumo:edit" slot="suffix"></iron-icon> -->
+      <iron-icon icon="lumo:bar-chart" slot="suffix"></iron-icon>
+    </vaadin-button>
 
   </template>
 

@@ -52,7 +52,7 @@
             selectedExpense: undefined
           });
 
-        case 'ADD_EXPENSE':
+        case 'ADD_EXPENSE': // Push new `expenses`, then clear currentselected expenses
           return Object.assign({}, state, {
             expenses: state.expenses.concat(action.expense),
             selectedExpense: undefined
@@ -124,10 +124,8 @@
           id: uuid(),
           date: (new Date(date.getTime() - date.getTimezoneOffset() * 60000)).toISOString().split('T')[0],
           merchant: [
-            'Office supplies', 'Electronics', 'Rental car', 'Airline',
-            'Hotel', 'Restaurant', 'Taxi', 'Ride sharing', 'Fast food',
-            'Parking', 'Breakfast', 'Shuttle'
-          ][Math.floor(Math.random() * 12)],
+            'Office supplies', 'Electronics'
+          ],
           total: _getRandomPrice(),
           status: status,
           receipt: status === 'new' ? '' : 'images/default-receipt.png',

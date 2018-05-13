@@ -1,0 +1,133 @@
+<link rel="import" href="../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../bower_components/iron-a11y-keys/iron-a11y-keys.html">
+<link rel="import" href="../bower_components/vaadin-button/vaadin-button.html">
+<link rel="import" href="../bower_components/vaadin-lumo-styles/color.html">
+<link rel="import" href="../bower_components/vaadin-lumo-styles/typography.html">
+<link rel="import" href="../bower_components/vaadin-text-field/vaadin-text-field.html">
+<link rel="import" href="../bower_components/vaadin-text-field/vaadin-password-field.html">
+
+<link rel="import" href="data/store.html">
+
+<dom-module id="my-view1">
+  <template>
+    <style include="lumo-color-legacy lumo-typography">
+      :host {
+        overflow: auto;
+        -webkit-overflow-scrolling: touch;
+      }
+
+      .wrapper {
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        min-height: 360px;
+      }
+
+      .header {
+        margin-top: auto;
+        border-bottom: 4px solid var(--lumo-primary-color-50pct);
+      }
+
+      .header h1 {
+        margin: var(--lumo-space-m) auto;
+        font-size: var(--lumo-font-size-xxl);
+      }
+
+      .header h1,
+      .login {
+        width: 300px;
+      }
+
+      .login {
+        padding-bottom: var(--lumo-space-m);
+        margin: var(--lumo-space-m) auto auto;
+      }
+
+      .login vaadin-text-field,
+      .login vaadin-password-field {
+        width: 100%;
+      }
+
+      vaadin-button {
+        margin-top: var(--lumo-space-l);
+      }
+
+      .footer {
+        width: 100%;
+        height: var(--lumo-size-l);
+        display: flex;
+        padding: var(--lumo-space-wide-l);
+        justify-content: space-between;
+        box-sizing: border-box;
+        align-items: center;
+        font-size: var(--lumo-font-size-s);
+        background: var(--lumo-shade-20pct);
+      }
+    </style>
+
+    <iron-a11y-keys keys="enter" on-keys-pressed="_logIn"></iron-a11y-keys>
+
+    <div class="wrapper">
+      <div class="header">
+        <h1>Expense Manager</h1>
+      </div>
+      <div class="login">
+        <vaadin-text-field value="{{username}}" label="Username" name="username"></vaadin-text-field>
+        <vaadin-password-field value="{{password}}" label="Password" name="password"></vaadin-password-field>
+        <vaadin-button theme="primary large" on-click="_logIn">Login</vaadin-button>
+      </div>
+      <div class="footer">
+        <span class="fork-me">
+          Fork me on <a href="https://github.com/vaadin/expense-manager-demo">GitHub</a>
+        </span>
+        <span class="built-with">
+          Built with <a href="https://vaadin.com/components">Vaadin components</a>
+        </span>
+      </div>
+    </div>
+  </template>
+
+  <script>
+    (function() {
+      /**
+       * @memberof ExpenseManager
+       */
+      class MyView1Element extends ExpenseManager.ReduxMixin(Polymer.Element) {
+        static get is() {
+          return 'my-view1';
+        }
+
+        static get properties() {
+          return {
+            /**
+             * The user name to authenticate with.
+             */
+            username: {
+              type: String,
+              value: 'demo'
+            },
+
+            /**
+             * The password to authenticate with.
+             */
+            password: {
+              type: String,
+              value: 'demo'
+            }
+          };
+        }
+
+        _logIn() {
+          this.dispatch('login');
+        }
+      }
+      customElements.define(MyView1Element.is, MyView1Element);
+
+      /**
+       * @namespace ExpenseManager
+       */
+      window.ExpenseManager = window.ExpenseManager || {};
+      ExpenseManager.MyView1Element = MyView1Element;
+    })();
+  </script>
+</dom-module>
