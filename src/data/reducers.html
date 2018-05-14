@@ -3,6 +3,11 @@
 
 <script>
   (() => {
+
+    let boom = {};
+    _generateDemoExpensesAsync().then(
+        result => boom = result);
+
     const helpers = window.ExpenseManager.dateHelpers;
 
     let savedState = localStorage.getItem('ExpenseManagerState');
@@ -34,11 +39,27 @@
       }
     }
 
+/* ATTEMPTING to AWAIT the beginning of expensesReducer */
+    async function expensesReducerSynchronous(state,action) {
+      
+      let temp_state = new Object();
+      _generateDemoExpenses(100).then(results => 
+        temp_state.expenses = results)
+      
+      temp_state.selectedExpense = undefined ;
 
-    function expensesReducer(state = {
+      //continue follow-up to the 'Original' expensedReducer..
+      expensesReducer(temp_state, action)
+    }
+
+    function expensesReducer(//state = {
+      /* 
       expenses: savedState ? savedState.expenses.expenses : _generateDemoExpenses(100),
-      selectedExpense: undefined
-    }, action) {
+      */
+    //   expenses: _generateDemoExpenses(100),
+    //   selectedExpense: undefined
+    // }, action) {
+    state= {expenses: boom, selectedExpense: undefined}, action) {
       switch (action.type) {
 
         case 'EDIT_EXPENSE':
@@ -73,7 +94,9 @@
     }
 
     function filtersReducer(state = {
-      filters: {status: ['new', 'in_progress', 'reimbursed']}
+      // filters: {status: ['new', 'in_progress', 'reimbursed', 'ok', 'invalid', 'already']}
+    
+      filters: {status: ['ok', 'failed', 'error']}
     }, action) {
       switch (action.type) {
 
@@ -95,6 +118,8 @@
           return state;
       }
     }
+    
+console.log(boom)
 
     window.ExpenseManager = window.ExpenseManager || {};
     window.ExpenseManager.rootReducer = Redux.combineReducers({
@@ -109,7 +134,48 @@
       return ([1e7] + -1e3 + -4e3 + -8e3 + -1e11).replace(/[018]/g, a => (a ^ Math.random() * 16 >> a / 4).toString(16));
     }
 
+    function _generateDemoExpensesAsyncHandler() {
+      return _generateDemoExpensesAsync().then(result => {return result});
+    }
+
+    async function _generateDemoExpensesAsync(num) {
+    //  return new Promise ( resolve => {
+      let {content} = await _computeData();
+
+      const expenses = [];
+      const now = Date.now();
+      for (let i = 0; i < content.length; i++) {
+        const date = helpers.subtract(now, 'hours', Math.floor(Math.random() * 168) + 1);
+        
+        tempstat = content[i].txnResponseDetail
+        
+        if (tempstat == "Voucher Already Redeemed.") {
+          status = 'error';
+        } else if (tempstat == "Approved.") {
+          status = 'ok';
+        
+        } else if (tempstat == "Invalid Voucher Code.") {
+          status = 'failed';
+        }
+        
+        expenses.push({
+          id: uuid(),
+          date: (new Date(date.getTime() - date.getTimezoneOffset() * 60000)).toISOString().split('T')[0],
+          merchant: content[i].txnMerchantName==''? "(undefined)" : content[i].txnMerchantName, 
+          total: content[i].txnOriginalAmount,
+          status: status,
+          receipt: status === 'new' ? '' : 'images/default-receipt.png',
+          comment: content[i].txnResponseDetail
+        });
+      }
+      console.log(expenses)
+      return expenses;
+    //  });
+    }
+
     function _generateDemoExpenses(num) {
+    //  return new Promise ( resolve => {
+      
       const expenses = [];
       const now = Date.now();
       for (let i = 0; i < num; i++) {
@@ -125,20 +191,44 @@
           date: (new Date(date.getTime() - date.getTimezoneOffset() * 60000)).toISOString().split('T')[0],
           merchant: [
             'Office supplies', 'Electronics'
-          ],
-          total: _getRandomPrice(),
+          ][Math.floor(Math.random() * 2)],
+          total: _getRandomPrice,
           status: status,
           receipt: status === 'new' ? '' : 'images/default-receipt.png',
-          comment: 'Expense from my business trip.'
+          comment: "Detailss......."
         });
       }
+
       return expenses;
+    //  });
     }
 
     function _getRandomPrice() {
       const price = Math.random() * (Math.random() * 3) * 300 + 10;
       return parseFloat(price.toFixed(2));
     }
+
+    function _computeData() {
+      return new Promise(resolve => {
+        _getResource( {
+            url: './src/data/manual-redeem.json',
+            onLoad(e){
+                //this.set('expenses', JSON.parse(e.target.responseText));
+                //return JSON.parse(e.target.responseText)
+                resolve (JSON.parse(e.target.responseText));
+
+            }
+        })
+      });
+    }
+
+    function _getResource(rq) {
+      let xhr = new XMLHttpRequest();
+      xhr.addEventListener('load', rq.onLoad.bind(this));
+      xhr.open('GET', rq.url);xhr.send();
+    }
+        
+
   })();
 
 </script>

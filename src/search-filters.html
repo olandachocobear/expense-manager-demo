@@ -70,14 +70,14 @@
 
     <div class="filters">
       <div class="title section-title" hidden="[[phone]]">
-        <span>Filter Expenses</span>
-        <vaadin-button on-click="_clearFilters" theme="tertiary-inline small">Clear Filters</vaadin-button>
+        <span>Filter Redeem</span>
+        <vaadin-button on-click="_clearFilters" theme="tertiary-inline small">Clear</vaadin-button>
       </div>
       <vaadin-date-picker label="From" value="{{filters.start}}" max="[[filters.end]]"></vaadin-date-picker>
       <vaadin-date-picker label="To" value="{{filters.end}}" min="[[filters.start]]"></vaadin-date-picker>
       <div class="row">
         <vaadin-text-field label="Min" value="{{filters.min}}" pattern="[0-9]+">
-          <div slot="prefix">$</div>
+          <div slot="prefix">Rp</div>
         </vaadin-text-field>
         <span class="delimiter">–</span>
         <vaadin-text-field label="Max" value="{{filters.max}}" pattern="[0-9]+"></vaadin-text-field>

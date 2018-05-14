@@ -52,14 +52,22 @@
     </style>
     <div class="container">
       <div class="total" hidden="[[tablet]]">
-        <div class="section-title">To be reimbursed</div>
-        <span class="sum">$[[totalOwed]]</span>
+        <div class="section-title">Transaksi Hari Ini</div>
+        <span class="sum" style="font-size: 42px;
+        margin-top: -19px;
+        font-weight: bold;
+        color: red">2 Trx.</span>
       </div>
 
-      <div class="chart">
+      <div class="total" hidden="[[tablet]]">
+        <div class="section-title">Nilai Transaksi</div>
+        <span class="sum">Rp [[totalOwed]]</span>
+      </div>
+
+      <!-- <div class="chart">
         <h2 class="section-title">Last 12 Months in total</h2>
         <h3> Vaadin Charts will be displayed in Pro version </h3>
-      </div>
+      </div> -->
     </div>
   </template>
   <script>

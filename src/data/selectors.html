@@ -38,7 +38,7 @@
 
     const total = Reselect.createSelector([getExpenses], expenses => {
       return expenses
-        .filter(exp => exp.status === 'new')
+        .filter(exp => exp.status === 'ok')
         .map(exp => exp.total)
         .reduce((sum, current) => sum + current, 0)
         .toFixed(2);

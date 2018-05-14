@@ -2,15 +2,26 @@
   (() => {
     window.ExpenseManager = window.ExpenseManager || {};
     window.ExpenseManager.constants = {
-      statuses: [{
-        name: 'new',
-        label: 'New'
-      }, {
-        name: 'in_progress',
-        label: 'In Progress'
-      }, {
-        name: 'reimbursed',
-        label: 'Reimbursed'
+      statuses: [
+      //   {
+      //   name: 'new',
+      //   label: 'New'
+      // }, {
+      //   name: 'in_progress',
+      //   label: 'In Progress'
+      // }, {
+      //   name: 'reimbursed',
+      //   label: 'Reimbursed'
+      // } , 
+      {
+        name: 'failed',
+        label: 'Invalid Code'
+      } , {
+        name: 'ok',
+        label: 'OK'
+      } , {
+        name: 'error',
+        label: 'Already Redeemed'
       }]
     };
   })();

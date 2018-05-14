@@ -41,12 +41,12 @@
         text-transform: capitalize;
       }
 
-      vaadin-grid .status-new {
+      vaadin-grid .status-new, vaadin-grid .status-failed, vaadin-grid .status-invalid {
         color: var(--lumo-error-color);
         font-weight: 500;
       }
 
-      vaadin-grid .status-in_progress {
+      vaadin-grid .status-in_progress, vaadin-grid .status-error, vaadin-grid .status-already {
         font-weight: 500;
         font-style: italic;
         text-transform: capitalize;
@@ -139,11 +139,11 @@
     </vaadin-grid>
 
     <!-- CHANGES HERE! david -->
-    <paper-icon-button-light on-click="_showExpenseEditor" id="add-button">
+    <!-- <paper-icon-button-light on-click="_showExpenseEditor" id="add-button">
       <button aria-label="Add expense">
         <iron-icon icon="expense-manager:add"></iron-icon>
       </button>
-    </paper-icon-button-light>
+    </paper-icon-button-light> -->
 
   </template>
   <script>
@@ -189,10 +189,11 @@
          * @param {Object|null} expense the selected expense, if any.
          */
         _activeItemChanged(expense) {
-          if (this.expenses && this.expenses.length > 0) { // don't trigger on init
-            this.$.expenses.selectedItems = expense ? [expense] : [];
-            this.dispatch('editExpense', expense);
-          }
+          // disable list-clicking
+          // if (this.expenses && this.expenses.length > 0) { // don't trigger on init
+          //   this.$.expenses.selectedItems = expense ? [expense] : [];
+          //   this.dispatch('editExpense', expense);
+          // }
         }
 
         /**
@@ -201,7 +202,7 @@
          */
         _formatTotal(total) {
           if (total) {
-            return '$' + total.toFixed(2);
+            return 'Rp ' + total.toFixed(2);
           }
         }
 
