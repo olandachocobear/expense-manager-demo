@@ -1,0 +1,31 @@
+<link rel="import" href="../bower_components/polymer/polymer-element.html">
+
+<link rel="import" href="../bower_components/number-input/number-input.html">
+
+<script type='module' src="./js/voucher-input.js"></script>
+
+<dom-module id="voucher-input">
+  <template >
+    
+    <style>
+    </style>
+
+    <dom-repeat items={{code}}>
+        <template>
+            <number-input value={{item}} on-keypress="_clearBox" on-keyup="_moveIt">
+            </number-input>
+        </template>
+    </dom-repeat>
+
+    <iron-ajax id="eligibilityCheck" 
+      url="https://reqres.in/api/users" method="post" 
+      body='{
+          "name": "morpheus",
+          "job": "leader"
+      }'
+      on-response="eligibleResponse">
+  </iron-ajax>
+
+  </template>
+  
+</dom-module>

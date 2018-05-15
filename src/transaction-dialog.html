@@ -3,12 +3,50 @@
 <link rel="import" href="../bower_components/vaadin-dialog/vaadin-dialog.html">
 
 <link rel="import" href="../bower_components/number-input/number-input.html">
+<link rel="import" href="../bower_components/iron-ajax/iron-ajax.html">
+<link rel="import" href="../bower_components/paper-icon-button/paper-icon-button-light.html">
+<link rel="import" href="../bower_components/iron-icon/iron-icon.html">
+
+<link rel="import" href="./vouchers-area.html">
+
+<script type='module' src="./js/transaction-dialog.js"></script>
 
 <dom-module id="transaction-dialog">
   <template>
+      <iron-ajax id="ajax"
+        url="https://reqres.in/api/login" method="post" 
+        handle-as="json"
+        on-response="onResponse"
+        on-error="onError"
+        last-response="{{response}}">
+      </iron-ajax>
+
+      <iron-ajax id="processRedeem" 
+          url="https://reqres.in/api/users" method="post" 
+          body='{
+            "name": "morpheus",
+            "job": "leader"
+          }'
+          on-response="eligibleResponse">
+      </iron-ajax>
+
+    
     <vaadin-dialog modeless noCloseOnEsc noCloseOnOutsideClick id="dialog" no-close-on-esc no-close-on-outside-click opened="[[open]]">
       <template>
           <style>
+             #add-button {
+                position: relative;
+                height: var(--lumo-size-xl);
+                width: var(--lumo-size-xl);
+                right: 16px;
+                bottom: 28px;
+                float: right;
+                z-index: 1;
+                background: var(--loyalty-primary-color);
+                color: var(--lumo-error-contrast-color);
+                box-shadow: var(--lumo-box-shadow-m);
+                border-radius: 50%;
+              }
               .wrapper {
                 display: flex;
                 margin-top: var(--lumo-space-s);
@@ -94,94 +132,41 @@
                         width: 100%;
                         text-align: center;">
 
-              <number-input name="voucher-1" class="integer" required no-clamp saturate min="0" max="9" ></number-input>
-              
-              <number-input name="voucher-2" class="integer" required no-clamp saturate min="0" max="9" ></number-input>
-              
-              <number-input name="voucher-3" class="integer" required no-clamp saturate min="0" max="9" ></number-input>
-              
-              <number-input name="voucher-4" class="integer" required no-clamp saturate min="0" max="9" ></number-input>
-              
-              <number-input name="voucher-5" class="integer" required no-clamp saturate min="0" max="9" ></number-input>
-              
-              <number-input name="voucher-6" class="integer" required no-clamp saturate min="0" max="9" ></number-input>
-              
-              <number-input name="voucher-7" class="integer" required no-clamp saturate min="0" max="9" ></number-input>
-            
-              <number-input name="voucher-8" class="integer" required no-clamp saturate min="0" max="9" ></number-input>
-            
-              <number-input name="voucher-9" class="integer" required no-clamp saturate min="0" max="9" ></number-input>
-            
-              <number-input name="voucher-10" class="integer" required no-clamp saturate min="0" max="9" ></number-input>
-            
-              <number-input name="voucher-11" required no-clamp saturate min="0" max="9" ></number-input>
-            
-              <number-input name="voucher-12" class="integer" required no-clamp saturate min="0" max="9" ></number-input>
-            
+            <vouchers-area> </vouchers-area>
             </div>  
             
             
             <!-- <vaadin-text-area name="comment" label="Comment" value="{{_expense.comment}}"></vaadin-text-area> -->
             
-            <div style="margin-top:31px;
+            <div style="display:none;margin-top:31px;
             margin-bottom:28px; text-align:center">
+              
               <vaadin-text-field value="Go-Cafe 25k!!" readonly style="
-              font-size:15px;
-              opacity:90%;
-              width:121px;
-              height:53px;
-              background-color:darkseagreen"></vaadin-text-field>
+                font-size:15px;
+                opacity:90%;
+                width:121px;
+                height:53px;
+                background-color:darkseagreen"
+              ></vaadin-text-field>
+
             </div>
           </div>
 <!-- 
         <center style=margin-top:17px;margin-bottom:18px> ----- </center> -->
 
+        <paper-icon-button-light id="add-button">
+            <button aria-label="Add expense">
+              <iron-icon icon="expense-manager:add"></iron-icon>
+            </button>
+          </paper-icon-button-light>
 
         <div class="buttons" style=text-align:center;margin-bottom:-10px>
-          <vaadin-button theme="primary" on-click="_close" style="opacity:0.84;height:50px;width:100%">Proceed</vaadin-button>
+          <vaadin-button theme="primary" on-click="_burnVoucher" style="opacity:0.84;height:50px;width:100%">Redeem!</vaadin-button>
         </div>
 
       </template>
     </vaadin-dialog>
 
   </template>
-  <script>
-    (function() {
-      /**
-       * @memberof ExpenseManager
-       */
-      class TransactionDialogElement extends ExpenseManager.ReduxMixin(Polymer.Element) {
-        static get is() {
-          return 'transaction-dialog';
-        }
-
-        static get properties() {
-          return {
-            /**
-             * True if the dialog is opened.
-             */
-            open: {
-              type: Boolean,
-              statePath: 'uiState.infoDialogVisible'
-            }
-          };
-        }
-
-        /**
-         * Closes the dialog.
-         */
-        _close() {
-          this.dispatch('hideInfoDialog');
-        }
-      }
-
-      customElements.define(TransactionDialogElement.is, TransactionDialogElement);
-
-      /**
-       * @namespace ExpenseManager
-       */
-      window.ExpenseManager = window.ExpenseManager || {};
-      ExpenseManager.TransactionDialogElement = TransactionDialogElement;
-    })();
-  </script>
+  
 </dom-module>
