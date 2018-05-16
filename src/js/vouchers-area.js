@@ -10,9 +10,10 @@ class VouchersAreaElement extends ExpenseManager.ReduxMixin(Polymer.Element) {
 
     static get properties() {
     return {
-        open: {
-        type: Boolean,
-        statePath: 'uiState.infoDialogVisible'
+        entriedVouchers: {
+            type: Object,
+            value: {},
+            statePath: 'vouchers.entriedVouchers'
         }
     };
     }
@@ -21,9 +22,9 @@ class VouchersAreaElement extends ExpenseManager.ReduxMixin(Polymer.Element) {
      * Check backend to get eligibility
      */
     _checkEligible() {
-    //  var ajaxCall =document.querySelector("#radial-button-template");
-    this.$.ajax.generateRequest();
-    this.$.eligibilityCheck.generateRequest()
+        //  var ajaxCall =document.querySelector("#radial-button-template");
+        this.$.ajax.generateRequest();
+        this.$.eligibilityCheck.generateRequest();
     }
 
     eligibleResponse(result) {
@@ -31,11 +32,11 @@ class VouchersAreaElement extends ExpenseManager.ReduxMixin(Polymer.Element) {
     }
 
     onError(e,detail){
-    console.log(e)
-    console.log(e.target.lastRequest.xhr.status)
-    console.log(detail.error); //the error object
-    console.log(detail.request.status); //the status code
-    console.log(detail.request.statusText);  //the error status text
+        console.log(e)
+        console.log(e.target.lastRequest.xhr.status)
+        console.log(detail.error); //the error object
+        console.log(detail.request.status); //the status code
+        console.log(detail.request.statusText);  //the error status text
     }
 }
 

@@ -1,0 +1,40 @@
+<link rel="import" href="../bower_components/polymer/polymer-element.html">
+]
+<dom-module id="spots-logo">
+  <template>
+    <style include="lumo-color-legacy">
+      
+    </style>
+    <img src="../images/spots-logo.png"></h1>
+
+  </template>
+
+  <script>
+    (function() {
+      /**
+       * @memberof ExpenseManager
+       */
+      class SpotsLogoElement extends ExpenseManager.ReduxMixin(Polymer.Element) {
+        static get is() {
+          return 'spots-logo';
+        }
+
+        _showInfoDialog() {
+          this.dispatch('showInfoDialog');
+        }
+
+        _logout() {
+          this.dispatch('logout');
+        }
+      }
+
+      customElements.define(SpotsLogoElement.is, SpotsLogoElement);
+
+      /**
+       * @namespace ExpenseManager
+       */
+      window.ExpenseManager = window.ExpenseManager || {};
+      ExpenseManager.SpotsLogoElement = SpotsLogoElement;
+    })();
+  </script>
+</dom-module>

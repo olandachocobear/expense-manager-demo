@@ -100,19 +100,31 @@
                 margin-bottom:13px;
               }
           </style>
-        <h4>VOUCHER / COUPON</h4>
-        <h2>Manual Redeem</h2>
+
+        <div style="float:right;line-height: 22px;
+        font-size: 13px;
+        opacity: 0.8;
+        margin-top:3px;margin-right:1px;text-align:right">
+          <p>
+            <u><b><span style=color:blue>Cashier</span></b></u>:</i><br>
+            Wijaya
+          </p>
+        </div>
+
+        <h4>VOUCHER REDEMPTION</h4>
+        <h2>PT Sumber Alfaria Trijaya</h2>
+        <h3 style="margin-top: -14px; color: rgb(0,0,0,0.6);">Alfamart Pasaraya</h3>
 
         <div id="form">
-            <iron-a11y-keys keys="enter" on-keys-pressed="_save"></iron-a11y-keys>
+            <!-- <iron-a11y-keys keys="enter" on-keys-pressed="_save"></iron-a11y-keys> -->
             
-            <vaadin-combo-box name="merchant" items='[{"label": "Voucher", "value": 0}, {"label": "Coupon", "value": 1}]' value="{{_expense.transType}}" selected="Voucher" label="Type Promotion" required></vaadin-combo-box>
+            <!-- <vaadin-combo-box name="merchant" items='[{"label": "Voucher", "value": 0}, {"label": "Coupon", "value": 1}]' value="{{_expense.transType}}" selected="Voucher" label="Type Promotion" required></vaadin-combo-box> -->
 
             <vaadin-text-field name="total" value="{{_expense.total}}" label="Total transaction" pattern="[0-9]+[.]?[0-9]*" required>
               <div slot="prefix">Rp</div>
             </vaadin-text-field>
             
-            <vaadin-text-field label="Merchant Name" value="Matahari Department Store (Ciputra Mall)" readonly></vaadin-text-field>
+            <!-- <vaadin-text-field label="Merchant Name" value="Matahari Department Store (Ciputra Mall)" readonly></vaadin-text-field> -->
 
             <!-- <vaadin-date-picker name="date" label="Date" value="{{_expense.date}}" required></vaadin-date-picker> -->
             
@@ -128,7 +140,7 @@
                 <label part="label" id="vaadin-text-field-label-11">Voucher code</label>
             </div>
 
-            <div style="margin-top:11px;display:inline-block;
+            <div style="margin-top:11px;
                         width: 100%;
                         text-align: center;">
 
@@ -155,13 +167,13 @@
         <center style=margin-top:17px;margin-bottom:18px> ----- </center> -->
 
         <paper-icon-button-light id="add-button">
-            <button aria-label="Add expense">
+            <button aria-label="Add expense" on-click="_add">
               <iron-icon icon="expense-manager:add"></iron-icon>
             </button>
           </paper-icon-button-light>
 
         <div class="buttons" style=text-align:center;margin-bottom:-10px>
-          <vaadin-button theme="primary" on-click="_burnVoucher" style="opacity:0.84;height:50px;width:100%">Redeem!</vaadin-button>
+          <vaadin-button theme="primary" on-click="_burn" style="opacity:0.84;height:50px;width:100%">Redeem!</vaadin-button>
         </div>
 
       </template>

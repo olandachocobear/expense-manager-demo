@@ -72,6 +72,14 @@
       return {type: 'HIDE_INFO_DIALOG'};
     };
 
+    const addVoucher = () => {
+      return {type: 'ADD_VOUCHER'};
+    }
+
+    const removeVoucher = () => {
+      return {type: 'REMOVE_VOUCHER'};
+    }
+
     window.ExpenseManager = window.ExpenseManager || {};
     window.ExpenseManager.actions = {
       login,
@@ -85,7 +93,11 @@
       hideFilters,
       filtersUpdated,
       showInfoDialog,
-      hideInfoDialog
+      hideInfoDialog,
+
+      addVoucher,
+      removeVoucher,
+
     };
   })();
 </script>

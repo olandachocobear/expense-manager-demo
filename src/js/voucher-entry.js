@@ -9,50 +9,43 @@
     
     static get properties() {
       return {
-        open: {
-          type: Boolean,
-          statePath: 'uiState.infoDialogVisible',
+        newVoucher: {
+          type: Object,
+          value() {
+            return {
+              vId: 0,
+              uniqueCode: '            '
+            };
+          }
         },
         vouchers: {
-          value() {
+          type: Array,
+          statePath: 'vouchers.vouchers'
+        /*   
+            value() {
                     
             return [
               {
-                'uniqueCode': '1567123456',
+                'uniqueCode': '156712345672',
+                'voucherType': 'Go-deals 25k',
                 'voucherDetail': '',
                 'voucherAmount': ''
               },
               {
-                'uniqueCode': '12128736612',
+                'uniqueCode': '121287366128',
+                'voucherType': 'Go-deals 25k',
                 'voucherDetail': '',
                 'voucherAmount': ''
               }
             ];
           }
+        */
         }
       };
     }
     
-    /**
-         * Check backend to get eligibility
-         */
-    _checkEligible() {
-      //  var ajaxCall =document.querySelector("#radial-button-template");
-      this.$.ajax.generateRequest();
-      this.$.eligibilityCheck.generateRequest();
-    }
+    // 
     
-    eligibleResponse(result) {
-      console.log(result.detail.response);
-    }
-    
-    onError(e, detail) {
-      console.log(e);
-      console.log(e.target.lastRequest.xhr.status);
-      console.log(detail.error); // the error object
-      console.log(detail.request.status); // the status code
-      console.log(detail.request.statusText); // the error status text
-    }
   }
     
   customElements.define(VoucherEntryElement.is, VoucherEntryElement);

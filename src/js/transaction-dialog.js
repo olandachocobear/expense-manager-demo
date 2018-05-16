@@ -14,8 +14,8 @@ class TransactionDialogElement extends ExpenseManager.ReduxMixin(Polymer.Element
          * True if the dialog is opened.
          */
         open: {
-        type: Boolean,
-        statePath: 'uiState.infoDialogVisible'
+            type: Boolean,
+            statePath: 'uiState.infoDialogVisible'
         }
     };
     }
@@ -28,10 +28,14 @@ class TransactionDialogElement extends ExpenseManager.ReduxMixin(Polymer.Element
     this.dispatch('hideInfoDialog');
     }
 
+    _add() {
+        this.dispatch('addVoucher');
+    }
+
     /**
      * Send Voucher(s) to backend to be burned
      */
-    _burnVoucher() {
+    _burn() {
     //  var ajaxCall =document.querySelector("#radial-button-template");
     this.$.processRedeem.generateRequest()
     }

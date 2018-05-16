@@ -18,7 +18,7 @@
 
     function uiReducer(state = {
       authenticated: savedState ? savedState.uiState.authenticated : false,
-      infoDialogVisible: false
+      infoDialogVisible: true
     }, action) {
       switch (action.type) {
 
@@ -50,6 +50,41 @@
 
       //continue follow-up to the 'Original' expensedReducer..
       expensesReducer(temp_state, action)
+    }
+
+    function vouchersReducer( state ={ 
+        vouchers: [
+        {
+                'uniqueCode': '156712345672',
+                'voucherType': ' Go-deals 25k',
+                'voucherDetail': '',
+                'voucherAmount': ''
+              },
+              {
+                'uniqueCode': '121287366128',
+                'voucherType': ' Go-deals 25k',
+                'voucherDetail': '',
+                'voucherAmount': ''
+              }
+        ],
+        currentVoucher: {}
+    }, action) {
+      switch (action.type) {
+          case 'ADD_VOUCHER':
+            return Object.assign({}, state, {
+                vouchers: state.vouchers.concat(action.voucher),
+                currentVoucher: undefined
+            });
+
+          case 'REMOVE_VOUCHER':
+              return Object.assign({}, state, {
+                expenses: state.vouchers.filter(e => e.id !== action.voucher.id),
+                currentVoucher: undefined
+              })
+
+          default:
+              return state;
+      }
     }
 
     function expensesReducer(//state = {
@@ -125,6 +160,7 @@ console.log(boom)
     window.ExpenseManager.rootReducer = Redux.combineReducers({
       uiState: uiReducer,
       expenses: expensesReducer,
+      vouchers: vouchersReducer,
       filters: filtersReducer
     });
 
