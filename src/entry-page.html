@@ -5,7 +5,7 @@
 <link rel="import" href="nav-bar.html">
 <link rel="import" href="expense-editor.html">
 <link rel="import" href="info-dialog.html">
-<link rel="import" href="transaction-dialog.html">
+<!-- <link rel="import" href="transaction-dialog.html"> -->
 <link rel="import" href="content-panel.html">
 <link rel="import" href="filters-toolbar.html">
 <link rel="import" href="data/store.html">
@@ -21,7 +21,7 @@
 <link rel="import" href="../bower_components/app-layout/app-toolbar/app-toolbar.html">
 
 
-<dom-module id="overview-page">
+<dom-module id="entry-page">
   <template>
     <style include="lumo-color">
       :host {
@@ -36,7 +36,8 @@
         display: flex;
         flex: auto;
         height: 0.001px;
-        background: var(--lumo-base-color);
+        /* background: var(--lumo-base-color); */
+        background: url("../images/spots-bg.png");
       }
 
       filters-toolbar[phone] {
@@ -66,35 +67,11 @@
       </app-header>
 
       <div class="content">
-        <filters-toolbar phone="[[phone]]" tablet="[[tablet]]"></filters-toolbar>
-        <content-panel phone="[[phone]]" tablet="[[tablet]]"></content-panel>
-      </div>
+
+     </div>
     </app-header-layout>
 
-    <!-- <app-drawer-layout fullbleed narrow="{{narrow}}">
-      <!-- Drawer content -->
-      <app-drawer id="drawer" slot="drawer" swipe-open="[[narrow]]">
-        <app-toolbar>Menu</app-toolbar>
-        <iron-selector selected="[[page]]" attr-for-selected="name" class="drawer-list" role="navigation">
-          <a name="view1" href="[[rootPath]]view1">View One</a>
-          <a name="view2" href="[[rootPath]]view2">View Two</a>
-          <a name="view3" href="[[rootPath]]view3">View Three</a>
-        </iron-selector>
-      </app-drawer> -->
-
-    <iron-media-query
-      query="(max-width: 600px)"
-      query-matches="{{phone}}">
-    </iron-media-query>
-
-    <iron-media-query
-      query="(max-width: 920px)"
-      query-matches="{{tablet}}">
-    </iron-media-query>
-
-    <!-- this is for modal/layered stuffs -->
-    <expense-editor></expense-editor>
-    <transaction-dialog></transaction-dialog>
+      
   </template>
 
   <script>
@@ -103,21 +80,24 @@
        * @memberof ExpenseManager
        * @mixes ExpenseManager.ResponsiveMixin
        */
-      class OverviewPageElement extends ExpenseManager.ReduxMixin(ExpenseManager.ResponsiveMixin(Polymer.Element)) {
+      class EntryPageElement extends ExpenseManager.ReduxMixin(ExpenseManager.ResponsiveMixin(Polymer.Element)) {
         static get is() {
-          return 'overview-page';
+          return 'entry-page';
         }
-       
         
+        connectedCallback(){
+            alert('as');
+            this.dispatch('showInfoDialog')
+        }
       }
 
-      customElements.define(OverviewPageElement.is, OverviewPageElement);
+      customElements.define(EntryPageElement.is, EntryPageElement);
 
       /**
        * @namespace ExpenseManager
        */
       window.ExpenseManager = window.ExpenseManager || {};
-      ExpenseManager.OverviewPageElement = OverviewPageElement;
+      ExpenseManager.EntryPageElement = EntryPageElement;
     })();
   </script>
 </dom-module>

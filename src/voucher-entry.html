@@ -2,6 +2,7 @@
 
 <link rel="import" href="./voucher-input.html">
 <link rel="import" href="./voucher-label.html">
+<link rel="import" href="../bower_components/iron-swipeable-container/iron-swipeable-container.html">
 
 <script type='module' src="./js/voucher-entry.js"></script>
 
@@ -16,16 +17,20 @@
         /* float:left; strange..if commented, it will be floating */
         position: relative;
         /* left:42%; */
-        z-index: 100;
+        box-shadow: 1px 2px 4px darkslateblue;
+        top: -19px;
+        left: 31%;
+        z-index: 2;
         line-height: 1;
         vertical-align: baseline;
         margin: 0 .14285714em;
         background-color: lightsteelblue;
         background-image: none;
-        padding: .5433em 1.233em; /* .5833em .833em; */
+        padding: .4983em 1.403em; /* .5833em .833em; */
+        color: #556b2fee;
         /* color: rgba(0,0,0,.6); */
         text-transform: none;
-        font-weight: 700;
+        font-weight: 500;
         border: 0 solid transparent;
         opacity: 0.95;
       }
@@ -76,6 +81,7 @@
 
     <dom-repeat items={{vouchers}}>
       <template>
+        <iron-swipeable-container swipe-style="curve" width-ratio="3">
         <div>
           <voucher-input code={{item.uniqueCode}}></voucher-input>
           
@@ -86,11 +92,10 @@
             label={{item.voucherType}}
           >
           </voucher-label>
-          
           <!-- extra information on the right..-->
           
-          
         </div>
+        </iron-swipeable-container>
       </template>
     </dom-repeat>
     

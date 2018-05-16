@@ -18,7 +18,7 @@
 
     function uiReducer(state = {
       authenticated: savedState ? savedState.uiState.authenticated : false,
-      infoDialogVisible: true
+      infoDialogVisible: false
     }, action) {
       switch (action.type) {
 
@@ -56,13 +56,13 @@
         vouchers: [
         {
                 'uniqueCode': '156712345672',
-                'voucherType': ' Go-deals 25k',
+                'voucherType': ' Go-deals 25k  ',
                 'voucherDetail': '',
                 'voucherAmount': ''
               },
               {
                 'uniqueCode': '121287366128',
-                'voucherType': ' Go-deals 25k',
+                'voucherType': ' Go-deals 25k  ',
                 'voucherDetail': '',
                 'voucherAmount': ''
               }
