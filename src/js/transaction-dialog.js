@@ -19,7 +19,7 @@ class TransactionDialogElement extends ExpenseManager.ReduxMixin(Polymer.Element
         },
         validTrx: {
             type: Boolean,
-            statePath: 'voucher.validTrx',
+            statePath: 'vouchers.validTrx',
             observer: '_updateRedeemable'
         },
         redeemable: {
@@ -29,7 +29,7 @@ class TransactionDialogElement extends ExpenseManager.ReduxMixin(Polymer.Element
     }
 
     _updateRedeemable (){
-        return this.validTrx ? "primary" : "error";
+        this.redeemable = this.validTrx ? "primary" : "error";
     }
 
     /**
@@ -38,10 +38,6 @@ class TransactionDialogElement extends ExpenseManager.ReduxMixin(Polymer.Element
     _close() {
 
         this.dispatch('hideInfoDialog');
-    }
-
-    _add() {
-        this.dispatch('addVoucher');
     }
 
     /**

@@ -58,7 +58,7 @@
         vouchers: [
         {
                 'id': 0,
-                'uniqueCode': '156712345672',
+                'uniqueCode': '            ',
                 'voucherType': ' Go-deals 25k  ',
                 'voucherDetail': '',
                 'voucherAmount': '',
@@ -67,17 +67,17 @@
                 'errorCode': '',
                 'errorMsg': ''
               },
-              {
-                'id': 1,
-                'uniqueCode': '121287366128',
-                'voucherType': ' Go-deals 25k  ',
-                'voucherDetail': '',
-                'voucherAmount': '',
-                'voucherEligible': true,
-                'onCheck': false,
-                'errorCode': '',
-                'errorMsg': ''
-              }
+              // {
+              //   'id': 1,
+              //   'uniqueCode': '121287366128',
+              //   'voucherType': ' Go-deals 25k  ',
+              //   'voucherDetail': '',
+              //   'voucherAmount': '',
+              //   'voucherEligible': true,
+              //   'onCheck': false,
+              //   'errorCode': '',
+              //   'errorMsg': ''
+              // }
         ],
         currentVoucher: {},
         trxNumber:""
@@ -85,13 +85,13 @@
       switch (action.type) {
           case 'ADD_VOUCHER':
             return Object.assign({}, state, {
-                vouchers: state.vouchers.concat(action.voucher),
+                vouchers: state.vouchers.concat(action.new_voucher),
                 currentVoucher: undefined
             });
 
           case 'REMOVE_VOUCHER':
               return Object.assign({}, state, {
-                vouchers: state.vouchers.filter(e => e.id !== action.voucher.id),
+                vouchers: state.vouchers.filter(e => e.id !== action.id),
                 currentVoucher: undefined
               });
           
@@ -100,7 +100,11 @@
                 vouchers: state.vouchers.map(e => {
                   return e.id === action.voucher.id ? action.voucher : e;
               })
-                
+            });
+            
+          case 'UPDATE_TXABLE':
+              return Object.assign({}, state, {
+                validTrx: action.valids
             });
 
           default:

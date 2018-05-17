@@ -32,6 +32,7 @@
       console.log(result.detail.response);
       this.currentVoucher.onCheck=false;
       this.dispatch('updateVoucher', this.currentVoucher)
+      this.dispatch('updateTransactionable', true);
       this._flagVoucherAsValid()
     }
     

@@ -48,6 +48,14 @@
       };
     }
     
+    // followup swipe-action..
+    _deleteNode(e) {
+      console.log(e);
+
+      this.dispatch('removeVoucher', this.voucher.id);
+      this.dispatch('updateTransactionable', true)
+
+    }
     // 
     
   }

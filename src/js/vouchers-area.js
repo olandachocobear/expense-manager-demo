@@ -12,9 +12,36 @@
       return {
         listVouchers: {
           type: Array,
-          statePath: 'vouchers.vouchers'
-        }
+          statePath: 'vouchers.vouchers',
+          observer: '_voucherChanged'
+        },
+         validList: {
+           type: Boolean,
+           statePath: 'vouchers.validTrx'
+         },
+         addAllowed: {
+           type: Boolean,
+           value: false
+         }
       };
+    }
+
+    _voucherChanged(){
+      // alert('!!'+)
+        if(this.listVouchers.length>0 && this.validList){
+          this.addAllowed = true
+        }
+    }
+
+    // add new (empty) voucher..
+    _add() {
+      let vouchers=this.listVouchers;
+      // get id of last voucher
+      this.dispatch('addVoucher', vouchers[vouchers.length-1]['id']);
+      this.dispatch('updateTransactionable', false)
+      console.log(this.listVouchers)
+
+      this.addAllowed = false;
     }
 
     /**

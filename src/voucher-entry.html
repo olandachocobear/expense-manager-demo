@@ -97,8 +97,10 @@
 
     <!-- <dom-repeat items={{vouchers}}> -->
       <!-- <template> -->
-        <iron-swipeable-container swipe-style="curve" width-ratio="3">
-        <div>
+        <iron-swipeable-container swipe-style="curve" width-ratio="3"
+          on-iron-swipe="_deleteNode"
+        >
+        <div id=node>
 
           <voucher-input
             current-voucher=[[voucher]] 

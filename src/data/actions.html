@@ -72,16 +72,30 @@
       return {type: 'HIDE_INFO_DIALOG'};
     };
 
-    const addVoucher = () => {
-      return {type: 'ADD_VOUCHER'};
+    const addVoucher = last_id => {
+      let new_voucher = {
+        'id': (last_id+1),
+        'uniqueCode': '            ',
+        'voucherType': ' Go-deals 25k  ',
+        'voucherDetail': '',
+        'voucherAmount': '',
+        'voucherEligible': false,
+        'onCheck': false,
+        'errorCode': '',
+        'errorMsg': ''
+      }
+      return {type: 'ADD_VOUCHER', new_voucher};
     }
 
     const updateVoucher = voucher => {
       return {type: 'UPDATE_VOUCHER', voucher};
     }
+    const updateTransactionable = valids => {
+      return {type: 'UPDATE_TXABLE', valids};
+    }
 
-    const removeVoucher = () => {
-      return {type: 'REMOVE_VOUCHER'};
+    const removeVoucher = (id) => {
+      return {type: 'REMOVE_VOUCHER', id};
     }
 
     window.ExpenseManager = window.ExpenseManager || {};
@@ -101,7 +115,8 @@
 
       addVoucher,
       removeVoucher,
-      updateVoucher
+      updateVoucher,
+      updateTransactionable
 
     };
   })();

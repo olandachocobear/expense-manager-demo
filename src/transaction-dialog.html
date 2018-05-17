@@ -4,8 +4,6 @@
 
 <link rel="import" href="../bower_components/number-input/number-input.html">
 <link rel="import" href="../bower_components/iron-ajax/iron-ajax.html">
-<link rel="import" href="../bower_components/paper-icon-button/paper-icon-button-light.html">
-<link rel="import" href="../bower_components/iron-icon/iron-icon.html">
 
 <link rel="import" href="./vouchers-area.html">
 
@@ -34,19 +32,6 @@
     <vaadin-dialog modeless=false id="dialog" no-close-on-esc no-close-on-outside-click opened="[[open]]">
       <template>
           <style>
-             #add-button {
-                position: relative;
-                height: var(--lumo-size-xl);
-                width: var(--lumo-size-xl);
-                right: 40%;
-                bottom: 8px;
-                float: right;
-                z-index: 9999;
-                background: var(--loyalty-primary-color);
-                color: var(--lumo-error-contrast-color);
-                box-shadow: var(--lumo-box-shadow-m);
-                border-radius: 50%;
-              }
               .wrapper {
                 display: flex;
                 margin-top: var(--lumo-space-s);
@@ -168,11 +153,7 @@
 <!-- 
         <center style=margin-top:17px;margin-bottom:18px> ----- </center> -->
 
-        <paper-icon-button-light id="add-button">
-            <button aria-label="Add expense" on-click="_add">
-              <iron-icon icon="expense-manager:add"></iron-icon>
-            </button>
-          </paper-icon-button-light>
+
 
         <div class="buttons" style=text-align:center;margin-bottom:-10px>
           <vaadin-button theme$="[[redeemable]]" on-click="_burn" style="opacity:0.84;height:50px;width:100%">Redeem!</vaadin-button>
