@@ -1,7 +1,7 @@
 {
-  "name": "vaadin-expense-manager",
-  "version": "3.0.0",
-  "description": "Sample PWA showcasing Vaadin components",
+  "name": "loyalty-polymer-pwa",
+  "version": "1.0.1",
+  "description": "Test polymer",
   "main": "service-worker.js",
   "dependencies": {
     "redux": "^3.7.2",
@@ -26,18 +26,15 @@
     "test:integration": "polymer build # test that psk builds without error with the CLI"
   },
   "repository": {
-    "type": "git",
-    "url": "git+https://github.com/vaadin/expense-manager-demo.git"
   },
   "keywords": [
     "pwa",
     "vaadin",
     "polymer"
   ],
-  "author": "Marcus Hellberg / Vaadin",
+  "author": "dhshln / kartuku",
   "license": "Apache-2.0",
   "bugs": {
-    "url": "https://github.com/vaadin/expense-manager-demo/issues"
   },
-  "homepage": "https://github.com/vaadin/expense-manager-demo#readme"
+  "homepage": "https://vaadin.com/"
 }

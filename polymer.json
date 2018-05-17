@@ -1,7 +1,7 @@
 {
   "autoBasePath": true,
   "entrypoint": "index.html",
-  "shell": "src/expense-app.html",
+  "shell": "src/loyalty-app.html",
   "fragments": [
     "src/entry-page.html"
   ],
