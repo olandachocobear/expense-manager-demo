@@ -24,6 +24,12 @@
       };
     };
 
+    const updateVoucher = (voucher) =>{
+      return {
+        type: 'UPDATE_VOUCHER',
+        voucher
+      }
+    }
     const saveExpense = (expense) => {
       if (expense.id) {
         return {
@@ -97,6 +103,7 @@
 
       addVoucher,
       removeVoucher,
+      updateVoucher
 
     };
   })();

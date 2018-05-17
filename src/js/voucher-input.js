@@ -9,7 +9,15 @@
     
     static get properties() {
       return {
-        codeLength: 11
+        codeLength: {
+          type: Number
+        },
+        currentVoucher: {
+          type: Object
+        },
+        completeCode: {
+          type: String
+        }
       };
     }
     
@@ -17,14 +25,30 @@
          * Check backend to get eligibility
          */
     _checkEligible() {
+      console.log(this.currentVoucher);
       //  var ajaxCall =document.querySelector("#radial-button-template");
+      
       this.$.eligibilityCheck.generateRequest();
     }
     
     eligibleResponse(result) {
       console.log(result.detail.response);
+      this._flagVoucherAsValid(this.currentVoucher);
+
+    }
+
+    _flagVoucherAsValid(voucher) {
+      voucher.voucherEligible = true
+      this.set('voucher.voucherEligible', true);
+      this.dispatch('updateVoucher', voucher)
+      this.notifyPath('vouchers.vouchers')
     }
     
+    _showValidVoucher() {
+      alert('re')
+      
+
+    }
     onError(e, detail) {
       console.log(e);
       console.log(e.target.lastRequest.xhr.status);
@@ -79,6 +103,9 @@
         }
       }
       console.log('voucher to be checked: ' + code);
+
+      this.completeCode = code;
+      this.currentVoucher.uniqueCode = code;
 
       // checking to the Backend
       this._checkEligible();

@@ -5,7 +5,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes, maximum-scale=5.0">
 
-  <title>Redeem Manual FE</title>
+  <title>Redeem Manual App</title>
   <meta name="description" content="Progressive Web App built using Polymer and Vaadin components">
 
   <!--
@@ -28,11 +28,10 @@
   <link rel="apple-touch-icon" href="images/icons/icon-144x144.png" />
   <meta name="mobile-web-app-capable" content="yes" />
   <meta name="mobile-web-app-status-bar-style" content="black" />
-  <meta name="mobile-web-app-title" content="Expenses">
+  <meta name="mobile-web-app-title" content="Loyalty">
 
   <script>
     window.Polymer = {rootPath: document.querySelector('base').getAttribute('href')};
-    // Load and register pre-caching Service Worker
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', function() {
         navigator.serviceWorker.register('service-worker.js', {
@@ -42,7 +41,6 @@
     }
   </script>
 
-  <!-- Add any global styles for body, document, etc. -->
   <style>
     html {
       height: 100%;

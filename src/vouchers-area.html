@@ -2,6 +2,7 @@
 <link rel="import" href="../bower_components/iron-ajax/iron-ajax.html">
 
 <link rel="import" href="./voucher-entry.html">
+<link rel="import" href="./data//store.html">
 
 <script type='module' src="./js/vouchers-area.js"></script>
 
@@ -9,8 +10,11 @@
   
   <template>  
 
-    <voucher-entry qty={{quantity}}> </voucher-entry>
+    <dom-repeat items=[[savedVouchers]]>
+
+      <voucher-entry voucher-item=[[item]]> </voucher-entry>
   
+    </dom-repeat>
   </template>
   
 </dom-module>

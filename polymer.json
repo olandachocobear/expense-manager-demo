@@ -3,7 +3,8 @@
   "entrypoint": "index.html",
   "shell": "src/loyalty-app.html",
   "fragments": [
-    "src/entry-page.html"
+    "src/entry-page.html",
+    "src/login-page.html"
   ],
   "sources": [
     "src/**/*",

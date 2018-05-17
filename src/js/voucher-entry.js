@@ -9,6 +9,10 @@
     
     static get properties() {
       return {
+        voucherList: {
+          type: Array,
+          
+        },
         newVoucher: {
           type: Object,
           value() {
@@ -18,9 +22,19 @@
             };
           }
         },
+        code: {
+          type: Object,
+          notify: true
+        },
+        voucherList:{
+          type: Array,
+
+        },
         vouchers: {
           type: Array,
-          statePath: 'vouchers.vouchers'
+          // notify: true,
+          statePath: 'vouchers.vouchers',
+          observer: '_listenToUpdate',
         /*   
             value() {
                     
@@ -40,8 +54,22 @@
             ];
           }
         */
+        },
+        showRedBar: {
+          type: Boolean,
+          statePath: 'vouchers.vouchers'
         }
       };
+    }
+    connectedCallback(){
+      console.log(this.voucherList);
+    }
+    
+    _listenToUpdate (p1, p2) {
+      console.log('Change is the only thing that\'s constant.')
+      console.log(p1)
+      console.log(p2)
+
     }
     
     // 

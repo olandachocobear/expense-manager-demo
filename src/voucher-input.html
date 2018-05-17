@@ -10,11 +10,13 @@
     <style>
     </style>
     
-    <dom-repeat items={{code}}>
+    <dom-repeat items={{code.uniqueCode}}>
         <template>
             <number-input value={{item}} on-keypress="_clearBox" on-keyup="_moveIt">
             </number-input>
         </template>
+
+        <!-- <input type=hidden value="{{curVoucher.id}}"></input> -->
     </dom-repeat>
 
     <iron-ajax id="eligibilityCheck" 
