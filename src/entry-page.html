@@ -66,6 +66,13 @@
         <nav-bar theme="dark"></nav-bar>
       </app-header>
 
+      <img src="../images/unified360-logo.png" width=182
+          style="position: fixed;
+          z-index: 9999999;
+          top: 9%;
+          right: 3%;
+          opacity: 0.3;"
+      >
       <div class="content">
 
      </div>
@@ -86,7 +93,6 @@
         }
         
         connectedCallback(){
-            alert('as');
             this.dispatch('showInfoDialog')
         }
       }
