@@ -2,7 +2,7 @@
 
 <link rel="import" href="../bower_components/number-input/number-input.html">
 
-<script type='module' src="./js/voucher-input.js"></script>
+<script src="./js/voucher-input.js"></script>
 
 <dom-module id="voucher-input">
   <template >
@@ -19,10 +19,10 @@
 
     <iron-ajax id="eligibilityCheck" 
       url="https://reqres.in/api/users" method="post" 
-      body='{
-          "name": "morpheus",
-          "job": "leader"
-      }'
+      body="{
+          'name': 'morpheus',
+          'job': 'leader'
+      }" 
       on-response="eligibleResponse"
       on-error="onError">
   </iron-ajax>

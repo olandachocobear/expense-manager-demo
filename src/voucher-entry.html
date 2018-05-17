@@ -4,7 +4,7 @@
 <link rel="import" href="./voucher-label.html">
 <link rel="import" href="../bower_components/iron-swipeable-container/iron-swipeable-container.html">
 
-<script type='module' src="./js/voucher-entry.js"></script>
+<script src="./js/voucher-entry.js"></script>
 
 <dom-module id="voucher-entry">
   <template>
@@ -76,12 +76,22 @@
     width: 95%;
     margin-left: 2%;
     margin-top: -22px;
-    visibility: hidden
+    visibility: hidden;
+    
       }
 
       overlay[shown]{
         visibility: visible;
     }
+
+      voucher-label { visibility: hidden;}
+      voucher-label[shown] {visibility: visible;}
+
+      .preload{display:none;float: right;
+    margin-top: -23px;
+    transition: visibility 2s linear,opacity 2s linear;
+    margin-right: -18px;opacity:0.9};
+      .preload[shown]{display: inline;}
      </style>
     </style>
 
@@ -90,7 +100,6 @@
         <iron-swipeable-container swipe-style="curve" width-ratio="3">
         <div>
 
-          [[voucher.voucherEligible]]
           <voucher-input
             current-voucher=[[voucher]] 
             id=[[voucher.id]] 
@@ -102,8 +111,13 @@
           <voucher-label 
             bgColor="red"
             label=[[voucher.voucherType]]
+            shown$="[[voucher.voucherEligible]]"
           >
           </voucher-label>
+
+          <div class="preload" shown$="[[voucher.onCheck]]">
+            <img src="../images/preload2.gif" >
+         </div>
           <!-- extra information on the right..-->
           
         </div>

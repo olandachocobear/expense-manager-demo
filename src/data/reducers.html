@@ -53,6 +53,8 @@
     }
 
     function vouchersReducer( state ={ 
+        validTrx: false,
+        trxProcess: false,
         vouchers: [
         {
                 'id': 0,
@@ -60,7 +62,10 @@
                 'voucherType': ' Go-deals 25k  ',
                 'voucherDetail': '',
                 'voucherAmount': '',
-                'voucherEligible': false
+                'voucherEligible': false,
+                'onCheck': false,
+                'errorCode': '',
+                'errorMsg': ''
               },
               {
                 'id': 1,
@@ -68,10 +73,14 @@
                 'voucherType': ' Go-deals 25k  ',
                 'voucherDetail': '',
                 'voucherAmount': '',
-                'voucherEligible': true
+                'voucherEligible': true,
+                'onCheck': false,
+                'errorCode': '',
+                'errorMsg': ''
               }
         ],
-        currentVoucher: {}
+        currentVoucher: {},
+        trxNumber:""
     }, action) {
       switch (action.type) {
           case 'ADD_VOUCHER':

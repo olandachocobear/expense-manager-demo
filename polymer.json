@@ -1,5 +1,4 @@
 {
-  "autoBasePath": true,
   "entrypoint": "index.html",
   "shell": "src/loyalty-app.html",
   "fragments": [
@@ -12,8 +11,7 @@
   ],
   "extraDependencies": [
     "bower_components/webcomponentsjs/*.js",
-    "manifest.json",
-    "images/default-receipt.png"
+    "manifest.json"
   ],
   "builds": [
     {

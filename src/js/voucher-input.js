@@ -23,16 +23,20 @@
          */
     _checkEligible() {
       //  var ajaxCall =document.querySelector("#radial-button-template");
+      this.currentVoucher.onCheck=true;
+      this.dispatch('updateVoucher', this.currentVoucher)
       this.$.eligibilityCheck.generateRequest();
     }
     
     eligibleResponse(result) {
       console.log(result.detail.response);
+      this.currentVoucher.onCheck=false;
+      this.dispatch('updateVoucher', this.currentVoucher)
       this._flagVoucherAsValid()
     }
     
     _flagVoucherAsValid(){
-      alert('valid')
+      // alert('valid')
       this.currentVoucher.voucherEligible=true;
       console.log(this.currentVoucher)
       this.dispatch('updateVoucher', this.currentVoucher)

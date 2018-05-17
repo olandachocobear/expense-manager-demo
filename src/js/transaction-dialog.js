@@ -16,8 +16,20 @@ class TransactionDialogElement extends ExpenseManager.ReduxMixin(Polymer.Element
         open: {
             type: Boolean,
             statePath: 'uiState.infoDialogVisible'
+        },
+        validTrx: {
+            type: Boolean,
+            statePath: 'voucher.validTrx',
+            observer: '_updateRedeemable'
+        },
+        redeemable: {
+            type: String
         }
     };
+    }
+
+    _updateRedeemable (){
+        return this.validTrx ? "primary" : "error";
     }
 
     /**
@@ -25,7 +37,7 @@ class TransactionDialogElement extends ExpenseManager.ReduxMixin(Polymer.Element
      */
     _close() {
 
-    this.dispatch('hideInfoDialog');
+        this.dispatch('hideInfoDialog');
     }
 
     _add() {
@@ -36,8 +48,8 @@ class TransactionDialogElement extends ExpenseManager.ReduxMixin(Polymer.Element
      * Send Voucher(s) to backend to be burned
      */
     _burn() {
-    //  var ajaxCall =document.querySelector("#radial-button-template");
-    this.$.processRedeem.generateRequest()
+    
+        //this.$.processRedeem.generateRequest()
     }
 
     eligibleResponse(result) {
