@@ -39,7 +39,7 @@
       data="{{routeData}}">
     </app-route>
 
-    <iron-pages id="pages" selected="[[routeData.page]]" attr-for-selected="name" fallback-selection="view1">
+    <iron-pages id="pages" selected="[[routeData.page]]" attr-for-selected="name" fallback-selection="login">
       <overview-page name="list"> </overview-page>
       <entry-page name="entry"> </entry-page>
       <login-page name="login" route="{{subroute}}" theme="light" /> </login-page>
@@ -122,6 +122,11 @@
         }
         _viewChanged(view) {
           console.log('rend')
+          console.log(this.routeData)
+          if(this.routeData.page=='entry')
+            this.dispatch('showInfoDialog')
+          else
+            this.dispatch('hideInfoDialog')
           // load data for view
         }
       }

@@ -10,7 +10,7 @@
     <style>
     </style>
     
-    <dom-repeat items={{code}}>
+    <dom-repeat items={{code}} mutable-data>
         <template>
             <number-input value={{item}} on-keypress="_clearBox" on-keyup="_moveIt">
             </number-input>
@@ -23,7 +23,8 @@
           "name": "morpheus",
           "job": "leader"
       }'
-      on-response="eligibleResponse">
+      on-response="eligibleResponse"
+      on-error="onError">
   </iron-ajax>
 
   </template>

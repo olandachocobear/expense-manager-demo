@@ -55,16 +55,20 @@
     function vouchersReducer( state ={ 
         vouchers: [
         {
+                'id': 0,
                 'uniqueCode': '156712345672',
                 'voucherType': ' Go-deals 25k  ',
                 'voucherDetail': '',
-                'voucherAmount': ''
+                'voucherAmount': '',
+                'voucherEligible': false
               },
               {
+                'id': 1,
                 'uniqueCode': '121287366128',
                 'voucherType': ' Go-deals 25k  ',
                 'voucherDetail': '',
-                'voucherAmount': ''
+                'voucherAmount': '',
+                'voucherEligible': true
               }
         ],
         currentVoucher: {}
@@ -78,9 +82,17 @@
 
           case 'REMOVE_VOUCHER':
               return Object.assign({}, state, {
-                expenses: state.vouchers.filter(e => e.id !== action.voucher.id),
+                vouchers: state.vouchers.filter(e => e.id !== action.voucher.id),
                 currentVoucher: undefined
+              });
+          
+          case 'UPDATE_VOUCHER':
+              return Object.assign({}, state, {
+                vouchers: state.vouchers.map(e => {
+                  return e.id === action.voucher.id ? action.voucher : e;
               })
+                
+            });
 
           default:
               return state;

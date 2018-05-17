@@ -76,6 +76,10 @@
       return {type: 'ADD_VOUCHER'};
     }
 
+    const updateVoucher = voucher => {
+      return {type: 'UPDATE_VOUCHER', voucher};
+    }
+
     const removeVoucher = () => {
       return {type: 'REMOVE_VOUCHER'};
     }
@@ -97,6 +101,7 @@
 
       addVoucher,
       removeVoucher,
+      updateVoucher
 
     };
   })();

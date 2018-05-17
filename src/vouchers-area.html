@@ -8,9 +8,11 @@
 <dom-module id="vouchers-area">
   
   <template>  
-
-    <voucher-entry qty={{quantity}}> </voucher-entry>
-  
+    <dom-repeat items=[[listVouchers]] mutable-data>
+      <template>
+        <voucher-entry voucher=[[item]]> </voucher-entry>
+      </template>
+    </dom-repeat>
   </template>
   
 </dom-module>

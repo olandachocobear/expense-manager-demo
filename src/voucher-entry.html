@@ -76,28 +76,40 @@
     width: 95%;
     margin-left: 2%;
     margin-top: -22px;
+    visibility: hidden
       }
+
+      overlay[shown]{
+        visibility: visible;
+    }
+     </style>
     </style>
 
-    <dom-repeat items={{vouchers}}>
-      <template>
+    <!-- <dom-repeat items={{vouchers}}> -->
+      <!-- <template> -->
         <iron-swipeable-container swipe-style="curve" width-ratio="3">
         <div>
-          <voucher-input code={{item.uniqueCode}}></voucher-input>
+
+          [[voucher.voucherEligible]]
+          <voucher-input
+            current-voucher=[[voucher]] 
+            id=[[voucher.id]] 
+            code=[[voucher.uniqueCode]]>
+          </voucher-input>
           
-          <overlay>.</overlay>
+          <overlay shown$="[[voucher.voucherEligible]]">.</overlay>
           
           <voucher-label 
             bgColor="red"
-            label={{item.voucherType}}
+            label=[[voucher.voucherType]]
           >
           </voucher-label>
           <!-- extra information on the right..-->
           
         </div>
         </iron-swipeable-container>
-      </template>
-    </dom-repeat>
+      <!-- </template> -->
+    <!-- </dom-repeat> -->
     
   </template>
 

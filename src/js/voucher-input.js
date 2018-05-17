@@ -9,9 +9,14 @@
     
     static get properties() {
       return {
-        codeLength: 11
-      };
-    }
+        //codeLength: 11
+
+        currentVoucher: {
+          type: Object,
+        }
+      }
+    };
+   
     
     /**
          * Check backend to get eligibility
@@ -23,8 +28,16 @@
     
     eligibleResponse(result) {
       console.log(result.detail.response);
+      this._flagVoucherAsValid()
     }
     
+    _flagVoucherAsValid(){
+      alert('valid')
+      this.currentVoucher.voucherEligible=true;
+      console.log(this.currentVoucher)
+      this.dispatch('updateVoucher', this.currentVoucher)
+    }
+     
     onError(e, detail) {
       console.log(e);
       console.log(e.target.lastRequest.xhr.status);
@@ -82,6 +95,9 @@
 
       // checking to the Backend
       this._checkEligible();
+
+      //update to particular Voucher
+      this.currentVoucher.uniqueCode=code
     }
   }
     

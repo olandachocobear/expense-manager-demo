@@ -2,13 +2,17 @@
   /**
      * @memberof ExpenseManager
      */
-  class VoucherEntryElement extends ExpenseManager.ReduxMixin(Polymer.Element) {
+  class VoucherEntryElement extends Polymer.MutableData(ExpenseManager.ReduxMixin(Polymer.Element)) {
     static get is() {
       return 'voucher-entry';
     }
     
     static get properties() {
       return {
+        voucher: {
+          type: Object,
+          notify: true
+        },
         newVoucher: {
           type: Object,
           value() {
