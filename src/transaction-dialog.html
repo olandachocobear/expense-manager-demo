@@ -84,6 +84,8 @@
               h2 {
                 margin-bottom:13px;
               }
+              #reset_btn { display: none}
+              #reset_btn[shown] {display: block;}
           </style>
 
         <div style="float:right;line-height: 22px;
@@ -107,17 +109,9 @@
             
             <!-- <vaadin-combo-box name="merchant" items='[{"label": "Voucher", "value": 0}, {"label": "Coupon", "value": 1}]' value="{{_expense.transType}}" selected="Voucher" label="Type Promotion" required></vaadin-combo-box> -->
 
-            <vaadin-text-field name="total" value="{{_expense.total}}" label="Total transaction" pattern="[0-9]+[.]?[0-9]*" required>
+            <vaadin-text-field name="total" value="{{fieldAmount}}" on-change="detectChanges" label="Total transaction" pattern="[0-9]+[.]?[0-9]*" required>
               <div slot="prefix">Rp</div>
             </vaadin-text-field>
-            
-            <!-- <vaadin-text-field label="Merchant Name" value="Matahari Department Store (Ciputra Mall)" readonly></vaadin-text-field> -->
-
-            <!-- <vaadin-date-picker name="date" label="Date" value="{{_expense.date}}" required></vaadin-date-picker> -->
-            
-            <!-- <vaadin-text-field name="voucher_code" value="{{_expense.total}}" label="Voucher" pattern="[0-9]+[.]?[0-9]*" required>
-                <div slot="prefix">$</div>
-              </vaadin-text-field> -->
 
             <div class="vaadin-text-field-container" style="margin-top:18px;
                   font-weight:500; 
@@ -131,7 +125,7 @@
                         width: 100%;
                         text-align: center;">
 
-            <vouchers-area> </vouchers-area>
+            <vouchers-area add-allowed=false> </vouchers-area>
             </div>  
             
             
@@ -157,6 +151,8 @@
 
         <div class="buttons" style=text-align:center;margin-bottom:-10px>
           <vaadin-button theme$="[[redeemable]]" on-click="_burn" style="opacity:0.84;height:50px;width:100%">Redeem!</vaadin-button>
+          <vaadin-button id=reset_btn shown$="[[resetable]]" theme="tertiary" on-click="_reset"
+            style="font-weight:normal;color:red;margin-left:15px"><u>Reset</u></vaadin-button>
         </div>
 
       </template>

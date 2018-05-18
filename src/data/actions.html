@@ -90,8 +90,14 @@
     const updateVoucher = voucher => {
       return {type: 'UPDATE_VOUCHER', voucher};
     }
+    const updateTransactionAmount = amount => {
+      return {type: 'UPDATE_TX_AMOUNT', amount};
+    }
     const updateTransactionable = valids => {
       return {type: 'UPDATE_TXABLE', valids};
+    }
+    const resetForm = () => {
+      return {type: 'RESET_ALL'};
     }
 
     const removeVoucher = (id) => {
@@ -116,7 +122,9 @@
       addVoucher,
       removeVoucher,
       updateVoucher,
-      updateTransactionable
+      updateTransactionable,
+      resetForm,
+      updateTransactionAmount
 
     };
   })();

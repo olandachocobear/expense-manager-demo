@@ -31,6 +31,7 @@
     eligibleResponse(result) {
       console.log(result.detail.response);
       this.currentVoucher.onCheck=false;
+      this.currentVoucher.voucherType=result.detail.response.id;
       this.dispatch('updateVoucher', this.currentVoucher)
       this.dispatch('updateTransactionable', true);
       this._flagVoucherAsValid()

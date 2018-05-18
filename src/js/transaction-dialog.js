@@ -24,12 +24,30 @@ class TransactionDialogElement extends ExpenseManager.ReduxMixin(Polymer.Element
         },
         redeemable: {
             type: String
+        },
+        resetable:{
+            type: Boolean,
+            value: false
+        },
+        fieldAmount:{
+            // type: String,
+            // observer: '_amountChanged'
+            statePath: 'vouchers.trxAmount'
         }
     };
     }
 
+    /* still NECESSARY to update State, even though already Observe */
+    detectChanges (){
+        this._amountChanged();
+    }
+    _amountChanged (){
+        this.dispatch('updateTransactionAmount', this.fieldAmount);
+    }
+
     _updateRedeemable (){
         this.redeemable = this.validTrx ? "primary" : "error";
+        this.resetable = true
     }
 
     /**
@@ -46,6 +64,10 @@ class TransactionDialogElement extends ExpenseManager.ReduxMixin(Polymer.Element
     _burn() {
     
         //this.$.processRedeem.generateRequest()
+    }
+
+    _reset() {
+        this.dispatch('resetForm');
     }
 
     eligibleResponse(result) {

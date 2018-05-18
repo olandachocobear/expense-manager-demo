@@ -53,6 +53,8 @@
     }
 
     function vouchersReducer( state ={ 
+        trxNumber: uuid(),
+        trxAmount: '',
         validTrx: false,
         trxProcess: false,
         vouchers: [
@@ -80,7 +82,6 @@
               // }
         ],
         currentVoucher: {},
-        trxNumber:""
     }, action) {
       switch (action.type) {
           case 'ADD_VOUCHER':
@@ -105,6 +106,31 @@
           case 'UPDATE_TXABLE':
               return Object.assign({}, state, {
                 validTrx: action.valids
+            });
+
+          case 'UPDATE_TX_AMOUNT':
+              return Object.assign({}, state, {
+                trxAmount: action.amount
+            });
+
+          case 'RESET_ALL':
+              return Object.assign({}, state, {
+                validTrx: false,
+                trxNumber: uuid(),
+                vouchers: [
+                  {
+                      'id': 0,
+                      'uniqueCode': '            ',
+                      'voucherType': ' Go-deals 25k  ',
+                      'voucherDetail': '',
+                      'voucherAmount': '',
+                      'voucherEligible': false,
+                      'onCheck': false,
+                      'errorCode': '',
+                      'errorMsg': ''
+                   },
+                ],
+                trxAmount: ''
             });
 
           default:

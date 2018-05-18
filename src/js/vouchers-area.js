@@ -31,6 +31,8 @@
         if(this.listVouchers.length>0 && this.validList){
           this.addAllowed = true
         }
+        else
+          this.addAllowed = false
     }
 
     // add new (empty) voucher..
