@@ -19,6 +19,7 @@
 <link rel="import" href="../bower_components/app-layout/app-scroll-effects/app-scroll-effects.html">
 <link rel="import" href="../bower_components/app-layout/app-toolbar/app-toolbar.html">
 <link rel="import" href="../bower_components/app-toasts/app-toasts.html">
+<link rel="import" href="../bower_components/metaui/m2-dialog.html">
 
 <dom-module id="entry-page">
   <template>
@@ -72,6 +73,12 @@
     
     <app-toasts id="toast2" intense mutable-data></app-toasts>
 
+
+    <m2-dialog id="receipt" stop-auto-dismiss>
+      <div slot="container">
+        TRX RECEIPT
+      </div>
+    </m2-dialog>
       
   </template>
 
@@ -97,10 +104,21 @@
               statePath: 'errors.code',
               observer: '_showMsg',
               notify: true
+            },
+            receiptVisible: {
+              type: Boolean,
+              statePath: 'uiState.receiptDialogVisible',
+              observer: '_toggleReceipt'
             }
           };
         }
-
+        
+        _toggleReceipt() {
+          if (this.receiptVisible)
+            this.$.receipt.open();
+          else
+            this.$.receipt.close();
+        }
         /* JANGAN DOUBLE! (di props udah) */
         // static get observers() {
         //   return [
@@ -113,6 +131,8 @@
             switch (this.errorCode){
               case '00': 
                 return //this.successToast();
+              case 200:
+                return this.showSuccessToast()
               case "B2": 
                 return this.showWarningToast(this.errorMsg);
               case 66: 
@@ -126,7 +146,7 @@
         
         showSuccessToast(){  
           let toasts2 = this.$.toast2;
-          toasts2.showSuccessToast("Voucher eligible.", {fitBottom:true});
+          toasts2.showSuccessToast("Success. Voucher burned.", {fitBottom:true});
           this._resetToast();
         }
         showWarningToast(warning){  

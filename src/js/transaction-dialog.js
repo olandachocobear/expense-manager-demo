@@ -33,9 +33,23 @@ class TransactionDialogElement extends ExpenseManager.ReduxMixin(Polymer.Element
             // type: String,
             // observer: '_amountChanged'
             statePath: 'vouchers.trxAmount'
+        },
+        ironUrl: {
+            type: String,
+            value: () => constant.url.dev.burn_vouch
+        },
+        trx: {
+            type: Object,
+            statePath: 'vouchers',
+            observer: '_updateBodyRequest'
+        },
+        userDetail: {
+            type: Object,
+            statePath: 'user.data'
         }
     };
     }
+
 
     /* still NECESSARY to update State, even though already Observe */
     detectChanges (){
@@ -50,6 +64,25 @@ class TransactionDialogElement extends ExpenseManager.ReduxMixin(Polymer.Element
         this.resetable = true
     }
 
+    _updateBodyRequest(){
+        this.checkUsr();
+
+        var voucher_arr = [];
+        for(var i=0; i<this.trx.vouchers.length; i++){
+            voucher_arr.push(this.trx.vouchers[i]['uniqueCode']);
+        }
+        this.bodyRequest = {
+            amount: parseInt(this.trx.trxAmount),
+            uniqueCodes: voucher_arr,
+            mid: this.userDetail.mid, 
+            merchantCode: this.userDetail.merchantCode, 
+            tid: this.userDetail.tid,
+            transactionDate: new Date(),
+            traceNumber: this.trx.trxNumber,
+            transactionTypeId: 2
+          };
+
+    } 
     /**
      * Closes the dialog.
      */
@@ -63,16 +96,32 @@ class TransactionDialogElement extends ExpenseManager.ReduxMixin(Polymer.Element
      */
     _burn() {
     
-        //this.$.processRedeem.generateRequest()
+        this.$.processRedeem.generateRequest()
     }
 
     _reset() {
         this.dispatch('resetForm');
     }
 
+    checkUsr() {
+        var usr = this.userDetail;
+        if (usr.mid == undefined)
+          usr['mid']="000001121530000";
+        if (usr.merchantCode == undefined)
+          usr['merchantCode']="00000066666";
+        if (usr.tid == undefined)
+          usr['tid']="11120860";
+      }
+
     eligibleResponse(result) {
         console.log(result.detail.response);
-        this._close()
+        //this._close()
+        this.dispatch('updateErrorMsg', result.detail.responseDetailBahasa);
+        this.dispatch('updateErrorCode', 200);
+        
+        this.dispatch('showReceipt');
+        
+        this._reset();
     }
 
     onError(e,detail){

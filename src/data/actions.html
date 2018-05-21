@@ -114,6 +114,14 @@
     const updateErrorMsg = (msg) => {
       return {type: 'UPDATE_ERROR_MSG', msg}
     }
+    
+    const showReceipt = () => {
+      return {type: 'SHOW_RECEIPT'}
+    }
+
+    const hideReceipt = () => {
+      return {type: 'HIDE_RECEIPT'}
+    }
     window.ExpenseManager = window.ExpenseManager || {};
     window.ExpenseManager.actions = {
       login,
@@ -138,7 +146,10 @@
 
       logMeIn,
       updateErrorCode,
-      updateErrorMsg
+      updateErrorMsg,
+
+      showReceipt,
+      hideReceipt
 
 
     };

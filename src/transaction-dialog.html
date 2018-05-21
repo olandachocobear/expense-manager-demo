@@ -4,6 +4,7 @@
 
 <link rel="import" href="../bower_components/number-input/number-input.html">
 <link rel="import" href="../bower_components/iron-ajax/iron-ajax.html">
+<link rel="import" href="constant.html">
 
 <link rel="import" href="./vouchers-area.html">
 
@@ -11,20 +12,18 @@
 
 <dom-module id="transaction-dialog">
   <template>
-      <iron-ajax id="ajax"
+      <!-- <iron-ajax id="ajax"
         url="https://reqres.in/api/login" method="post" 
         handle-as="json"
         on-response="onResponse"
         on-error="onError"
         last-response="{{response}}">
-      </iron-ajax>
+      </iron-ajax> -->
 
       <iron-ajax id="processRedeem" 
-          url="https://reqres.in/api/users" method="post" 
-          body="{
-            'name': 'morpheus',
-            'job': 'leader'
-          }" 
+          url={{ironUrl}} method="post" 
+          body="{{bodyRequest}}"
+          headers='{"Content-Type": "application/json"}'
           on-response="eligibleResponse">
       </iron-ajax>
 

@@ -18,7 +18,8 @@
 
     function uiReducer(state = {
       authenticated: savedState ? savedState.uiState.authenticated : false,
-      infoDialogVisible: false
+      infoDialogVisible: false,
+      receiptDialogVisible: false,
     }, action) {
       switch (action.type) {
 
@@ -33,6 +34,12 @@
 
         case 'HIDE_INFO_DIALOG':
           return Object.assign({}, state, {infoDialogVisible: false});
+
+        case 'SHOW_RECEIPT':
+          return Object.assign({}, state, {receiptDialogVisible: true});
+        
+        case 'HIDE_RECEIPT':
+          return Object.assign({}, state, {receiptDialogVisible: false});
 
         default:
           return state;

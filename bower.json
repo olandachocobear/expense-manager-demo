@@ -19,7 +19,8 @@
     "iron-swipeable-container": "^2.1.0",
     "d2l-loading-spinner": "^6.0.3",
     "iron-location": "^2.2.1",
-    "app-toasts": "^0.4.0"
+    "app-toasts": "^0.4.0",
+    "metaui": "git://github.com/isuwang/metaui.git#^0.1.1"
   },
   "devDependencies": {
     "web-component-tester": "^6.0.0"
