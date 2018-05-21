@@ -150,7 +150,7 @@
 
 
         <div class="buttons" style=text-align:center;margin-bottom:-10px>
-          <vaadin-button theme$="[[redeemable]]" on-click="_burn" style="opacity:0.84;height:50px;width:100%">Redeem!</vaadin-button>
+          <vaadin-button theme$="[[redeemable]]" disabled=[[!validTrx]] on-click="_burn" style="opacity:0.84;height:50px;width:100%">Redeem!</vaadin-button>
           <vaadin-button id=reset_btn shown$="[[resetable]]" theme="tertiary" on-click="_reset"
             style="font-weight:normal;color:red;margin-left:15px"><u>Reset</u></vaadin-button>
         </div>

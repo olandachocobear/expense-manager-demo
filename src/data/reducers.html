@@ -69,17 +69,6 @@
                 'errorCode': '',
                 'errorMsg': ''
               },
-              // {
-              //   'id': 1,
-              //   'uniqueCode': '121287366128',
-              //   'voucherType': ' Go-deals 25k  ',
-              //   'voucherDetail': '',
-              //   'voucherAmount': '',
-              //   'voucherEligible': true,
-              //   'onCheck': false,
-              //   'errorCode': '',
-              //   'errorMsg': ''
-              // }
         ],
         currentVoucher: {},
     }, action) {
@@ -138,7 +127,65 @@
       }
     }
 
-    function expensesReducer(//state = {
+  function userReducer( state ={ 
+      data: {
+        username: '',
+        groupCode: '',
+        storeCode: '',
+        storeName: '',
+        merchantCode: '',
+        merchantName: '',
+        mid: '',
+        tid: '',
+      },
+      session: {
+        jsess: '',
+        authTime: ''
+      }
+    }, action) {
+      switch (action.type) {
+          case 'LOGGING_IN':
+            return Object.assign({}, state, {
+                data: action.user.details,
+                session: action.user.session
+            });
+
+          case 'LOGGING_OUT':
+              return Object.assign({}, state, {
+                session: ''
+              });
+          
+          case 'UPDATE_SESSION':
+              return Object.assign({}, state, {
+                session: action.new_session
+            });
+
+          default:
+              return state;
+      }
+    }
+    
+  function errorsReducer( state={ 
+      msg: null,
+      code: null
+    }, action) {
+      switch (action.type) {
+          case 'UPDATE_ERROR_CODE':
+            return Object.assign({}, state, {
+                code: action.code
+            });
+
+          case 'UPDATE_ERROR_MSG':
+            return Object.assign({}, state, {
+                msg: action.msg
+            });
+
+          default:
+              return state;
+      }
+    }
+
+  function expensesReducer(//state = {
       /* 
       expenses: savedState ? savedState.expenses.expenses : _generateDemoExpenses(100),
       */
@@ -212,7 +259,9 @@ console.log(boom)
       uiState: uiReducer,
       expenses: expensesReducer,
       vouchers: vouchersReducer,
-      filters: filtersReducer
+      errors: errorsReducer,
+      filters: filtersReducer,
+      user: userReducer
     });
 
 

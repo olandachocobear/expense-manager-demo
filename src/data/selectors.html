@@ -19,20 +19,23 @@
         const status = filters.status;
         const start = filters.start;
         const end = filters.end;
-
-        return expenses
-          .filter(exp => !(merchant && exp.merchant.toUpperCase().indexOf(merchant.toUpperCase()) < 0))
-          .filter(exp => !(min && exp.total < min))
-          .filter(exp => !(max && exp.total > max))
-          .filter(exp => {
-            return status && status.length > 0 ? status.indexOf(exp.status) >= 0 : false;
-          })
-          .filter(exp => {
-            return start && helpers.isValid(start) ? helpers.isAfter(exp.date, start) : true;
-          })
-          .filter(exp => {
-            return end && helpers.isValid(end) ? helpers.isBefore(exp.date, end) : true;
-          });
+        
+        if (expenses.length!=0)
+          return expenses
+            .filter(exp => !(merchant && exp.merchant.toUpperCase().indexOf(merchant.toUpperCase()) < 0))
+            .filter(exp => !(min && exp.total < min))
+            .filter(exp => !(max && exp.total > max))
+            .filter(exp => {
+              return status && status.length > 0 ? status.indexOf(exp.status) >= 0 : false;
+            })
+            .filter(exp => {
+              return start && helpers.isValid(start) ? helpers.isAfter(exp.date, start) : true;
+            })
+            .filter(exp => {
+              return end && helpers.isValid(end) ? helpers.isBefore(exp.date, end) : true;
+            });
+        else
+          return {};
       });
 
 

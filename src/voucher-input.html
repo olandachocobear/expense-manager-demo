@@ -2,6 +2,8 @@
 
 <link rel="import" href="../bower_components/number-input/number-input.html">
 
+<link rel="import" href="constant.html">
+
 <script src="./js/voucher-input.js"></script>
 
 <dom-module id="voucher-input">
@@ -18,14 +20,15 @@
     </dom-repeat>
 
     <iron-ajax id="eligibilityCheck" 
-      url="https://reqres.in/api/users" method="post" 
-      body="{
-          'name': 'morpheus',
-          'job': 'leader'
-      }" 
+      url=[[ironUrl]] method="post" 
+      body='{{bodyRequest}}'
+      headers='{
+        "Content-Type": "application/json",  
+        "Authorization": "someAuthorizationToken",
+        "JSESSIONID": "15fwcOgFann7woqj32RhgaUyihnIGl"}'
       on-response="eligibleResponse"
       on-error="onError">
-  </iron-ajax>
+     </iron-ajax>
 
   </template>
   

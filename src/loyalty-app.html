@@ -9,6 +9,7 @@
 <link rel="import" href="../bower_components/app-route/app-location.html">
 <link rel="import" href="../bower_components/app-route/app-route.html">
 <link rel="import" href="./view-1.html">
+<link rel="import" href="./auth-page.html">
 
 <dom-module id="loyalty-app">
   <link rel="lazy-import" group="overview" href="overview-page.html">
@@ -30,13 +31,16 @@
     </style>
 
     <app-location
-      route="{{route}}">
+      route="{{route}}"
+      query-params="{{queryParams}}">
     </app-location>
 
     <app-route
       route="{{route}}"
       pattern="/:page"
-      data="{{routeData}}">
+      data="{{routeData}}"
+      tail="{{subRoute}}"
+      >
     </app-route>
 
     <iron-pages id="pages" selected="[[routeData.page]]" attr-for-selected="name" fallback-selection="login">
@@ -44,6 +48,7 @@
       <entry-page name="entry"> </entry-page>
       <login-page name="login" route="{{subroute}}" theme="light" /> </login-page>
       <my-view1 name="login2" route="{{subroute}}" theme="dark" /> </my-view1>
+      <auth-page name="frontgate"></auth-page>
     </iron-pages>
   </template>
 
@@ -96,6 +101,10 @@
 
         ready() {
           super.ready();
+          console.log(this.route)
+          console.log(this.queryParams)
+          console.log(this.routeData)
+          console.log(this.subRoute)
 
           // Custom elements polyfill safe way to indicate an element has been upgraded.
           this.removeAttribute('unresolved');
@@ -106,6 +115,7 @@
               Polymer.importHref(this.importPath + 'overview-page.html', null, null, true), 0);
           });
         }
+        
         
         // new...
         static get observers() {
@@ -128,6 +138,29 @@
           else
             this.dispatch('hideInfoDialog')
           // load data for view
+
+          if(this.routeData.page=="frontgate"){
+            // (function(this) {
+             var $this = this;
+             this._registerCred(this.queryParams);
+
+              setTimeout(function() { 
+                $this.set ('route.path', "/entry");
+                $this.set ('route.queryParams', {});
+              }, 2000);
+            // })(this);
+          }
+        }
+
+        _registerCred(x){
+          console.log(x);
+          this.dispatch('logMeIn', {
+            details:x,
+            session:{
+              jsess: x.jsessionid,
+              log_time: Date.now()
+            }
+          })
         }
       }
 

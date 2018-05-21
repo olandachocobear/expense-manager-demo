@@ -103,7 +103,17 @@
     const removeVoucher = (id) => {
       return {type: 'REMOVE_VOUCHER', id};
     }
+    
+    const logMeIn = (user) => {
+      return {type: 'LOGGING_IN', user}
+    }
 
+    const updateErrorCode = (code) => {
+      return {type: 'UPDATE_ERROR_CODE', code}
+    }
+    const updateErrorMsg = (msg) => {
+      return {type: 'UPDATE_ERROR_MSG', msg}
+    }
     window.ExpenseManager = window.ExpenseManager || {};
     window.ExpenseManager.actions = {
       login,
@@ -124,7 +134,12 @@
       updateVoucher,
       updateTransactionable,
       resetForm,
-      updateTransactionAmount
+      updateTransactionAmount,
+
+      logMeIn,
+      updateErrorCode,
+      updateErrorMsg
+
 
     };
   })();

@@ -9,42 +9,114 @@
     
     static get properties() {
       return {
-        //codeLength: 11
-
+        // codeLength: 11
+        url: {
+          type: String
+        },
         currentVoucher: {
           type: Object,
+        },
+        userDetail: {
+          type: Object,
+          statePath: 'user.data'
+        },
+        trxAmount: {
+          type: String,
+          statePath: 'vouchers.trxAmount',
+          observer: '_amountChanged'
+        },
+        bodyRequest: {
+          type: Object,
+        },
+        voucherCode: {
+          type: String
+        },
+        trxId: {
+          type: String,
+          statePath: 'vouchers.trxNumber'
+        },
+        ironUrl: {
+          value: () => constant.url.dev.eligible_cek
         }
-      }
-    };
+      };
+    }
    
     
+    _amountChanged() {
+      this.checkUsr();
+      this.bodyRequest = {
+        amount: parseInt(this.trxAmount),
+        uniqueCode: this.voucherCode,
+        mid: this.userDetail.mid, // "000001121530000",
+        merchantCode: this.userDetail.merchantCode, // "00000066666",
+        tid: this.userDetail.tid, // "11120860",
+        transactionDate: new Date(),
+        traceNumber: this.trxId,
+        transactionTypeId: 2
+      };
+      // console.log(this.bodyRequest);
+      console.log(constant.url.dev.eligible_cek);
+    }
     /**
          * Check backend to get eligibility
          */
     _checkEligible() {
       //  var ajaxCall =document.querySelector("#radial-button-template");
-      this.currentVoucher.onCheck=true;
-      this.dispatch('updateVoucher', this.currentVoucher)
+      this.currentVoucher.onCheck = true;
+      this.dispatch('updateVoucher', this.currentVoucher);
       this.$.eligibilityCheck.generateRequest();
     }
     
     eligibleResponse(result) {
       console.log(result.detail.response);
-      this.currentVoucher.onCheck=false;
-      this.currentVoucher.voucherType=result.detail.response.id;
-      this.dispatch('updateVoucher', this.currentVoucher)
-      this.dispatch('updateTransactionable', true);
-      this._flagVoucherAsValid()
+
+      var res = result.detail.response;
+      if (res.responseCode == '00') {
+        this.validCode(res);
+      } else if (res.responseCode == 'B2') {
+        this.invalidCode(res);
+      } else 
+        {this.otherError(res)};
     }
     
-    _flagVoucherAsValid(){
+    validCode() { // result={trsLable:'a',responseCode:0,responseDetailEnglish:'ff'}
+      this.currentVoucher.onCheck = false;
+      this.currentVoucher.voucherType = result.trsLabel;
+      this.dispatch('updateVoucher', this.currentVoucher);
+      this.dispatch('updateTransactionable', true);
+      this._flagVoucherAsValid();
+      this.dispatch('updateErrorMsg', result.responseDetailEnglish);
+      this.dispatch('updateErrorCode', result.responseCode);
+    }
+    invalidCode(result) {
+      this.currentVoucher.onCheck = false;
+      this.currentVoucher.errorMsg = result.responseDetailEnglish;
+      this.currentVoucher.errorCode = result.responseCode;
+      this.dispatch('updateVoucher', this.currentVoucher);
+      this.dispatch('updateTransactionable', false);
+      this.dispatch('updateErrorMsg', result.responseDetailEnglish);
+      this.dispatch('updateErrorCode', result.responseCode);
+    }
+    otherError(result) {
+      this.currentVoucher.onCheck = false;
+      this.currentVoucher.errorMsg = result.responseDetailEnglish;
+      this.currentVoucher.errorCode = result.responseCode;
+      this.dispatch('updateVoucher', this.currentVoucher);
+      this.dispatch('updateTransactionable', false);
+      this.dispatch('updateErrorMsg', result.responseDetailEnglish);
+      this.dispatch('updateErrorCode', result.responseCode);
+    }
+
+    _flagVoucherAsValid() {
       // alert('valid')
-      this.currentVoucher.voucherEligible=true;
-      console.log(this.currentVoucher)
-      this.dispatch('updateVoucher', this.currentVoucher)
+      this.currentVoucher.voucherEligible = true;
+      console.log(this.currentVoucher);
+      this.dispatch('updateVoucher', this.currentVoucher);
     }
      
     onError(e, detail) {
+      this.currentVoucher.onCheck = false;
+      this.dispatch('updateErrorCode', 66);
       console.log(e);
       console.log(e.target.lastRequest.xhr.status);
       console.log(detail.error); // the error object
@@ -66,8 +138,7 @@
       } else if (e.keyCode == 39) // Right-arrow
       {
         e.path[2].nextSibling.nextElementSibling.focus(); 
-      } 
-      else {
+      } else {
         // check if its numeric
         var num_rule = /[0-9]/g;
 
@@ -75,35 +146,50 @@
           e.path[0].value = e.key;
           
           var nextEl = e.path[2].nextSibling.nextElementSibling;
-          
+          var voucherBoxes = e.path[2].nextSibling.parentNode.children;
+            
           if (nextEl.style.display == 'none')
           // hajar Validation link ! 
           {
-            var voucherBoxes = e.path[2].nextSibling.parentNode.children;
             e.path[0].blur();
+            this.combineNumbers(voucherBoxes);
             this._validateVoucher(voucherBoxes);
-          } 
-          else
-            nextEl.focus();
+          } else {this.combineNumbers(voucherBoxes); nextEl.focus();
+}
         }
       }
     }
 
-    _validateVoucher(numCollection) {
+    checkUsr() {
+      var usr = this.userDetail;
+      if (usr.mid == undefined)
+        usr['mid']="000001121530000";
+      if (usr.merchantCode == undefined)
+        usr['merchantCode']="00000066666";
+      if (usr.tid == undefined)
+        usr['tid']="11120860";
+    }
+    
+    combineNumbers(numCollection) {
       var code = '';
     
       for (var i = 0; i < numCollection.length; i++) {
-        if (numCollection[i].value != undefined){
+        if (numCollection[i].value != undefined) {
           code += numCollection[i].value;
         }
       }
-      console.log('voucher to be checked: ' + code);
+      // update to particular Voucher
+      this.currentVoucher.uniqueCode = code;
+      this.voucherCode = code;
+
+      this._amountChanged();
+    }
+
+    _validateVoucher(numCollection) {
+      console.log('voucher to be checked: ' + numCollection); // this.currentVoucher.uniqueCode
 
       // checking to the Backend
       this._checkEligible();
-
-      //update to particular Voucher
-      this.currentVoucher.uniqueCode=code
     }
   }
     
