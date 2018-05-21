@@ -47,15 +47,13 @@
       this.bodyRequest = {
         amount: parseInt(this.trxAmount),
         uniqueCode: this.voucherCode,
-        mid: this.userDetail.mid, // "000001121530000",
-        merchantCode: this.userDetail.merchantCode, // "00000066666",
-        tid: this.userDetail.tid, // "11120860",
+        mid: this.userDetail.mid, 
+        merchantCode: this.userDetail.merchantCode, 
+        tid: this.userDetail.tid,
         transactionDate: new Date(),
         traceNumber: this.trxId,
         transactionTypeId: 2
       };
-      // console.log(this.bodyRequest);
-      console.log(constant.url.dev.eligible_cek);
     }
     /**
          * Check backend to get eligibility
@@ -79,9 +77,11 @@
         {this.otherError(res)};
     }
     
-    validCode() { // result={trsLable:'a',responseCode:0,responseDetailEnglish:'ff'}
+    validCode(result) { // result={trsLable:'a',responseCode:0,responseDetailEnglish:'ff'}
       this.currentVoucher.onCheck = false;
-      this.currentVoucher.voucherType = result.trsLabel;
+      var voucherValue = result.originalAmount-result.remainingAmount;
+      this.currentVoucher.voucherType = `Voucher Rp${voucherValue.toString()}`; //result.trsLabel;
+      this.currentVoucher.voucherEligible = true;
       this.dispatch('updateVoucher', this.currentVoucher);
       this.dispatch('updateTransactionable', true);
       this._flagVoucherAsValid();
@@ -129,7 +129,7 @@
     }
 
     _moveIt(e) {
-      console.log(e);
+      // console.log(e);
 
       if (e.keyCode == 37) // Left-arrow
       {
@@ -155,7 +155,7 @@
             this.combineNumbers(voucherBoxes);
             this._validateVoucher(voucherBoxes);
           } else {this.combineNumbers(voucherBoxes); nextEl.focus();
-}
+          }
         }
       }
     }

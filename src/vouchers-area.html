@@ -16,7 +16,6 @@
         position: relative;
         height: var(--lumo-size-xl);
         width: var(--lumo-size-xl);
-        right: 40%;
         bottom: 8px;
         float: right;
         z-index: 9999;
@@ -24,6 +23,16 @@
         color: var(--lumo-error-contrast-color);
         box-shadow: var(--lumo-box-shadow-m);
         border-radius: 50%;
+      }
+      @media(min-width:1025px){
+        #add-button{
+          right:47%;
+        }
+      }
+      @media(max-width:1024px){
+        #add-button{
+          right:45%;
+        }
       }
       paper-icon-button-light {
         display: none;
@@ -34,7 +43,7 @@
       
     </style>
     
-    <dom-repeat items=[[listVouchers]] >
+    <dom-repeat items=[[listVouchers]] mutable-data>
       <template>
         <voucher-entry voucher=[[item]]> </voucher-entry>
       </template>
