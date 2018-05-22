@@ -17,7 +17,7 @@
     b) Use the `--base-path` command-line option for `polymer build`.
     c) Add a `autoBasePath` property in your `polymer.json` to apply this setting for multiple builds.
   -->
-  <base href="/">
+  <base href="/ManualRedeem/">
 
   <link rel="icon" href="images/favicon.ico">
 
@@ -31,7 +31,10 @@
   <meta name="mobile-web-app-title" content="Expenses">
 
   <script>
-    window.Polymer = {rootPath: document.querySelector('base').getAttribute('href')};
+    window.Polymer = {
+      //rootPath: document.querySelector('base').getAttribute('href')
+      rootPath: '/ManualRedeem/'
+    };
     // Load and register pre-caching Service Worker
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', function() {

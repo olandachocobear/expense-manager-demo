@@ -1,4 +1,5 @@
 {
+  "basePath": "/manual-redeem/",
   "entrypoint": "index.html",
   "shell": "src/loyalty-app.html",
   "fragments": [
@@ -16,15 +17,25 @@
   "builds": [
     {
       "name": "es5-bundled",
+      "basePath": "ManualRedeem",
       "preset": "es5-bundled"
     },
     {
-      "name": "es6-bundled",
+      "name": "ManualRedeem",
       "preset": "es6-bundled",
+      "basePath": "ManualRedeem/",
+      "bundle": {
+        "stripComments": true,
+        "inlineScripts": false
+      },
+  "js": {"compile": true, "minify": true},
+  "css": {"minify": true},
+  "html": {"minify": true},
       "browserCapabilities": [
         "es2015"
       ]
     }
+    
   ],
   "lint": {
     "rules": [
