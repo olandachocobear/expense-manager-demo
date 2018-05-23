@@ -4,9 +4,9 @@
 <script>
   (() => {
 
-    let boom = {};
-    _generateDemoExpensesAsync().then(
-        result => boom = result);
+    let boom = {"content":[{"txnLogId":3520,"txnTransactionDate":"11-05-2018 17:05:47","txnStartTransactionDate":null,"txnEndTransactionDate":null,"txnTransactionType":"Manual Redeem","txnInstitutionCode":null,"txnInstitutionName":null,"txnMerchantCode":"","txnMerchantName":"","txnStoreCode":"","txnStoreName":"","txnMid":"GOCAFE000000001","txnTid":"GOCAFE01","txnMaskedNumber":null,"txnTokenNumber":null,"txnCardNumber":null,"txnUniqueCode":"73255656532","txnOriginalAmount":250000.0,"txnRemainingAmount":250000.0,"txnTraceNumber":"000153","txnReversalFlag":false,"txnResponseCode":"B2","txnResponseDetail":"Invalid Voucher Code.","txnTimezone":"GMT+7","txnAdditionalInfo":null,"txnVoucherName":null,"storeCode":null,"storeName":null,"txnLogDetails":[{"txnLogDetailId":3029,"txnLogId":null,"txnInstitutionCode":null,"txnInstitutionName":null,"txnTransactionDate":1526033147000,"txnAdjustedAmount":250000.0,"txnRedeemRewardId":null,"txnRedeemType":null,"txnRedeemCode":null,"txnRedeemLabel":null,"txnRedeemValue":null,"txnRedeemExpired":null,"txnRedeemQty":1,"txnRewardCampaignId":null,"txnRewardCampaignLabel":null,"txnRewardId":null,"txnRewardType":null,"txnRewardCode":null,"txnRewardLabel":null,"txnRewardValue":null,"txnRewardExpired":null,"txnRewardQty":null,"txnRewardTag":null,"txnRewardMessage":null,"status":null,"txnAdditionalInfo":null}]}]};
+    // _generateDemoExpensesAsync().then(
+    //     result => boom = result);
 
     const helpers = window.ExpenseManager.dateHelpers;
 
@@ -46,7 +46,7 @@
       }
     }
 
-/* ATTEMPTING to AWAIT the beginning of expensesReducer */
+/* ATTEMPTING to AWAIT the beginning of expensesReducer 
     async function expensesReducerSynchronous(state,action) {
       
       let temp_state = new Object();
@@ -58,10 +58,43 @@
       //continue follow-up to the 'Original' expensedReducer..
       expensesReducer(temp_state, action)
     }
-
+*/
+    function lastTxReducer( state = { 
+        trxNumber: uuid(),
+        trxAmount: 150000,
+        remaining: 125000,
+        validTrx: false,
+        trxProcess: false,
+        vouchers: [
+        {
+                'id': 0,
+                'uniqueCode': '            ',
+                'voucherType': 'Voucher Gopay 25k',
+                'voucherDetail': '',
+                'voucherAmount': 25000,
+                'voucherEligible': false,
+                'onCheck': false,
+                'errorCode': '',
+                'errorMsg': '',
+                'available': false
+              },
+        ],
+        currentVoucher: {},
+    }, action) {
+      switch (action.type) {
+          case 'APPEND_TX':
+            return action.trx
+          
+          default:
+            return state;
+      }
+    }
+        
+            
     function vouchersReducer( state ={ 
         trxNumber: uuid(),
         trxAmount: '',
+        remaining: '',
         validTrx: false,
         trxProcess: false,
         vouchers: [
@@ -70,11 +103,12 @@
                 'uniqueCode': '            ',
                 'voucherType': ' Go-deals 25k  ',
                 'voucherDetail': '',
-                'voucherAmount': '',
+                'voucherAmount': 0,
                 'voucherEligible': false,
                 'onCheck': false,
                 'errorCode': '',
-                'errorMsg': ''
+                'errorMsg': '',
+                'available': false
               },
         ],
         currentVoucher: {},
@@ -106,7 +140,8 @@
 
           case 'UPDATE_TX_AMOUNT':
               return Object.assign({}, state, {
-                trxAmount: action.amount
+                trxAmount: action.amount,
+                remaining: action.amount
             });
 
           case 'RESET_ALL':
@@ -116,19 +151,24 @@
                 vouchers: [
                   {
                       'id': 0,
-                      'uniqueCode': '            ',
+                      'uniqueCode': '000000000000',
                       'voucherType': ' Go-deals 25k  ',
                       'voucherDetail': '',
-                      'voucherAmount': '',
+                      'voucherAmount': 0,
                       'voucherEligible': false,
                       'onCheck': false,
                       'errorCode': '',
-                      'errorMsg': ''
+                      'errorMsg': '',
                    },
                 ],
-                trxAmount: ''
+                trxAmount: '',
+                remaining: ''
             });
 
+            case 'UPDATE_REMAINING':
+              return Object.assign({}, state, {
+                remaining: action.amt
+            });
           default:
               return state;
       }
@@ -139,11 +179,11 @@
         username: '',
         groupCode: '',
         storeCode: '',
-        storeName: '',
+        storeName: 'Alfamart Pasaraya',
         merchantCode: '',
-        merchantName: '',
-        mid: '',
-        tid: '',
+        merchantName: 'PT Sumber Alfaria Trijaya',
+        mid: 'ALFA0101201',
+        tid: '20399402',
       },
       session: {
         jsess: '',
@@ -199,7 +239,8 @@
     //   expenses: _generateDemoExpenses(100),
     //   selectedExpense: undefined
     // }, action) {
-    state= {expenses: boom, selectedExpense: undefined}, action) {
+    state= {expenses: boom, 
+        selectedExpense: undefined}, action) {
       switch (action.type) {
 
         case 'EDIT_EXPENSE':
@@ -266,6 +307,7 @@ console.log(boom)
       uiState: uiReducer,
       expenses: expensesReducer,
       vouchers: vouchersReducer,
+      lastTrx: lastTxReducer,
       errors: errorsReducer,
       filters: filtersReducer,
       user: userReducer
@@ -281,7 +323,8 @@ console.log(boom)
       return _generateDemoExpensesAsync().then(result => {return result});
     }
 
-    async function _generateDemoExpensesAsync(num) {
+   /*
+   async function _generateDemoExpensesAsync(num) {
     //  return new Promise ( resolve => {
       let {content} = await _computeData();
 
@@ -315,7 +358,7 @@ console.log(boom)
       return expenses;
     //  });
     }
-
+*/
     function _generateDemoExpenses(num) {
     //  return new Promise ( resolve => {
       
