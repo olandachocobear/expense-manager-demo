@@ -21,9 +21,9 @@
       "preset": "es5-bundled"
     },
     {
-      "name": "ManualRedeem",
+      "name": "voucher-redeem",
       "preset": "es6-bundled",
-      "basePath": "ManualRedeem/",
+      "basePath": "voucher-redeem/",
       "bundle": {
         "stripComments": true,
         "inlineScripts": false

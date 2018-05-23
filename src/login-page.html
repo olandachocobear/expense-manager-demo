@@ -72,10 +72,10 @@
         <h1>Loyalty Front-End</h1>
       </div>
       <div class="login">
-        <vaadin-text-field value="{{username}}" label="Username" name="username"></vaadin-text-field>
+        <vaadin-text-field value="{{user.username}}" label="Username" name="username"></vaadin-text-field>
         <vaadin-password-field value="{{password}}" label="Password" name="password"></vaadin-password-field>
-        <a href="#/entry">
-          <vaadin-button theme="primary large" on-click="">Login</vaadin-button>
+        <a href="#/frontgate">
+          <vaadin-button theme="primary large" on-click="_logIn">Login</vaadin-button>
         </a>
       </div>
       <!-- <div class="footer">
@@ -104,9 +104,9 @@
             /**
              * The user name to authenticate with.
              */
-            username: {
-              type: String,
-              value: 'demo'
+            user: {
+              type: Object,
+              storePath: 'user.data'
             },
 
             /**
@@ -115,12 +115,24 @@
             password: {
               type: String,
               value: 'demo'
+            },
+
+            userStore: {
+              type: Object,
+              statePath: 'user'
+            },
+            sessionStore: {
+              type: Object,
+              statePath: 'user.session'
             }
           };
         }
 
         _logIn() {
-          this.dispatch('login');
+          console.log(this.userStore)
+          console.log(this.sessionStore)
+
+          //this.dispatch('login');
         }
       }
       customElements.define(LoginPageElement.is, LoginPageElement);

@@ -206,6 +206,10 @@
         showSuccessToast(){  
           let toasts2 = this.$.toast2;
           toasts2.showSuccessToast("Success. Voucher burned.", {fitBottom:true});
+          
+          // instead of making new Actions/Reducer for refreshing Lists,
+          // better add observer on `overview-page` on errorMessage
+          
           this._resetToast();
         }
         showWarningToast(warning){  

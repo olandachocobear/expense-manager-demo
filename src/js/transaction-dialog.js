@@ -54,6 +54,18 @@ class TransactionDialogElement extends ExpenseManager.ReduxMixin(Polymer.Element
         },
         displayRemaining: {
             type: Boolean
+        },
+        storeName: {
+            type: String,
+            statePath: 'user.data.storeName'
+        },
+        merchantName: {
+            type: String,
+            statePath: 'user.data.merchantName'
+        },
+        username: {
+            type: String,
+            statePath: 'user.data.username'
         }
     };
     }
@@ -73,7 +85,6 @@ class TransactionDialogElement extends ExpenseManager.ReduxMixin(Polymer.Element
     }
 
     _updateBodyRequest(){
-        this.checkUsr();
         this._toggleRemaining();
 
         var voucher_arr = [];

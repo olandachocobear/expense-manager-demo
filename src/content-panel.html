@@ -3,6 +3,8 @@
 <link rel="import" href="expenses-list.html">
 <link rel="import" href="responsive-mixin.html">
 
+<link rel="import" href="../bower_components/iron-ajax/iron-ajax.html">
+
 <dom-module id="content-panel">
   <template>
     <style>
@@ -30,9 +32,15 @@
       }
     </style>
 
-    <expenses-list></expenses-list>
+    <expenses-list lists=[[queryResult]]></expenses-list>
     <history-panel phone="[[phone]]" tablet="[[tablet]]"></history-panel>
   
+    <iron-ajax id="processRedeem" 
+          url={{ironUrl}} method="post" 
+          body="{{bodyRequest}}"
+          headers='{"Content-Type": "application/json"}'
+          on-response="eligibleResponse">
+      </iron-ajax>
   </template>
   <script>
     (function() {
@@ -43,6 +51,25 @@
       class ContentPanelElement extends ExpenseManager.ResponsiveMixin(Polymer.Element) {
         static get is() {
           return 'content-panel';
+        }
+
+        static get properties() {
+          return {
+            queryResult: {
+              type: Object,
+              statePath: 'voucherReport.list',
+            },
+            newResponseCode: {
+              type: String,
+              statePath: 'errors.code',
+              observer: '_checkIfNewTransaction'
+            }
+          }
+        }
+
+        _checkIfNewTransaction() {
+          if (this.newResponseCode == 200)
+            this.$.new
         }
       }
 

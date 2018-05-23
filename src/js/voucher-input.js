@@ -47,7 +47,6 @@
    
     
     _amountChanged() {
-      this.checkUsr();
       this.bodyRequest = {
         amount: parseInt(this.trxAmount),
         uniqueCode: this.voucherCode,
