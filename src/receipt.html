@@ -1,0 +1,130 @@
+<link rel="import" href="../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../bower_components/vaadin-lumo-styles/color.html">
+<link rel="import" href="../bower_components/app-layout/app-header-layout/app-header-layout.html">
+<link rel="import" href="../bower_components/app-layout/app-header/app-header.html">
+<link rel="import" href="nav-bar.html">
+<link rel="import" href="info-dialog.html">
+<!-- <link rel="import" href="transaction-dialog.html"> -->
+<link rel="import" href="content-panel.html">
+<link rel="import" href="filters-toolbar.html">
+<link rel="import" href="data/store.html">
+<link rel="import" href="responsive-mixin.html">
+<link rel="import" href="../bower_components/iron-media-query/iron-media-query.html">
+
+<link rel="stylesheet" type="text/css" media="print" href="./print.css" />
+
+
+
+<dom-module id="receipt-paper">
+  <template>
+    <style>
+    </style>
+<div>
+        <center><h2>{{merchant}}</h2></center>
+          <div style="display: flex;margin-top:-15px"></div>
+            <h5 style=margin-top:7px>MID: {{mid}}</h5>
+            <h5 style=margin-top:-20px>TID: {{tid}}</h5>
+            <div style=margin-top:-20px>
+              ==================================
+            </div>
+  
+            <dom-repeat items={{listVouchers}} mutable-data>
+                <template>
+                    <div value={{item}} on-keypress="_clearBox" on-keyup="_moveIt">
+                      <center>
+                        <img src="./images/voucher_burn.png" style=max-width:280px>
+                        <br><h3 style=margin-bottom:5px>{{item.voucherType}}</h3>
+                        
+                        -------------------------------------------------------------
+                      </center>  
+                        <h5 style=margin-top:7px>Original Amount: Rp {{origAmount}},-</h5>
+                        <h5 style=margin-top:-20px>Voucher Amount: Rp {{item.voucherAmount}},-</h5>
+                        <br>
+                        <H2 style=margin-top:-15px>Nett Amount: Rp {{remaining}},-</H4>
+                      
+                    </div>
+                </template>
+            </dom-repeat>
+
+            <button onclick="nativePrint('receipt')">Print Receipt</button>
+          <br><br>
+        </div>          
+
+    </template>
+  <script>
+    printDivCSS = new String ('<link href="./print.css" rel="stylesheet" type="text/css">')
+    function printDiv(divId) {
+        window.frames["print_frame"].document.body.innerHTML=printDivCSS + document.getElementById(divId).innerHTML
+        window.frames["print_frame"].window.focus()
+        window.frames["print_frame"].window.print()
+    }
+
+    function nativePrint(div){
+      this.shadowRoot.querySelector
+      var divToPrint=document.getElementById(div);
+
+      var newWin=window.open('','Print-Window');
+
+      newWin.document.open();
+
+      newWin.document.write('<html><body onload="window.print()">'+divToPrint.innerHTML+'</body></html>');
+
+      newWin.document.close();
+
+      setTimeout(function(){newWin.close();},10);
+    }
+
+    (function() {
+      /**
+       * @memberof ExpenseManager
+       * @mixes ExpenseManager.ResponsiveMixin
+       */
+      class ReceiptElement extends ExpenseManager.ReduxMixin(ExpenseManager.ResponsiveMixin(Polymer.Element)) {
+        static get is() {
+          return 'receipt-paper';
+        }
+        
+        static get properties() {
+          return {
+            merchant: {
+              type: Object,
+              statePath: 'user.data.storeName'
+            },
+            mid: {
+              type: Object,
+              statePath: 'user.data.mid'
+            },
+            tid: {
+              type: Object,
+              statePath: 'user.data.tid'
+            },
+            lastTrx: {
+              type: Object,
+              statePath: 'lastTrx'
+            },
+            origAmount: {
+              type: String,
+              statePath: 'lastTrx.trxAmount'
+            },
+            remaining: {
+              type: String,
+              statePath: 'lastTrx.remaining'
+            },
+            listVouchers: {
+              type: Array,
+              statePath: 'lastTrx.vouchers'
+            }
+          };
+        }
+      
+    }
+      customElements.define(ReceiptElement.is, ReceiptElement);
+
+      /**
+       * @namespace ExpenseManager
+       */
+      window.ExpenseManager = window.ExpenseManager || {};
+      ExpenseManager.ReceiptElement = ReceiptElement;
+    })();
+  </script>
+</dom-module>

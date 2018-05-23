@@ -28,7 +28,7 @@
       </iron-ajax>
 
     
-    <vaadin-dialog modeless=false id="dialog" no-close-on-esc no-close-on-outside-click opened="[[open]]">
+    <vaadin-dialog style="z-index:0" modeless=false id="dialog" no-close-on-esc no-close-on-outside-click opened="[[open]]">
       <template>
           <style>
               .wrapper {
@@ -85,6 +85,22 @@
               }
               #reset_btn { display: none}
               #reset_btn[shown] {display: block;}
+              
+              #remaining { display: none; }
+              
+              @media (max-width:500px){
+                #remaining { margin-top:-62px }
+              }
+              @media (min-width:501px){
+                #remaining { margin-top:-60px }
+              }
+
+              #remaining[shown] {display: block;}
+              #remaining[disabled] {
+                  color: #000 !important;
+                  font-size: 20px !important;
+                  font-style: oblique;
+              }
           </style>
 
         <div style="float:right;line-height: 22px;
@@ -112,6 +128,7 @@
               <div slot="prefix">Rp</div>
             </vaadin-text-field>
 
+
             <div class="vaadin-text-field-container" style="margin-top:18px;
                   font-weight:500; 
                   font-size: var(--lumo-font-size-s); 
@@ -130,6 +147,13 @@
             
             <!-- <vaadin-text-area name="comment" label="Comment" value="{{_expense.comment}}"></vaadin-text-area> -->
             
+            
+            <vaadin-text-field disabled id="remaining" theme="align-right" value="Rp [[remainingAmount]]" label="Remaining Amount" pattern="[0-9]*"
+              shown$="[[displayRemaining]]">
+                <div slot="prefix"></div>
+            </vaadin-text-field>
+
+
             <div style="display:none;margin-top:31px;
             margin-bottom:28px; text-align:center">
               
@@ -147,9 +171,9 @@
         <center style=margin-top:17px;margin-bottom:18px> ----- </center> -->
 
 
-
+        <!-- disabled=[[!validTrx]]  -->
         <div class="buttons" style=text-align:center;margin-bottom:-10px>
-          <vaadin-button theme$="[[redeemable]]" disabled=[[!validTrx]] on-click="_burn" style="opacity:0.84;height:50px;width:100%">Redeem!</vaadin-button>
+          <vaadin-button theme$="[[redeemable]]" on-click="_burn" style="opacity:0.84;height:50px;width:100%">Redeem!</vaadin-button>
           <vaadin-button id=reset_btn shown$="[[resetable]]" theme="tertiary" on-click="_reset"
             style="font-weight:normal;color:red;margin-left:15px"><u>Reset</u></vaadin-button>
         </div>

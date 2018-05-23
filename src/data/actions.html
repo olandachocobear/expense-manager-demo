@@ -104,6 +104,10 @@
       return {type: 'REMOVE_VOUCHER', id};
     }
     
+    const updateRemaining = (amt) => {
+      return {type: 'UPDATE_REMAINING', amt};
+    }
+    
     const logMeIn = (user) => {
       return {type: 'LOGGING_IN', user}
     }
@@ -122,6 +126,11 @@
     const hideReceipt = () => {
       return {type: 'HIDE_RECEIPT'}
     }
+
+    const addLastTransaction = (trx) => {
+      return {type: 'APPEND_TX', trx}
+    }
+
     window.ExpenseManager = window.ExpenseManager || {};
     window.ExpenseManager.actions = {
       login,
@@ -143,13 +152,16 @@
       updateTransactionable,
       resetForm,
       updateTransactionAmount,
+      updateRemaining,
 
       logMeIn,
       updateErrorCode,
       updateErrorMsg,
 
       showReceipt,
-      hideReceipt
+      hideReceipt,
+
+      addLastTransaction
 
 
     };

@@ -9,7 +9,7 @@
     const getFilters = state => state.filters.filters;
     const helpers = ExpenseManager.dateHelpers;
 
-    const expenses = Reselect.createSelector(
+    const expenses = 0/*Reselect.createSelector(
       [getExpenses, getFilters],
       (expenses, filters) => {
 
@@ -36,24 +36,24 @@
             });
         else
           return {};
-      });
+      });*/
 
 
-    const total = Reselect.createSelector([getExpenses], expenses => {
+    const total = 0; /*Reselect.createSelector([getExpenses], expenses => {
       return expenses
         .filter(exp => exp.status === 'ok')
         .map(exp => exp.total)
         .reduce((sum, current) => sum + current, 0)
         .toFixed(2);
-    });
+    });*/
 
-    const merchants = Reselect.createSelector([getExpenses], expenses => {
+    const merchants = {} /*Reselect.createSelector([getExpenses], expenses => {
       return expenses
         .map(e => e.merchant)
         .filter((val, index, self) => self.indexOf(val) === index);
-    });
+    });*/
 
-    const appliedFilters = Reselect.createSelector([getFilters], filters => {
+    const appliedFilters = 0 /*Reselect.createSelector([getFilters], filters => {
       let numFilters = 0;
 
       Object.keys(filters).forEach(f => {
@@ -67,7 +67,7 @@
         }
       });
       return numFilters;
-    });
+    });*/
 
     window.ExpenseManager = window.ExpenseManager || {};
     window.ExpenseManager.select = {

@@ -11,6 +11,9 @@
 <link rel="import" href="responsive-mixin.html">
 <link rel="import" href="../bower_components/iron-media-query/iron-media-query.html">
 
+<link rel="stylesheet" type="text/css" media="print" href="./print.css" />
+
+<link rel="import" href="receipt.html">
 
 <link rel="import" href="../bower_components/app-layout/app-drawer/app-drawer.html">
 <link rel="import" href="../bower_components/app-layout/app-drawer-layout/app-drawer-layout.html">
@@ -75,15 +78,40 @@
 
 
     <m2-dialog id="receipt" stop-auto-dismiss 
-      style=z-index:1000>
+      style=z-index:1000;max-width:500px>
       <div slot="container">
-        TRX RECEIPT
+        <!-- TRX RECEIPT -->
+        <receipt-paper style="width:300px;text-align:center;margin:auto">
+
+        </receipt-paper>
       </div>
     </m2-dialog>
-      
+    <frame name=print_frame id=print_frame></frame>
   </template>
 
   <script>
+    printDivCSS = new String ('<link href="./print.css" rel="stylesheet" type="text/css">')
+    function printDiv(divId) {
+        window.frames["print_frame"].document.body.innerHTML=printDivCSS + document.getElementById(divId).innerHTML
+        window.frames["print_frame"].window.focus()
+        window.frames["print_frame"].window.print()
+    }
+
+    function nativePrint(div){
+      this.shadowRoot.querySelector
+      var divToPrint=document.getElementById(div);
+
+      var newWin=window.open('','Print-Window');
+
+      newWin.document.open();
+
+      newWin.document.write('<html><body onload="window.print()">'+divToPrint.innerHTML+'</body></html>');
+
+      newWin.document.close();
+
+      setTimeout(function(){newWin.close();},10);
+    }
+
     (function() {
       /**
        * @memberof ExpenseManager
@@ -110,11 +138,41 @@
               type: Boolean,
               statePath: 'uiState.receiptDialogVisible',
               observer: '_toggleReceipt'
+            },
+            merchant: {
+              type: Object,
+              statePath: 'user.data.storeName'
+            },
+            mid: {
+              type: Object,
+              statePath: 'user.data.mid'
+            },
+            tid: {
+              type: Object,
+              statePath: 'user.data.tid'
+            },
+            lastTrx: {
+              type: Object,
+              statePath: 'lastTrx'
+            },
+            origAmount: {
+              type: String,
+              statePath: 'lastTrx.trxAmount'
+            },
+            remaining: {
+              type: String,
+              statePath: 'lastTrx.remaining'
+            },
+            listVouchers: {
+              type: Array,
+              statePath: 'lastTrx.vouchers'
             }
           };
         }
         
         _toggleReceipt() {
+          console.log(this.merchant)
+          console.log(this.lastTrx)
           if (this.receiptVisible)
             this.$.receipt.open();
           else

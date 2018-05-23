@@ -37,6 +37,10 @@
         },
         ironUrl: {
           value: () => constant.url.dev.eligible_cek
+        },
+        remaining: {
+          type: String,
+          statePath: 'vouchers.remaining'
         }
       };
     }
@@ -80,12 +84,13 @@
     validCode(result) { // result={trsLable:'a',responseCode:0,responseDetailEnglish:'ff'}
       this.currentVoucher.onCheck = false;
       var voucherValue = result.originalAmount-result.remainingAmount;
-      this.currentVoucher.voucherType = `Voucher Rp${result.trsValue}`; //result.trsLabel;
-      
+      this.currentVoucher.voucherType = result.trsLabel; //`Voucher Rp${result.trsValue}`; 
+      this.currentVoucher.voucherAmount = result.trsValue;
       /* Checkin out if the amount is smaller than the Voucher */
       // comparison here..
 
       this.currentVoucher.voucherEligible = true;
+      this.dispatch('updateRemaining', this.remaining - result.trsValue);
       this.dispatch('updateVoucher', this.currentVoucher);
       this.dispatch('updateTransactionable', true);
       this._flagVoucherAsValid();
