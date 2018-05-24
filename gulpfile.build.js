@@ -35,7 +35,8 @@ gulp.task('default', function () {
         "**/*.js",
         "bower_components/*.*" ,
         "manifest.json",
-	    "images/*.*"
+	    "**/*.png",
+        "**/*.gif",
         ])
         .pipe(war({
             welcome: 'index.html',

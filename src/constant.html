@@ -4,11 +4,13 @@
       url: {
         staging: {
           eligible_cek:"http://172.30.35.60:8081/web/3.0/manualredeem/eligible",
-          burn_vouch: "http://172.30.35.60:8081/api/3.0/promo/manual/codes"
+          burn_vouch: "http://172.30.35.60:8081/api/3.0/promo/manual/codes",
+          list_vouchers: "https://evoucher-dev.kartuku.co.id/loyalty-web-api/web/3.0/manualredeem"
         },
         dev: {
           eligible_cek: "http://localhost:8080/api/3.0/promo/manual/eligible",
-          burn_vouch: "http://localhost:8080/api/3.0/promo/manual/codes"
+          burn_vouch: "http://localhost:8080/api/3.0/promo/manual/codes",
+          list_vouchers: "./src/data/manual-redeem.json"
         }
       },
     };

@@ -69,7 +69,8 @@
       }
     </style>
 
-    <vaadin-grid items="[[expenses]]" id="expenses" active-item="{{activeItem}}">
+<iron-scroll-threshold on-lower-threshold="loadMoreVouchers">
+    <vaadin-grid theme="wrap-cell-content" items="[[lists]]" id="expenses" active-item="{{activeItem}}">
 
       <vaadin-grid-column width="8em" frozen>
         <template class="header">
@@ -80,7 +81,7 @@
           </vaadin-grid-sorter>
         </template>
         <template>
-          [[_formatDate(item.date)]]
+          [[_formatDate(item.txnTransactionDate)]]
         </template>
       </vaadin-grid-column>
 
@@ -93,7 +94,7 @@
           </vaadin-grid-sorter>
         </template>
         <template>
-          [[item.merchant]]
+          [[item.txnMerchantName]]
         </template>
       </vaadin-grid-column>
 
@@ -106,7 +107,7 @@
           </vaadin-grid-sorter>
         </template>
         <template>
-          <span class="total">[[_formatTotal(item.total)]]</span>
+           <span class="total">[[item.txnLogDetails.0.txnRedeemValue]] </span><!--[[_formatTotal(item.total)]]</span> -->
         </template>
       </vaadin-grid-column>
 
@@ -119,7 +120,7 @@
           </vaadin-grid-sorter>
         </template>
         <template>
-          <span class$="status-[[item.status]] status">[[_formatStatus(item.status)]]</span>
+          <span class$="status-[[item.status]] status"> [[item.txnResponseDetail]]  </span> <!--[[_formatStatus(item.status)]] -->
         </template>
       </vaadin-grid-column>
 
@@ -132,11 +133,12 @@
           </vaadin-grid-sorter>
         </template>
         <template>
-          <div class="comment">[[item.comment]]</div>
+          <div class="comment">[[item.txnLogDetails.0.txnRewardMessage]]</div>
         </template>
       </vaadin-grid-column>
 
     </vaadin-grid>
+</iron-scroll-threshold>
 
     <!-- CHANGES HERE! david -->
     <!-- <paper-icon-button-light on-click="_showExpenseEditor" id="add-button">
@@ -224,6 +226,10 @@
           if (date) {
             return window.ExpenseManager.dateHelpers.format(date);
           }
+        }
+
+        loadMoreVouchers(){
+          alert('reach bottom!')
         }
       }
 

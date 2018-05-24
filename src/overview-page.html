@@ -67,7 +67,7 @@
 
       <div class="content">
         <filters-toolbar phone="[[phone]]" tablet="[[tablet]]"></filters-toolbar>
-        <content-panel phone="[[phone]]" tablet="[[tablet]]"></content-panel>
+        <content-panel tid=[[tid]] mid=[[mid]] phone="[[phone]]" tablet="[[tablet]]"></content-panel>
       </div>
     </app-header-layout>
 
@@ -107,7 +107,19 @@
         static get is() {
           return 'overview-page';
         }
-       
+        
+        static get properties() {
+          return {
+            tid: {
+              type: String,
+              statePath: 'user.data.tid'
+            },
+            mid: {
+              type: String,
+              statePath: 'user.data.mid'
+            }
+          }
+        }
         
       }
 

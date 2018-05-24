@@ -4,6 +4,7 @@
 <link rel="import" href="responsive-mixin.html">
 
 <link rel="import" href="../bower_components/iron-ajax/iron-ajax.html">
+<link rel="import" href="constant.html">
 
 <dom-module id="content-panel">
   <template>
@@ -35,11 +36,13 @@
     <expenses-list lists=[[queryResult]]></expenses-list>
     <history-panel phone="[[phone]]" tablet="[[tablet]]"></history-panel>
   
-    <iron-ajax id="processRedeem" 
-          url={{ironUrl}} method="post" 
-          body="{{bodyRequest}}"
-          headers='{"Content-Type": "application/json"}'
-          on-response="eligibleResponse">
+    <iron-ajax id="vouchersLoader" auto
+          url=[[ironUrl]] method="get"
+          params='{{_getParams()}}'
+          headers='{
+            "JSESSIONID": "uIqMlmiwuHozqt8RSuttLy4gc9LtN6"
+          }'
+          on-response="_displayList">
       </iron-ajax>
   </template>
   <script>
@@ -55,21 +58,69 @@
 
         static get properties() {
           return {
+            tid: {
+              type: String
+            },
+            mid: {
+              type: String
+            },
+            ironUrl: {
+              type: String,
+              value: () => constant.url.dev.list_vouchers
+            },
+            currentPage: {
+              type: Number,
+              value: () => 0,
+              observer: "_pageUpdated"
+            },
             queryResult: {
               type: Object,
-              statePath: 'voucherReport.list',
             },
             newResponseCode: {
               type: String,
               statePath: 'errors.code',
               observer: '_checkIfNewTransaction'
+            },
+            userDetails: {
+              type: Object,
+              statePath: 'user.data.mid'
+            },
+            userSess: {
+              type: String,
+              statePath: 'user.session.jsess'
             }
           }
+        }
+
+        _getParams() {
+          return ({
+              txnMid: this.tid,
+              txnTid: this.mid,
+              page: this.currentPage,
+              size: 25,
+              sort: "txnTransactionDate,DESC"
+          })
+        }
+
+        _pageUpdated() {
+          console.log('Loading page #' + this.currentPage);
+          this.$.vouchersLoader.params.page = this.currentPage;
+          this.updateList()
         }
 
         _checkIfNewTransaction() {
           if (this.newResponseCode == 200)
             this.$.new
+        }
+
+        updateList() {
+          this.$.vouchersLoader.generateRequest();
+        }
+
+        _displayList(result) {
+          var res = result.detail.response
+          this.queryResult = res.content;
+          console.log(this.queryResult)
         }
       }
 

@@ -104,7 +104,7 @@
           <voucher-input
             current-voucher=[[voucher]] 
             id=[[voucher.id]] 
-            code=[[voucher.uniqueCode]]>
+            code={{voucher.uniqueCode}}>
           </voucher-input>
           
           <overlay shown$="[[voucher.voucherEligible]]">.</overlay>
@@ -117,7 +117,7 @@
           </voucher-label>
 
           <div class="preload" shown$="[[voucher.onCheck]]">
-            <img src="../images/preload2.gif" >
+            <img src="images/preload2.gif" >
          </div>
           <!-- extra information on the right..-->
           
