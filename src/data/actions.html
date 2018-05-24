@@ -130,6 +130,14 @@
     const addLastTransaction = (trx) => {
       return {type: 'APPEND_TX', trx}
     }
+    
+    const changeMenu  = (page) => {
+      return {type: 'SWITCH_PAGE', page}
+    }
+
+    const nextPage = () => {
+      return {type: 'PAGE_INCREASE'}
+    }
 
     window.ExpenseManager = window.ExpenseManager || {};
     window.ExpenseManager.actions = {
@@ -161,7 +169,10 @@
       showReceipt,
       hideReceipt,
 
-      addLastTransaction
+      addLastTransaction,
+      
+      changeMenu,
+      nextPage
 
 
     };

@@ -82,7 +82,7 @@
         <span class="delimiter">–</span>
         <vaadin-text-field label="Max" value="{{filters.max}}" pattern="[0-9]+"></vaadin-text-field>
       </div>
-      <vaadin-combo-box label="Merchant" items="{{merchants}}" value="{{filters.merchant}}"></vaadin-combo-box>
+      <!-- <vaadin-combo-box label="Merchant" items="{{merchants}}" value="{{filters.merchant}}"></vaadin-combo-box> -->
       <option-group caption="Status" value="{{filters.status}}" items="[[statusOptions]]" label-path="label" value-path="name"></option-group>
       <div class="buttons" hidden="[[!phone]]">
         <vaadin-button on-click="_clearFilters" theme="tertiary">Clear Filters</vaadin-button>

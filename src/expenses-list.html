@@ -9,6 +9,8 @@
 <link rel="import" href="data/store.html">
 <link rel="import" href="icons.html">
 
+<link rel="import" href="../bower_components/iron-scroll-threshold/iron-scroll-threshold.html">
+
 <dom-module id="expenses-list">
   <template>
     <style>
@@ -70,6 +72,10 @@
     </style>
 
 <iron-scroll-threshold on-lower-threshold="loadMoreVouchers">
+  <div>TESTTTT</div>
+
+</iron-scroll-threshold>
+
     <vaadin-grid theme="wrap-cell-content" items="[[lists]]" id="expenses" active-item="{{activeItem}}">
 
       <vaadin-grid-column width="8em" frozen>
@@ -138,7 +144,8 @@
       </vaadin-grid-column>
 
     </vaadin-grid>
-</iron-scroll-threshold>
+
+    <button on-tap="nextPage"> <h4>LOAD MORE</h4> </button>
 
     <!-- CHANGES HERE! david -->
     <!-- <paper-icon-button-light on-click="_showExpenseEditor" id="add-button">
@@ -175,6 +182,15 @@
              */
             activeItem: {
               observer: '_activeItemChanged'
+            },
+
+            page: {
+              type: Number,
+              statePath: 'uiState.pagination'
+            },
+            pageLoad: {
+              type: Boolean,
+              statePath: 'uiState.page_loading'
             }
           };
         }
@@ -185,6 +201,10 @@
 
         _showInfoDialog() {
           this.dispatch('showInfoDialog');
+        }
+
+        nextPage() {
+          this.dispatch('nextPage');
         }
 
         /**

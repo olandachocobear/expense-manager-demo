@@ -38,13 +38,13 @@
     <spots-logo></spots-logo>
 
     <a href="#/entry">
-    <vaadin-button on-click="" theme="primary">
+    <vaadin-button on-click="" theme$="[[entryBtnState]]">
       New Transaction
     </vaadin-button>
     </a>
 
     <a href="#/list">
-    <vaadin-button on-click="" theme="small">
+    <vaadin-button on-click="" theme$="[[logBtnState]]">
       Redeem Log
       <!-- <iron-icon icon="lumo:edit" slot="suffix"></iron-icon> -->
       <iron-icon icon="lumo:bar-chart" slot="suffix"></iron-icon>
@@ -62,7 +62,33 @@
         static get is() {
           return 'nav-bar';
         }
-
+        
+        static get properties() {
+          return {
+            logBtnState: {
+              type: String
+            },
+            entryBtnState: {
+              type: String
+            },
+            activePage: {
+              type: String,
+              statePath: 'uiState.activePage',
+              observer: '_switchBtn'
+            }
+          }
+        }
+        
+        _switchBtn(){
+          if(this.activePage=='list'){
+            this.logBtnState = "primary"
+            this.entryBtnState = "small"
+          }
+          else {
+            this.logBtnState = "small"
+            this.entryBtnState = "primary"
+          }
+        }
         _showInfoDialog() {
           this.dispatch('showInfoDialog');
         }

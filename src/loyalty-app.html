@@ -143,6 +143,9 @@
           else
             this.dispatch('hideInfoDialog')
           // load data for view
+          
+          // to determine which top button is active
+          this.dispatch("changeMenu", this.routeData.page)
 
           if(this.routeData.page=="frontgate"){
             // (function(this) {
