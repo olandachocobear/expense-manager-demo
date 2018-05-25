@@ -1,0 +1,32 @@
+<link rel="import" href="../bower_components/polymer/polymer-element.html">
+
+<link rel="import" href="../bower_components/number-input/number-input.html">
+
+<link rel="import" href="constant.html">
+
+<script src="./js/standard-input.js"></script>
+
+<dom-module id="standard-input">
+  <template >
+    
+    <style>
+    </style>
+    
+    <vaadin-text-field name="total" value="{{code}}" 
+        mutable-data on-keyup="delayCheck" pattern="[0-9]+[.]?[0-9]*">
+    </vaadin-text-field>
+
+    <iron-ajax id="eligibilityCheck" 
+      url=[[ironUrl]] method="post" 
+      body='{{bodyRequest}}'
+      headers='{
+        "Content-Type": "application/json",  
+        "Authorization": "someAuthorizationToken",
+        "JSESSIONID": "15fwcOgFann7woqj32RhgaUyihnIGl"}'
+      on-response="eligibleResponse"
+      on-error="onError">
+     </iron-ajax>
+
+  </template>
+  
+</dom-module>

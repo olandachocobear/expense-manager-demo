@@ -117,27 +117,8 @@
             mid: {
               type: String,
               statePath: 'user.data.mid'
-            },
-            page: {
-              type: Number,
-              statePath: 'uiState.pagination',
-              observer: '_displayResult'
-            },
-            queryResult:{
-              type: Array
             }
           }
-        }
-
-        _displayList(result) {
-          
-          this.push("queryResult", {})
-          // if(this.queryResult)
-          //   this.queryResult = this.queryResult.push(res.content);
-          // else
-          //   this.queryResult = res.content
-
-          console.log("HE");
         }
         
       }
