@@ -20,12 +20,19 @@
           type: Object,
           statePath: 'user.data'
         },
+        userSession: {
+          type: String,
+          statePath: 'user.session.jsess'
+        },
         trxAmount: {
           type: String,
           statePath: 'vouchers.trxAmount',
           observer: '_amountChanged'
         },
         bodyRequest: {
+          type: Object,
+        },
+        header: {
           type: Object,
         },
         voucherCode: {
@@ -36,7 +43,7 @@
           statePath: 'vouchers.trxNumber'
         },
         ironUrl: {
-          value: () => constant.url.dev.eligible_cek
+          value: () => constant.url.staging.eligible_cek
         },
         remaining: {
           type: String,
@@ -80,6 +87,12 @@
         traceNumber: this.trxId,
         transactionTypeId: 2
       };
+
+      this.header = {
+        "Content-Type": "application/json",  
+        "Authorization": "someAuthorizationToken",
+        "JSESSIONID": this.userSession
+      }
     }
     /**
          * Check backend to get eligibility

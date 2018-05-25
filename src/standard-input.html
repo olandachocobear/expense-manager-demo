@@ -19,10 +19,7 @@
     <iron-ajax id="eligibilityCheck" 
       url=[[ironUrl]] method="post" 
       body='{{bodyRequest}}'
-      headers='{
-        "Content-Type": "application/json",  
-        "Authorization": "someAuthorizationToken",
-        "JSESSIONID": "15fwcOgFann7woqj32RhgaUyihnIGl"}'
+      headers='{{header}}'
       on-response="eligibleResponse"
       on-error="onError">
      </iron-ajax>
