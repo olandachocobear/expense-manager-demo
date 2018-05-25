@@ -63,14 +63,16 @@
     _compareVoucher(val){
         if(val!=this.currentVoucher.uniqueCode)
             console.log('still waiting input..')
-        else    
+        else   {
+            this._amountChanged()
             this._checkEligible()
+        }
     }
 
     _amountChanged() {
       this.bodyRequest = {
         amount: parseInt(this.trxAmount),
-        uniqueCode: this.voucherCode,
+        uniqueCode: this.code,
         mid: this.userDetail.mid, 
         merchantCode: this.userDetail.merchantCode, 
         tid: this.userDetail.tid,
