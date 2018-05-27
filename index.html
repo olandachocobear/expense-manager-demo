@@ -88,9 +88,34 @@
   <!-- Load webcomponents-loader.js to check and load any polyfills your browser needs -->
   <script src="bower_components/webcomponentsjs/webcomponents-loader.js"></script>
 
+  <script src="//cdnjs.cloudflare.com/ajax/libs/numeral.js/2.0.6/numeral.min.js"></script>
+
   <!-- Load your application shell -->
   <link rel="import" href="src/loyalty-app.html">
 
 </body>
+<script>
+  // load a locale
+numeral.register('locale', 'id', {
+    delimiters: {
+        thousands: '.',
+        decimal: ','
+    },
+    abbreviations: {
+        thousand: 'k',
+        million: 'm',
+        billion: 'b',
+        trillion: 't'
+    },
+    ordinal : function (number) {
+        return number === 1 ? 'er' : 'ème';
+    },
+    currency: {
+        symbol: 'Rp'
+    }
+});
 
+// switch between locales
+numeral.locale('id');
+</script>
 </html>

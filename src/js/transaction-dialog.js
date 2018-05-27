@@ -32,7 +32,7 @@ class TransactionDialogElement extends ExpenseManager.ReduxMixin(Polymer.Element
         fieldAmount:{
             // type: String,
             // observer: '_amountChanged'
-            statePath: 'transaction.trxAmount'
+            //statePath: 'transaction.trxAmount'
         },
         ironUrl: {
             type: String,
@@ -74,14 +74,16 @@ class TransactionDialogElement extends ExpenseManager.ReduxMixin(Polymer.Element
     };
     }
 
-
+    _strip(num){
+        return(numeral(num)._value)
+    }
     /* still NECESSARY to update State, even though already Observe */
     detectChanges (){
         this._amountChanged();
     }
     _amountChanged (){
         var remaining = this._calcRemaining();
-        this.dispatch('updateTransactionAmount', this.fieldAmount);
+        this.dispatch('updateTransactionAmount', this._strip(this.fieldAmount));
         this.dispatch('updateRemaining', remaining);
     }
 
@@ -91,7 +93,7 @@ class TransactionDialogElement extends ExpenseManager.ReduxMixin(Polymer.Element
         for (var i = 0; i<vouchers.length; i++){
             discount_amount += vouchers[i].voucherAmount;
         }
-        return parseInt(this.fieldAmount)-discount_amount;
+        return parseInt(this._strip(this.fieldAmount))-discount_amount;
     }
 
     _updateRedeemable (){
@@ -111,13 +113,13 @@ class TransactionDialogElement extends ExpenseManager.ReduxMixin(Polymer.Element
                 voucher_arr.push(this.trx.vouchers[i]['uniqueCode']);
                 discount_amount += this.trx.vouchers[i]['voucherAmount'];
             }
-            var current_remaining = parseInt(this.fieldAmount)-discount_amount
+            var current_remaining = parseInt(this._strip(this.fieldAmount))-discount_amount
         }
 
         this.dispatch('updateRemaining', current_remaining)
         
         this.bodyRequest = {
-            amount: parseInt(this.fieldAmount),
+            amount: parseInt(this._strip(this.fieldAmount)),
             uniqueCodes: voucher_arr,
             mid: this.userDetail.mid, 
             merchantCode: this.userDetail.merchantCode, 
