@@ -13,12 +13,16 @@
     </style>
     
     <vaadin-text-field name="total" value="{{code}}" 
+        voucher-field
+        required
         mutable-data on-keyup="delayCheck" 
         pattern="[0-9]+[.]?[0-9]*"
         style="text-align:center;
               --lumo-text-field-size: var(--lumo-size-m);
               color: maroon;
-              font-size: var(--lumo-font-size-l);">
+              font-size: var(--lumo-font-size-l);
+              font-weight: bold;
+              letter-spacing: 0.3em;">
     </vaadin-text-field>
 
     <iron-ajax id="eligibilityCheck" 
