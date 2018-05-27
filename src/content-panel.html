@@ -101,8 +101,8 @@
         }
         _getParams() {
           return ({
-              txnMid: this.tid,
-              txnTid: this.mid,
+              txnMid: "GOCAFE000000001",// this.tid,
+              txnTid: "GOCAFE01", //this.mid,
               page: (this.currentPage==undefined) ? 0: this.currentPage,
               size: 25,
               sort: "txnTransactionDate,DESC"

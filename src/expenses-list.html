@@ -78,7 +78,7 @@
 
     <vaadin-grid items="[[lists]]" id="expenses" active-item="{{activeItem}}">
 
-      <vaadin-grid-column width="8em" frozen>
+      <vaadin-grid-column width="10em" frozen>
         <template class="header">
           <vaadin-grid-sorter path="date" direction="desc">
             <div class="header-cell">
@@ -91,11 +91,11 @@
         </template>
       </vaadin-grid-column>
 
-      <vaadin-grid-column width="6em">
+      <vaadin-grid-column width="8em">
         <template class="header">
           <vaadin-grid-sorter path="total" class="numeric">
             <div class="header-cell">
-              Voucher Number
+              No. Voucher
             </div>
           </vaadin-grid-sorter>
         </template>
@@ -108,7 +108,7 @@
         <template class="header">
           <vaadin-grid-sorter path="merchant">
             <div class="header-cell">
-              Type
+              Voucher Name
             </div>
           </vaadin-grid-sorter>
         </template>
@@ -121,7 +121,7 @@
         <template class="header">
           <vaadin-grid-sorter path="total" class="numeric">
             <div class="header-cell">
-              Value
+              Disc. Amount
             </div>
           </vaadin-grid-sorter>
         </template>
@@ -129,12 +129,12 @@
            <span class="total">[[item.txnLogDetails.0.txnRedeemValue]] </span><!--[[_formatTotal(item.total)]]</span> -->
         </template>
       </vaadin-grid-column>
-      
+
       <vaadin-grid-column width="8em" flex-grow="2">
         <template class="header">
           <vaadin-grid-sorter path="merchant">
             <div class="header-cell">
-              Cashier
+              Cashier Name
             </div>
           </vaadin-grid-sorter>
         </template>
