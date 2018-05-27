@@ -3,7 +3,8 @@
 
   window.ExpenseManager.dateHelpers = {
     format(date, format) {
-      const [y, m, d] = date.split('-');
+      // const [y, m, d] = date.split('-');
+      const [d, m, y] = date.split('-');
       return [m, d, y].join('/');
     },
 

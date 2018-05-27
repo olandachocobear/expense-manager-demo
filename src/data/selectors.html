@@ -128,12 +128,12 @@
             // .filter(burned => {
             //   return status && status.length > 0 ? status.indexOf(burned.status) >= 0 : false;
             // })
-            // .filter(burned => {
-            //   return start && helpers.isValid(start) ? helpers.isAfter(burned.txnTransactionDate, start) : true;
-            // })
-            // .filter(burned => {
-            //   return end && helpers.isValid(end) ? helpers.isBefore(burned.txnTransactionDate, end) : true;
-            // });
+            .filter(burned => {
+              return start && helpers.isValid(start) ? helpers.isAfter(helpers.format(burned.txnTransactionDate), start) : true;
+            })
+            .filter(burned => {
+              return end && helpers.isValid(end) ? helpers.isBefore(helpers.format(burned.txnTransactionDate), end) : true;
+            });
         else
           return {};
       });
