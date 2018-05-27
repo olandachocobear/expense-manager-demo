@@ -91,16 +91,29 @@
         </template>
       </vaadin-grid-column>
 
-      <vaadin-grid-column width="8em" flex-grow="2">
+      <vaadin-grid-column width="6em">
         <template class="header">
-          <vaadin-grid-sorter path="merchant">
+          <vaadin-grid-sorter path="total" class="numeric">
             <div class="header-cell">
-              Merchant
+              Voucher Number
             </div>
           </vaadin-grid-sorter>
         </template>
         <template>
-          [[item.txnMerchantName]]
+           <span class="total">[[item.txnUniqueCode]] </span><!--[[_formatTotal(item.total)]]</span> -->
+        </template>
+      </vaadin-grid-column>
+
+      <vaadin-grid-column width="8em" flex-grow="2">
+        <template class="header">
+          <vaadin-grid-sorter path="merchant">
+            <div class="header-cell">
+              Type
+            </div>
+          </vaadin-grid-sorter>
+        </template>
+        <template>
+          [[item.txnLogDetails.0.txnRedeemLabel]]
         </template>
       </vaadin-grid-column>
 
@@ -108,12 +121,25 @@
         <template class="header">
           <vaadin-grid-sorter path="total" class="numeric">
             <div class="header-cell">
-              Total
+              Value
             </div>
           </vaadin-grid-sorter>
         </template>
         <template>
            <span class="total">[[item.txnLogDetails.0.txnRedeemValue]] </span><!--[[_formatTotal(item.total)]]</span> -->
+        </template>
+      </vaadin-grid-column>
+      
+      <vaadin-grid-column width="8em" flex-grow="2">
+        <template class="header">
+          <vaadin-grid-sorter path="merchant">
+            <div class="header-cell">
+              Cashier
+            </div>
+          </vaadin-grid-sorter>
+        </template>
+        <template>
+          [[item.txnLogDetails.0.username]]
         </template>
       </vaadin-grid-column>
 

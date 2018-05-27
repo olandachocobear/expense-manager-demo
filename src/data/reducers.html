@@ -287,6 +287,28 @@
       }
     }
 
+  function burnedReducer( state=[], action) {
+      switch (action.type) {
+          case 'APPEND_BURNED_LIST': {
+           var temp = [];
+           for(var i=0; i<state.length;i++)
+              temp.push(state[i])
+
+           var newStuff = action.lists;
+           for(var j=0; j<newStuff.length;j++)
+              temp.push(newStuff[j]);
+           
+           return temp;
+          } 
+
+          case 'FRESH_BURNED_LIST':
+            return action.lists
+
+          default:
+              return state;
+      }
+    }
+
   function expensesReducer(//state = {
       /* 
       expenses: savedState ? savedState.expenses.expenses : _generateDemoExpenses(100),
@@ -366,7 +388,8 @@ console.log(boom)
       lastTrx: lastTxReducer,
       errors: errorsReducer,
       filters: filtersReducer,
-      user: userReducer
+      user: userReducer,
+      burned: burnedReducer
     });
 
 

@@ -33,7 +33,7 @@
       }
     </style>
 
-    <expenses-list lists={{queryResult}}></expenses-list>
+    <expenses-list lists=[[rawResult]]></expenses-list>
     <!-- <history-panel phone="[[phone]]" tablet="[[tablet]]"></history-panel> -->
   
     <iron-ajax id="vouchersLoader" auto
@@ -74,9 +74,12 @@
               statePath: 'uiState.pagination',
               observer: "_pageUpdated"
             },
-            queryResult: {
+            rawResult: {
               type: Array,
-              value: () => []
+              // statePath: 'burned',
+              // observer: '_listChanged'
+              // value: () => ExpenseManager.select.listVouchers
+              statePath: ExpenseManager.select.listVouchers
             },
             newResponseCode: {
               type: String,
@@ -93,7 +96,9 @@
             }
           }
         }
-
+        _listChanged(){
+          alert('content changed..')
+        }
         _getParams() {
           return ({
               txnMid: this.tid,
@@ -107,6 +112,8 @@
         _pageUpdated() {
           console.log('Loading for page #' + this.currentPage);
           this.$.vouchersLoader.params.page = this.currentPage;
+          
+          // should be Immediately, or wait for button?
           this.updateList()
         }
 
@@ -121,15 +128,21 @@
 
         _displayList(result) {
           var res = result.detail.response;
+          var temp = [];
           
           for(var i=0; i<res.content.length;i++)
-            this.push("queryResult", res.content[i])
+            temp.push(res.content[i])
           // if(this.queryResult)
           //   this.queryResult = this.queryResult.push(res.content);
           // else
           //   this.queryResult = res.content
 
-          console.log(this.queryResult);
+          console.log(temp);
+
+          if(this.$.vouchersLoader.params.page==0)
+            this.dispatch('insertBurned', temp)
+          else
+            this.dispatch('appendBurned', temp)
         }
       }
 

@@ -142,6 +142,13 @@
     const testRemove = () => {
       return {type: 'TEST_REMOVE'}
     }
+    
+    const appendBurned = (lists) => {
+      return {type: 'APPEND_BURNED_LIST', lists}
+    }
+    const insertBurned = (lists) => {
+      return {type: 'FRESH_BURNED_LIST', lists}
+    }
 
     window.ExpenseManager = window.ExpenseManager || {};
     window.ExpenseManager.actions = {
@@ -178,7 +185,10 @@
       changeMenu,
       nextPage,
       
-      testRemove
+      testRemove,
+
+      appendBurned,
+      insertBurned
 
 
     };

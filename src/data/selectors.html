@@ -8,6 +8,8 @@
     const getExpenses = state => state.expenses.expenses;
     const getFilters = state => state.filters.filters;
     const getVouchers = state => state.lastTrx.vouchers;
+    const getList = state => state.burned;
+
     const helpers = ExpenseManager.dateHelpers;
 
     const expenses = 0/*Reselect.createSelector(
@@ -108,6 +110,34 @@
         .reduce((sum, current) => sum + current, 0)
     });
 
+    const listVouchers = Reselect.createSelector(
+      [getList, getFilters],
+      (burned, filters) => {
+
+        const min = filters.min;
+        const max = filters.max;
+        // const status = filters.status;
+        const start = filters.start;
+        const end = filters.end;
+        
+        if (burned.length!=0)
+          return burned
+            // .filter(list => !(merchant && list.merchant.toUpperCase().indexOf(merchant.toUpperCase()) < 0))
+            .filter(burned => !(min && burned.txnOriginalAmount < min))
+            .filter(burned => !(max && burned.txnOriginalAmount > max))
+            // .filter(burned => {
+            //   return status && status.length > 0 ? status.indexOf(burned.status) >= 0 : false;
+            // })
+            // .filter(burned => {
+            //   return start && helpers.isValid(start) ? helpers.isAfter(burned.txnTransactionDate, start) : true;
+            // })
+            // .filter(burned => {
+            //   return end && helpers.isValid(end) ? helpers.isBefore(burned.txnTransactionDate, end) : true;
+            // });
+        else
+          return {};
+      });
+
     window.ExpenseManager = window.ExpenseManager || {};
     window.ExpenseManager.select = {
       expenses,
@@ -115,7 +145,8 @@
       appliedFilters,
       total,
       vouchers_group,
-      total_discount
+      total_discount,
+      listVouchers
     };
   })();
 
