@@ -153,6 +153,10 @@
     const searchVoucher = (voucher) => {
       return {type: 'SEARCH_VOUCHER', voucher}
     }
+    
+    const resetTrx = () => {
+      return {type: 'RESET_TX'}
+    }
 
     window.ExpenseManager = window.ExpenseManager || {};
     window.ExpenseManager.actions = {
@@ -194,7 +198,8 @@
       appendBurned,
       insertBurned,
 
-      searchVoucher
+      searchVoucher,
+      resetTrx
 
 
     };

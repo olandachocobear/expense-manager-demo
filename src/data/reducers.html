@@ -157,12 +157,12 @@
                   ]
               })
 
-          case 'RESET_ALL':
+          case 'RESET_TX':
               return Object.assign({}, state, {
                 validTrx: false,
                 trxNumber: uuid(),
                 trxAmount: '',
-                remaining: ''
+                remaining: '0'
             });
           
           default:

@@ -106,13 +106,13 @@
         <div style="float:right;line-height: 22px;
         font-size: 12px;
         opacity: 0.8;
-        margin-top:-7px;margin-right:5px;text-align:right">
+        margin-top:-4px;margin-right:3px;text-align:right">
           <p>
             Hi,
             <u><b><span style=color:blue>[[username]]</span></b></u>!</i>
             <br>
             
-            <div style=margin-top:4px;>Not You?</div>
+            <div style=margin-top:9px;>Not You?</div>
             <div style=margin-top:-5px>
               <a href="https://evoucher-dev.kartuku.co.id/loyalty-web/" onclick="(e)=>e.stopPropagation()">
                 Logout.
@@ -121,9 +121,9 @@
           </p>
         </div>
 
-        <h3>VOUCHER REDEMPTION</h3>
-        <h2>[[merchantName]]</h2>
-        <h3 style="margin-top: -14px; color: rgb(0,0,0,0.6);">
+        <h3 style=font-size:1em;margin-top:3px>VOUCHER REDEMPTION</h3>
+        <h2 style=margin-top:4px>[[merchantName]]</h2>
+        <h3 style="margin-top: -11px; font-size:0.9em;color: rgb(0,0,0,0.6);">
           [[storeName]]
         </h3>
 
@@ -135,12 +135,15 @@
             <vaadin-text-field name="total" on-blur="alert('a')" 
               prevent-invalid-input pattern="[0-9.]*" value="{{fieldAmount}}" 
               on-change="detectChanges" label="Total transaction" 
-              pattern="[0-9]*" required>
+              pattern="[0-9]*" required
+              style="--lumo-text-field-size: var(--lumo-size-l);
+                    font-size: var(--lumo-font-size-l);
+                    margin-top:10px">
               <div slot="prefix">Rp</div>
             </vaadin-text-field>
 
 
-            <div class="vaadin-text-field-container" style="margin-top:18px;
+            <div class="vaadin-text-field-container" style="margin-top:26px;
                   font-weight:500; 
                   font-size: var(--lumo-font-size-s); 
                   color: var(--lumo-secondary-text-color);
@@ -148,7 +151,7 @@
                 <label part="label" id="vaadin-text-field-label-11">Voucher code</label>
             </div>
 
-            <div style="margin-top:11px;
+            <div style="margin-top:7px;
                         width: 100%;
                         text-align: center;">
 
@@ -185,7 +188,7 @@
         <!-- disabled=[[!validTrx]]  -->
         <div class="buttons" style=text-align:center;margin-bottom:-10px>
           <vaadin-button theme$="[[redeemable]]" on-click="_burn" style="opacity:0.84;height:50px;width:100%">Redeem!</vaadin-button>
-          <vaadin-button id=reset_btn shown$="[[resetable]]" theme="tertiary" on-click="createCache"
+          <vaadin-button id=reset_btn shown$="[[resetable]]" theme="tertiary" on-click="_reset"
             style="font-weight:normal;color:red;margin-left:15px"><u>Reset</u></vaadin-button>
         </div>
 
