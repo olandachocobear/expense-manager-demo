@@ -7,6 +7,7 @@
 
     const getExpenses = state => state.expenses.expenses;
     const getFilters = state => state.filters.filters;
+    const getVouchers = state => state.lastTrx.vouchers;
     const helpers = ExpenseManager.dateHelpers;
 
     const expenses = 0/*Reselect.createSelector(
@@ -68,13 +69,53 @@
       });
       return numFilters;
     });*/
+    
+    const vouchers_group = Reselect.createSelector(
+      [getVouchers],
+      (vouchers) => {
+          let vouch_arr = []
+          for(var v in vouchers) 
+            {
+              vouch_arr.push(vouchers[v]['voucherType'])
+            }
+          let voucherCount = vouch_arr.
+                  reduce( (tmp, key) => {
+                      if (! tmp[key])
+                        tmp[key]= 1;
+                      else
+                        tmp[key]++;
+
+                      return tmp;
+                  }, {});
+          
+          var string_count = "";
+
+          for (var i in voucherCount){
+              if (string_count!= "")
+                string_count += " & ";
+              string_count += `${voucherCount[i]} ${i} `;
+          }
+
+          return string_count;
+
+    });
+
+    const total_discount = Reselect.createSelector(
+      [getVouchers], vouchers => {
+      return vouchers
+        // .filter(exp => exp.status === 'ok')
+        .map(vouch => vouch.voucherAmount)
+        .reduce((sum, current) => sum + current, 0)
+    });
 
     window.ExpenseManager = window.ExpenseManager || {};
     window.ExpenseManager.select = {
       expenses,
       merchants,
       appliedFilters,
-      total
+      total,
+      vouchers_group,
+      total_discount
     };
   })();
 

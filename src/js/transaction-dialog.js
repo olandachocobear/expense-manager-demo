@@ -66,6 +66,10 @@ class TransactionDialogElement extends ExpenseManager.ReduxMixin(Polymer.Element
         username: {
             type: String,
             statePath: 'user.data.username'
+        },
+        trans_detail: {
+            type: Object,
+            statePath: 'transaction'
         }
     };
     }
@@ -113,7 +117,7 @@ class TransactionDialogElement extends ExpenseManager.ReduxMixin(Polymer.Element
         this.dispatch('updateRemaining', current_remaining)
         
         this.bodyRequest = {
-            amount: parseInt(this.trx.trxAmount),
+            amount: parseInt(this.fieldAmount),
             uniqueCodes: voucher_arr,
             mid: this.userDetail.mid, 
             merchantCode: this.userDetail.merchantCode, 
@@ -169,7 +173,7 @@ class TransactionDialogElement extends ExpenseManager.ReduxMixin(Polymer.Element
     eligibleResponse(result) {
         console.log(result.detail.response);
 
-        this.dispatch('addLastTransaction', this.trx);
+        this.createCache();
 
         //this._close()
         this.dispatch('updateErrorMsg', result.detail.responseDetailBahasa);
@@ -186,6 +190,17 @@ class TransactionDialogElement extends ExpenseManager.ReduxMixin(Polymer.Element
         console.log(detail.error); //the error object
         console.log(detail.request.status); //the status code
         console.log(detail.request.statusText);  //the error status text
+    }
+
+    createCache(){
+        var {trxNumber,trxAmount,remaining} = this.trans_detail
+        var {vouchers} = this.trx
+        
+        var cachedTrx = {trxNumber,trxAmount,remaining,vouchers}
+
+        console.log(cachedTrx)
+        this.dispatch('addLastTransaction', cachedTrx);
+        this.dispatch('showReceipt')
     }
 }
 

@@ -22,36 +22,37 @@
 <div id=receiptBlock >
   <div style=text-align:center>
         <center><h2>{{merchant}}</h2></center>
-          <div style="display: flex;margin-top:-15px"></div>
+          <div style="display: flex;margin-top:-25px"></div>
             <h5 style=margin-top:16px>MID: {{mid}}</h5>
             <h5 style=margin-top:-20px>TID: {{tid}}</h5>
             <div style=margin-top:-20px>
               ==================================
             </div>
   
-            <dom-repeat items={{listVouchers}} mutable-data>
-                <template>
+            <!-- <dom-repeat items={{listVouchers}} mutable-data> -->
+                <!-- <template> -->
                     <div value={{item}} on-keypress="_clearBox" on-keyup="_moveIt">
                       <center>
                         <img src="images/voucher_burn.png" style=max-width:280px>
-                        <br><h3 style=margin-bottom:5px>{{item.voucherType}}</h3>
+                        <br><h3 style=margin-bottom:5px>{{voucher_distinct}}</h3>
                         
                         -------------------------------------------------------------
                       </center>  
-                        <h5 style=margin-top:7px>Original Amount: Rp {{origAmount}},-</h5>
-                        <h5 style=margin-top:-20px>Voucher Amount: Rp {{item.voucherAmount}},-</h5>
+                        <h5 style=margin-top:8px>Original Amount: Rp {{origAmount}},-</h5>
+                        <h5 style=margin-top:-20px>Discount Amount: Rp {{total_discount}},-</h5>
                         <br>
                         <H2 style=margin-top:-15px>Nett Amount: Rp {{remaining}},-</H4>
                       
                     </div>
-                </template>
-            </dom-repeat>
+                <!-- </template> -->
+            <!-- </dom-repeat> -->
 
             <!-- <button on-click="polymerPrint('receipt')">Print Receipt</button> -->
-            <vaadin-button theme="secondary" on-click="_print" style="opacity:0.84;height:50px;width:100%">Print</vaadin-button>
-          <br><br>
+            
         </div>          
       </div>
+      <vaadin-button theme="secondary" on-click="_print" style="opacity:0.84;height:50px;width:100%">Print</vaadin-button>
+          <br><br>
     </template>
   <script>
     printDivCSS = new String ('<link href="./print.css" rel="stylesheet" type="text/css">')
@@ -88,6 +89,14 @@
         
         static get properties() {
           return {
+            voucher_distinct: {
+              type: String,
+              statePath: ExpenseManager.select.vouchers_group
+            },
+            total_discount: {
+              type: String,
+              statePath: ExpenseManager.select.total_discount
+            },
             merchant: {
               type: Object,
               statePath: 'user.data.storeName'
