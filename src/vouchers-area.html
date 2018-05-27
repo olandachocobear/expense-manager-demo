@@ -4,6 +4,7 @@
 <link rel="import" href="./voucher-entry.html">
 <link rel="import" href="../bower_components/paper-icon-button/paper-icon-button-light.html">
 <link rel="import" href="../bower_components/iron-icon/iron-icon.html">
+<link rel="import" href="../bower_components/iron-swipeable-container/iron-swipeable-container.html">
 
 <script src="./js/vouchers-area.js"></script>
 
@@ -42,16 +43,21 @@
       }
       
     </style>
-    
-    <dom-repeat items=[[listVouchers]] mutable-data>
-      <template>
-        <voucher-entry voucher=[[item]]> </voucher-entry>
+    <iron-swipeable-container id="swiper" swipe-style="curve" width-ratio="3"
+    on-iron-swipe="_deleteNode" destroy
+  >
+    <!-- <dom-repeat items={{listExample}}> -->
+      <template is="dom-repeat" items={{listExample}} index-as="nomor">
+        
+      
+            <div id=[[item.id]]>[[item.id]]</div>
+  
       </template>
-    </dom-repeat>
-
+    <!-- </dom-repeat> -->
+  </iron-swipeable-container>
     
-    <paper-icon-button-light id="add-button" shown$="[[addAllowed]]">
-        <button aria-label="Add voucher" on-click="_add">
+    <paper-icon-button-light id="add-button" shown>
+        <button aria-label="Add voucher" on-click="_deleteNode">
           <iron-icon icon="expense-manager:add"></iron-icon>
         </button>
     </paper-icon-button-light>

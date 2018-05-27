@@ -77,11 +77,11 @@
     <app-toasts id="toast2" intense mutable-data></app-toasts>
 
 
-    <m2-dialog id="receipt" stop-auto-dismiss 
+    <m2-dialog id="receipt" on-dialog-closed="_setReceiptClosed" stop-auto-dismiss 
       style=z-index:1000;max-width:500px>
       <div slot="container">
         <!-- TRX RECEIPT -->
-        <receipt-paper style="width:300px;text-align:center;margin:auto">
+        <receipt-paper style="width:300px;margin:auto">
 
         </receipt-paper>
       </div>
@@ -139,6 +139,10 @@
               statePath: 'uiState.receiptDialogVisible',
               observer: '_toggleReceipt'
             },
+            // receiptVisible: {
+            //   type: Boolean,
+            //   observer: '_detectModalChanges'
+            // },
             merchant: {
               type: Object,
               statePath: 'user.data.storeName'
@@ -170,14 +174,16 @@
           };
         }
         
-        _toggleReceipt() {
-          console.log(this.merchant)
-          console.log(this.lastTrx)
-          if (this.receiptVisible)
-            this.$.receipt.open();
-          else
-            this.$.receipt.close();
+        _setReceiptClosed() {
+          this.dispatch('hideReceipt');
         }
+
+        _toggleReceipt() {
+          if (this.receiptVisible){
+            this.$.receipt.open();
+          }
+        }
+
         /* JANGAN DOUBLE! (di props udah) */
         // static get observers() {
         //   return [

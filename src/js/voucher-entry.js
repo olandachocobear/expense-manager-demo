@@ -48,16 +48,6 @@
       };
     }
     
-    // followup swipe-action..
-    _deleteNode(e) {
-      console.log(e);
-
-      //update TRX first, so voucher area will get validTrx and add + button
-      this.dispatch('updateTransactionable', true)
-      this.dispatch('removeVoucher', this.voucher.id);
-
-    }
-    // 
     
   }
     

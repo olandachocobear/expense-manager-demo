@@ -13,28 +13,55 @@
         listVouchers: {
           type: Array,
           statePath: 'vouchers.vouchers',
-          observer: '_voucherChanged'
+          observer: '_voucherChanged',
+          notify: true
         },
          validList: {
            type: Boolean,
-           statePath: 'vouchers.validTrx'
+           statePath: 'transaction.validTrx'
          },
          addAllowed: {
            type: Boolean,
            value: false
+         },
+         transList: {
+           statePath: 'transaction.array_example'
+         },
+         listExample: {
+           type: Array,
+           statePath: 'transaction.array_example',
+          //  value: () => [
+          //    {id: 0},
+          //    {id: 1},
+          //    {id: 2},
+          //    {id: 3},
+          //    {id: 4},
+          //    {id: 5},
+          //    {id: 6},
+          //  ]
+          observer: '_listRefreshed'
          }
       };
     }
 
     _voucherChanged(){
       // alert('!!'+)
-        if(this.listVouchers.length>0 && this.validList){
-          this.addAllowed = true
-        }
-        else
-          this.addAllowed = false
+      if(this.listVouchers.length==1 ){
+        this.addAllowed = true
+      }
+      else if(this.listVouchers.length>1 && this.validList)
+        this.addAllowed = true
+      else
+        this.addAllowed = false
     }
 
+    _listRefreshed() {
+      console.log(this.$.swiper.children) //.alertt();
+      var divs = this.$.swiper.children
+      for (var i=0; i<divs.length-1; i++){
+        divs[i].style.display='block'
+      }
+    }
     // add new (empty) voucher..
     _add() {
       let vouchers=this.listVouchers;
@@ -44,6 +71,46 @@
       console.log(this.listVouchers)
 
       this.addAllowed = false;
+    }
+
+    // followup swipe-action..
+    _deleteNode(e) {
+
+     this.dispatch('testRemove');
+
+    //   this.push('listExample',
+    //     {id: 8}
+    // )
+
+    //this.splice('listExample',0,8);
+    
+    // var $this = this;
+    //   setTimeout( () => {
+    //     $this.set('listExample', [
+    //       {id: 0},
+    //       {id: 1},
+    //       {id: 2},
+    //       {id: 3},
+    //       {id: 4},
+    //       {id: 5},
+    //       {id: 6},
+    //     ])
+    //   }, 1500)
+    
+/*
+      console.log(e.detail.target);
+      console.log('removing element #' + e.detail.target)
+      var removed_node = parseInt(e.detail.target.id);
+
+      //update TRX first, so voucher area will get validTrx and add + button
+      this.dispatch('updateTransactionable', true);
+
+      var $this = this;
+      setTimeout( () => {
+        $this.dispatch('removeVoucher', removed_node);
+        console.log($this.listVouchers)
+      }, 1500)
+      */
     }
 
     /**

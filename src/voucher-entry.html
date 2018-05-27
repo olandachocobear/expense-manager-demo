@@ -96,13 +96,10 @@
 
     <!-- <dom-repeat items={{vouchers}}> -->
       <!-- <template> -->
-        <iron-swipeable-container swipe-style="curve" width-ratio="3"
-          on-iron-swipe="_deleteNode"
-        >
-        <div id=node>
+        
+        <div>
           <!-- <h5>[[voucher.uniqueCode]]</h5> -->
           <standard-input current-voucher=[[voucher]] 
-          id=[[voucher.id]] 
           code={{voucher.uniqueCode}}>
           </standard-input>
           
@@ -111,6 +108,7 @@
           <voucher-label 
             bgColor="red"
             label=[[voucher.voucherType]]
+            id=[[voucher.id]]
             shown$="[[voucher.voucherEligible]]"
           >
           </voucher-label>
@@ -121,7 +119,6 @@
           <!-- extra information on the right..-->
           
         </div>
-        </iron-swipeable-container>
       <!-- </template> -->
     <!-- </dom-repeat> -->
     

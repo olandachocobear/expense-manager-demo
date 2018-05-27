@@ -26,8 +26,8 @@
         },
         trxAmount: {
           type: String,
-          statePath: 'vouchers.trxAmount',
-          observer: '_amountChanged'
+          statePath: 'transaction.trxAmount',
+        //   observer: '_amountChanged'
         },
         bodyRequest: {
           type: Object,
@@ -43,11 +43,11 @@
           statePath: 'vouchers.trxNumber'
         },
         ironUrl: {
-          value: () => constant.url.staging.eligible_cek
+          value: () => constant.url.dev.eligible_cek
         },
         remaining: {
           type: String,
-          statePath: 'vouchers.remaining'
+          statePath: 'transaction.remaining'
         }
       };
     }
@@ -55,44 +55,49 @@
     delayCheck() {
         //create temporary to be compared
         var curr = this.code;
-        
-        //update to Store
-        this.currentVoucher.uniqueCode = curr;
-        this.dispatch ('updateVoucher',this.currentVoucher)
+        if(curr){
+            //update to Store
+            this.currentVoucher.uniqueCode = curr;
+            this.dispatch ('updateVoucher',this.currentVoucher)
 
-        //launch 'delayed' checker
-        var $this = this;
-        setTimeout( ()=> {
-            $this._compareVoucher(curr)
-        }, constant.delay);
+            //launch 'delayed' checker
+            var $this = this;
+            setTimeout( ()=> {
+                $this._compareVoucher(curr)
+            }, constant.delay);
+        }
     }
 
     _compareVoucher(val){
         if(val!=this.currentVoucher.uniqueCode)
             console.log('still waiting input..')
         else   {
-            this._amountChanged()
+            this.updateIronParams()
             this._checkEligible()
         }
     }
 
     _amountChanged() {
-      this.bodyRequest = {
-        amount: parseInt(this.trxAmount),
-        uniqueCode: this.code,
-        mid: this.userDetail.mid, 
-        merchantCode: this.userDetail.merchantCode, 
-        tid: this.userDetail.tid,
-        transactionDate: new Date(),
-        traceNumber: this.trxId,
-        transactionTypeId: 2
-      };
+        this.updateIronParams();
+    }
 
-      this.header = {
-        "Content-Type": "application/json",  
-        "Authorization": "someAuthorizationToken",
-        "JSESSIONID": this.userSession
-      }
+    updateIronParams(){
+        this.bodyRequest = {
+            amount: parseInt(this.trxAmount),
+            uniqueCode: this.code,
+            mid: this.userDetail.mid, 
+            merchantCode: this.userDetail.merchantCode, 
+            tid: this.userDetail.tid,
+            transactionDate: new Date(),
+            traceNumber: this.trxId,
+            transactionTypeId: 2
+        };
+
+        this.header = {
+            "Content-Type": "application/json",  
+            "Authorization": "someAuthorizationToken",
+            "JSESSIONID": this.userSession
+        }
     }
     /**
          * Check backend to get eligibility
@@ -124,9 +129,7 @@
       /* Checkin out if the amount is smaller than the Voucher */
       // comparison here..
 
-      this.currentVoucher.voucherEligible = true;
-      this.dispatch('updateRemaining', this.remaining - result.trsValue);
-      this.dispatch('updateVoucher', this.currentVoucher);
+      
       this.dispatch('updateTransactionable', true);
       this._flagVoucherAsValid();
       this.dispatch('updateErrorMsg', result.responseDetailEnglish);
@@ -160,6 +163,12 @@
      
     onError(e, detail) {
       this.currentVoucher.onCheck = false;
+      // remember to update the state, to remoce preload icon
+      var $this = this;
+      setTimeout( () => {
+          $this.dispatch('updateVoucher', this.currentVoucher)
+      }, 1250);
+      
       this.dispatch('updateErrorCode', 66);
       console.log(e);
       console.log(e.target.lastRequest.xhr.status);

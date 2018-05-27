@@ -75,7 +75,7 @@
     const addVoucher = last_id => {
       let new_voucher = {
         'id': (last_id+1),
-        'uniqueCode': '            ',
+        'uniqueCode': '',
         'voucherType': ' Go-deals 25k  ',
         'voucherDetail': '',
         'voucherAmount': '',
@@ -138,6 +138,10 @@
     const nextPage = () => {
       return {type: 'PAGE_INCREASE'}
     }
+    
+    const testRemove = () => {
+      return {type: 'TEST_REMOVE'}
+    }
 
     window.ExpenseManager = window.ExpenseManager || {};
     window.ExpenseManager.actions = {
@@ -172,7 +176,9 @@
       addLastTransaction,
       
       changeMenu,
-      nextPage
+      nextPage,
+      
+      testRemove
 
 
     };
