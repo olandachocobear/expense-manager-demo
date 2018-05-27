@@ -150,6 +150,10 @@
       return {type: 'FRESH_BURNED_LIST', lists}
     }
 
+    const searchVoucher = (voucher) => {
+      return {type: 'SEARCH_VOUCHER', voucher}
+    }
+
     window.ExpenseManager = window.ExpenseManager || {};
     window.ExpenseManager.actions = {
       login,
@@ -188,7 +192,9 @@
       testRemove,
 
       appendBurned,
-      insertBurned
+      insertBurned,
+
+      searchVoucher
 
 
     };

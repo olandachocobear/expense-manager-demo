@@ -353,7 +353,7 @@
 
     function filtersReducer(state = {
       // filters: {status: ['new', 'in_progress', 'reimbursed', 'ok', 'invalid', 'already']}
-    
+      specificVoucher: '',
       filters: {status: ['ok', 'failed', 'error']}
     }, action) {
       switch (action.type) {
@@ -370,6 +370,11 @@
         case 'CLEAR_FILTERS':
           return Object.assign({}, state, {
             filters: {status: ['new', 'in_progress', 'reimbursed']}
+          });
+        
+        case 'SEARCH_VOUCHER':
+          return Object.assign({}, state, {
+            specificVoucher: action.voucher
           });
 
         default:

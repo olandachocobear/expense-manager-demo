@@ -93,18 +93,30 @@
             userSess: {
               type: String,
               statePath: 'user.session.jsess'
+            },
+            search: {
+              type: String,
+              statePath: 'filters.specificVoucher',
+              observer: 'searchChanged'
             }
           }
         }
-        _listChanged(){
-          alert('content changed..')
+        
+        searchChanged() {
+          if(this.search!='')
+              this.$.vouchersLoader.params.txnUniqueCode= this.search;
+          else
+              delete this.$.vouchersLoader.params.txnUniqueCode
+          
+          this.updateList()
         }
+
         _getParams() {
           return ({
               txnMid: "GOCAFE000000001",// this.tid,
               txnTid: "GOCAFE01", //this.mid,
               page: (this.currentPage==undefined) ? 0: this.currentPage,
-              size: 25,
+              size: 100,
               sort: "txnTransactionDate,DESC"
           })
         }
