@@ -14,7 +14,6 @@
           type: Array,
           statePath: 'vouchers.vouchers',
           observer: '_voucherChanged',
-          notify: true
         },
          validList: {
            type: Boolean,
@@ -53,6 +52,8 @@
         this.addAllowed = true
       else
         this.addAllowed = false
+      
+      this._listRefreshed()
     }
 
     _listRefreshed() {
@@ -76,7 +77,7 @@
     // followup swipe-action..
     _deleteNode(e) {
 
-     this.dispatch('testRemove');
+    //  this.dispatch('testRemove');
 
     //   this.push('listExample',
     //     {id: 8}
@@ -97,7 +98,7 @@
     //     ])
     //   }, 1500)
     
-/*
+
       console.log(e.detail.target);
       console.log('removing element #' + e.detail.target)
       var removed_node = parseInt(e.detail.target.id);
@@ -110,7 +111,7 @@
         $this.dispatch('removeVoucher', removed_node);
         console.log($this.listVouchers)
       }, 1500)
-      */
+      
     }
 
     /**

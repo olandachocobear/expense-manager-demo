@@ -47,17 +47,16 @@
     on-iron-swipe="_deleteNode" destroy
   >
     <!-- <dom-repeat items={{listExample}}> -->
-      <template is="dom-repeat" items={{listExample}} index-as="nomor">
-        
-      
-            <div id=[[item.id]]>[[item.id]]</div>
-  
+      <template is="dom-repeat" items={{listVouchers}} mutable-data index-as="nomor">
+        <div id=[[item.id]]>[[item.id]]
+          <voucher-entry voucher=[[item]]> </voucher-entry>
+        </div>  
       </template>
     <!-- </dom-repeat> -->
   </iron-swipeable-container>
     
     <paper-icon-button-light id="add-button" shown>
-        <button aria-label="Add voucher" on-click="_deleteNode">
+        <button aria-label="Add voucher" on-click="_add">
           <iron-icon icon="expense-manager:add"></iron-icon>
         </button>
     </paper-icon-button-light>
