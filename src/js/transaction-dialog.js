@@ -36,7 +36,7 @@ class TransactionDialogElement extends ExpenseManager.ReduxMixin(Polymer.Element
         },
         ironUrl: {
             type: String,
-            value: () => constant.url.staging.burn_vouch
+            value: () => constant.url.dev.burn_vouch
         },
         trx: {
             type: Object,
@@ -50,7 +50,10 @@ class TransactionDialogElement extends ExpenseManager.ReduxMixin(Polymer.Element
         remainingAmount: {
             type: String,
             statePath: 'transaction.remaining',
-            // observer: '_toggleRemaining'
+            observer: 'refreshRemainingText'
+        },
+        remainingTxt: {
+            type: String
         },
         displayRemaining: {
             type: Boolean
@@ -72,6 +75,10 @@ class TransactionDialogElement extends ExpenseManager.ReduxMixin(Polymer.Element
             statePath: 'transaction'
         }
     };
+    }
+
+    refreshRemainingText(){
+        this.remainingTxt = numeral(this.remainingAmount).format(0.0)
     }
 
     _strip(num){
@@ -110,8 +117,11 @@ class TransactionDialogElement extends ExpenseManager.ReduxMixin(Polymer.Element
 
         if(this.trx.vouchers[0]['voucherAmount']>0){
             for(var i=0; i<this.trx.vouchers.length; i++){
-                voucher_arr.push(this.trx.vouchers[i]['uniqueCode']);
-                discount_amount += this.trx.vouchers[i]['voucherAmount'];
+                // remember to only update body with Eligible vouchers..
+                if(this.trx.vouchers[i]['voucherEligible']){
+                    voucher_arr.push(this.trx.vouchers[i]['uniqueCode']);
+                    discount_amount += this.trx.vouchers[i]['voucherAmount'];
+                }
             }
             var current_remaining = parseInt(this._strip(this.fieldAmount))-discount_amount
         }
