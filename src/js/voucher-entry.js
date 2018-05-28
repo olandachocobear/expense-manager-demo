@@ -9,9 +9,15 @@
     
     static get properties() {
       return {
+        // inherited from parent
         voucher: {
           type: Object,
-          notify: true
+          notify: true,
+          observer: 'updateShaker'
+        },
+        shaking: {
+          type: Boolean,
+          value: false
         },
         newVoucher: {
           type: Object,
@@ -25,27 +31,25 @@
         vouchers: {
           type: Array,
           statePath: 'vouchers.vouchers'
-        /*   
-            value() {
-                    
-            return [
-              {
-                'uniqueCode': '156712345672',
-                'voucherType': 'Go-deals 25k',
-                'voucherDetail': '',
-                'voucherAmount': ''
-              },
-              {
-                'uniqueCode': '121287366128',
-                'voucherType': 'Go-deals 25k',
-                'voucherDetail': '',
-                'voucherAmount': ''
-              }
-            ];
-          }
-        */
         }
       };
+    }
+    
+    updateShaker() {
+      if(this.voucher.shake)
+        this._shakeMomentarily()
+    }
+    _shakeMomentarily() {
+      this.shaking = true;
+      this.voucher.shake = true;
+      
+      var $this = this;
+      setTimeout( () => {
+        this.shaking = false;
+        this.voucher.shake = false;
+        
+        this.dispatch('updateVoucher',$this.voucher);
+      }, 300);
     }
     
     

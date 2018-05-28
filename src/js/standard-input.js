@@ -139,6 +139,8 @@
       this.currentVoucher.onCheck = false;
       this.currentVoucher.errorMsg = result.responseDetailEnglish;
       this.currentVoucher.errorCode = result.responseCode;
+      //add shake
+      this.currentVoucher.shake = true;
       this.dispatch('updateVoucher', this.currentVoucher);
       this.dispatch('updateTransactionable', false);
       this.dispatch('updateErrorMsg', result.responseDetailEnglish);
@@ -148,6 +150,8 @@
       this.currentVoucher.onCheck = false;
       this.currentVoucher.errorMsg = result.responseDetailEnglish;
       this.currentVoucher.errorCode = result.responseCode;
+      //add shake
+      this.currentVoucher.shake = true;
       this.dispatch('updateVoucher', this.currentVoucher);
       this.dispatch('updateTransactionable', false);
       this.dispatch('updateErrorMsg', result.responseDetailEnglish);

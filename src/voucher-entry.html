@@ -92,6 +92,44 @@
     transition: visibility 2s linear,opacity 2s linear;
     margin-right: 4px;opacity:0.9};
       .preload[shown]{display: inline;}
+
+      div [shake]{  
+        animation: wrong-log 0.3s;
+      }
+
+      @-moz-keyframes wrong-log {
+        0%, 100% {
+          left: 0px;
+        }
+        20% , 60% {
+          left: 15px;
+        }
+        40% , 80% {
+          left: -15px;
+        }
+      }
+      @-webkit-keyframes wrong-log {
+        0%, 100% {
+          left: 0px;
+        }
+        20% , 60% {
+          left: 15px;
+        }
+        40% , 80% {
+          left: -15px;
+        }
+      }
+      @keyframes wrong-log {
+        0%, 100% {
+          left: 0px;
+        }
+        20% , 60% {
+          left: 15px;
+        }
+        40% , 80% {
+          left: -15px;
+        }
+      }
     </style>
 
     <!-- <dom-repeat items={{vouchers}}> -->
@@ -99,10 +137,12 @@
         
         <div>
           <!-- <h5>[[voucher.uniqueCode]]</h5> -->
-          <standard-input current-voucher=[[voucher]] 
-          code={{voucher.uniqueCode}}>
-          </standard-input>
-          
+          <div style=position:relative shake$=[[shaking]]>
+              <standard-input current-voucher=[[voucher]] 
+              code={{voucher.uniqueCode}}>
+              </standard-input>
+          </div>
+
           <overlay shown$="[[voucher.voucherEligible]]">.</overlay>
           
           <voucher-label 
