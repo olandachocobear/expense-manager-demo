@@ -36,7 +36,7 @@ class TransactionDialogElement extends ExpenseManager.ReduxMixin(Polymer.Element
         },
         ironUrl: {
             type: String,
-            value: () => constant.url.dev.burn_vouch
+            value: () => constant.url.staging.burn_vouch
         },
         trx: {
             type: Object,
@@ -183,8 +183,6 @@ class TransactionDialogElement extends ExpenseManager.ReduxMixin(Polymer.Element
         this.dispatch('updateErrorMsg', result.detail.responseDetailBahasa);
         this.dispatch('updateErrorCode', 200);
         
-        this.dispatch('showReceipt');
-        
         this._reset();
     }
 
@@ -204,7 +202,11 @@ class TransactionDialogElement extends ExpenseManager.ReduxMixin(Polymer.Element
 
         console.log(cachedTrx)
         this.dispatch('addLastTransaction', cachedTrx);
-        this.dispatch('showReceipt')
+        
+        var $this=this;
+        setTimeout( () => {
+            this.dispatch('showReceipt')
+        }, 800);
     }
 }
 

@@ -66,7 +66,7 @@
             },
             ironUrl: {
               type: String,
-              value: () => constant.url.dev.list_vouchers
+              value: () => constant.url.staging.list_vouchers
             },
             currentPage: {
               type: String,
@@ -113,8 +113,8 @@
 
         _getParams() {
           return ({
-              txnMid: "GOCAFE000000001",// this.tid,
-              txnTid: "GOCAFE01", //this.mid,
+              txnMid: this.tid,
+              txnTid: this.mid,
               page: (this.currentPage==undefined) ? 0: this.currentPage,
               size: 100,
               sort: "txnTransactionDate,DESC"
