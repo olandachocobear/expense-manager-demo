@@ -48,6 +48,10 @@
         remaining: {
           type: String,
           statePath: 'transaction.remaining'
+        },
+        wholeVoucher: {
+          type: Array,
+          statePath: 'vouchers.vouchers'
         }
       };
     }
@@ -121,6 +125,17 @@
         {this.otherError(res)};
     }
     
+    checkIfExisted() {
+      var {uniqueCode} = this.currentVoucher;
+      var currentList = this.wholeVoucher;
+      
+      var count= currentList.
+                filter(vouch => vouch.uniqueCode==uniqueCode).
+                length;
+      
+      return count;
+    }
+
     validCode(result) { // result={trsLable:'a',responseCode:0,responseDetailEnglish:'ff'}
       this.currentVoucher.onCheck = false;
       var voucherValue = result.originalAmount-result.remainingAmount;
@@ -129,6 +144,19 @@
       /* Checkin out if the amount is smaller than the Voucher */
       // comparison here..
 
+      /*
+        Checking if it has inputted before..
+       */
+      if (this.checkIfExisted()>1){ // val should be only 1 (its own entry)
+        // reject the new voucher
+        var new_result = result
+        new_result.responseCode = Math.random() * 1000;
+        new_result.responseDetailEnglish = "Voucher telah di-entry untuk transaksi ini."
+        this.invalidCode(new_result);
+        return;
+        // this.invalidCode({new={...}})
+      }
+        
       
       this.dispatch('updateTransactionable', true);
       this._flagVoucherAsValid();

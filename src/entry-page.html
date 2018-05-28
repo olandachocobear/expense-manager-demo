@@ -225,7 +225,7 @@
         }
         showErrorToast(err){  
           let toasts2 = this.$.toast2;
-          toasts2.showErrorToast(`Failed to burn (msg: '${err}').`, {fitBottom:true});
+          toasts2.showErrorToast(`Failed to process (msg: '${err}').`, {fitBottom:true});
           this._resetToast();
         }
         showCustomToast(msg){
