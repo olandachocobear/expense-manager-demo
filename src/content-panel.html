@@ -113,8 +113,8 @@
 
         _getParams() {
           return ({
-              txnMid: this.tid,
-              txnTid: this.mid,
+              txnMid: this.mid,
+              txnTid: this.tid,
               page: (this.currentPage==undefined) ? 0: this.currentPage,
               size: 100,
               sort: "txnTransactionDate,DESC"
