@@ -2,6 +2,7 @@
 <link rel="import" href="../bower_components/iron-icon/iron-icon.html">
 <link rel="import" href="../bower_components/vaadin-grid/vaadin-grid.html">
 <link rel="import" href="../bower_components/vaadin-grid/vaadin-grid-sorter.html">
+<link rel="import" href="../bower_components/vaadin-grid/vaadin-grid-filter.html">
 <link rel="import" href="../bower_components/vaadin-lumo-styles/color.html">
 <link rel="import" href="../bower_components/vaadin-lumo-styles/sizing.html">
 <link rel="import" href="../bower_components/paper-icon-button/paper-icon-button-light.html">
@@ -19,7 +20,10 @@
         display: flex;
         flex-direction: column;
       }
-
+      
+      :host input{
+        display: none
+      }
       #add-button {
         position: absolute;
         height: var(--lumo-size-xl);
@@ -76,7 +80,8 @@
 
 </iron-scroll-threshold>
 
-    <vaadin-grid items="[[lists]]" id="expenses" active-item="{{activeItem}}">
+    <vaadin-grid id="expenses" active-item="{{activeItem}}"
+       >
 
       <vaadin-grid-column width="10em" frozen>
         <template class="header">
@@ -98,6 +103,9 @@
               No. Voucher
             </div>
           </vaadin-grid-sorter>
+          <vaadin-grid-filter aria-label="#" path="txnUniqueCode" value="[[_filterVoucher]]">
+              <input placeholder="Voucher #" value="{{_filterVoucher::input}}" id="voucherCode" focus-target>
+            </vaadin-grid-filter>
         </template>
         <template>
            <span class="total">[[item.txnUniqueCode]] </span><!--[[_formatTotal(item.total)]]</span> -->
@@ -173,13 +181,6 @@
 
     <button on-tap="nextPage"> <h4>LOAD MORE</h4> </button>
 
-    <!-- CHANGES HERE! david -->
-    <!-- <paper-icon-button-light on-click="_showExpenseEditor" id="add-button">
-      <button aria-label="Add expense">
-        <iron-icon icon="expense-manager:add"></iron-icon>
-      </button>
-    </paper-icon-button-light> -->
-
   </template>
   <script>
     (function() {
@@ -217,8 +218,84 @@
             pageLoad: {
               type: Boolean,
               statePath: 'uiState.page_loading'
-            }
+            },
+            burnedStuff: {
+              type: Array,
+              // statePath: 'burned'
+            },
+            dataProvider: {
+              type: Array,
+              /*
+              value: () => {
+                const _this = this;
+                return (params, callback) => {
+                  const items = Array.apply(null, {length: 20})
+                    .map((item, index) => getJSON('http://randomuser.me?index=' + 0));//(index + params.page * params.pageSize)));
+                  _this.loading = true;
+                  setTimeout(() => {
+                    callback(items);
+                    _this.loading = false;
+                  }, 500);
+                };
+              }
+             */
+              
+            },
+            _loading: {
+              type: Boolean
+            },
           };
+        }
+
+        appendRows(loaded){
+            this.dispatch('appendBurned', loaded)
+        }
+        constructor() {
+          super();
+          this.prop = 'expenses-list'          
+        }
+
+        ready(){
+          super.ready();
+          
+          // we can stitch it to a method! 
+          this.addEventListener('state-changed', this._detectFilterChange);
+
+          console.log(this.dataProvider);
+
+          this.$.expenses.size = 10;
+          this.$.expenses.dataProvider = function(params, callback) {
+            var xhr = new XMLHttpRequest();
+            var $this = this;
+            xhr.onload = function() {
+                callback(JSON.parse(xhr.responseText).content);
+                // console.log($this.dispatch('l'));//appendRows(xhr.responseText.content)
+            };
+            var index = params.page * params.pageSize;
+            
+            //console.log(this.getState());
+
+            var url = '../src/data/manual-redeem.json?'; //'https://demo.vaadin.com/demo-data/1.0/people?index=' + index + '&count=' + params.pageSize;
+
+            // `params.filters` format: [{path: 'lastName', direction: 'asc'}, ...];
+            params.filters.forEach(function(filter) {
+              url += '&' + filter.path + '=' + encodeURIComponent(filter.value);
+            });
+
+            xhr.open('GET', url, true);
+            xhr.send();
+          };
+         
+        }
+        
+        _detectFilterChange(event){
+          const state = event.detail;
+          let lastFilters = {};
+
+          if (JSON.stringify(state.filters) !== JSON.stringify(this.srcFilters)) {
+            this._filterVoucher = "73255656532" //state.filters.uniqueCode;
+            lastFilters = state.filters;
+          }
         }
 
         _showExpenseEditor() {
