@@ -132,10 +132,10 @@
             
             <!-- <vaadin-combo-box name="merchant" items='[{"label": "Voucher", "value": 0}, {"label": "Coupon", "value": 1}]' value="{{_expense.transType}}" selected="Voucher" label="Type Promotion" required></vaadin-combo-box> -->
 
-            <vaadin-text-field name="total" on-blur="alert('a')" 
+            <vaadin-text-field name="total" 
               prevent-invalid-input pattern="[0-9.]*" value="{{fieldAmount}}" 
               on-change="detectChanges" label="Total transaction" 
-              pattern="[0-9]*" required
+              required apply-format
               style="--lumo-text-field-size: var(--lumo-size-l);
                     font-size: var(--lumo-font-size-xl);
                     margin-top:10px">
@@ -162,7 +162,7 @@
             <!-- <vaadin-text-area name="comment" label="Comment" value="{{_expense.comment}}"></vaadin-text-area> -->
             
             
-            <vaadin-text-field disabled id="remaining" theme="align-right" 
+            <vaadin-text-field readonly id="remaining" theme="align-right" 
               value="Rp [[remainingTxt]]" label="Remaining Amount" pattern="[0-9]*"
               shown$="[[displayRemaining]]">
                 <div slot="prefix"></div>

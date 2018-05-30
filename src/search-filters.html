@@ -76,13 +76,13 @@
       <vaadin-date-picker label="From" value="{{filters.txnStartTransactionDate}}" max="[[filters.txnEndTransactionDate]]"></vaadin-date-picker>
       <vaadin-date-picker label="To" value="{{filters.txnEndTransactionDate}}" min="[[filters.txnStartTransactionDate]]"></vaadin-date-picker>
       <vaadin-text-field label="Invoice Number" value="{{filters.txnTraceNumber}}" pattern="[0-9]+"></vaadin-text-field>
-      <div class="row">
+      <!-- <div class="row">
         <vaadin-text-field label="Min" value="{{filters.min}}" pattern="[0-9]+">
           <div slot="prefix">Rp</div>
         </vaadin-text-field>
         <span class="delimiter">–</span>
         <vaadin-text-field label="Max" value="{{filters.max}}" pattern="[0-9]+"></vaadin-text-field>
-      </div>
+      </div> -->
       <!-- <vaadin-combo-box label="Merchant" items="{{merchants}}" value="{{filters.merchant}}"></vaadin-combo-box> -->
       <option-group caption="Status" value="{{filters.status}}" items="[[statusOptions]]" label-path="label" value-path="name"></option-group>
       <div class="buttons" hidden="[[!phone]]">

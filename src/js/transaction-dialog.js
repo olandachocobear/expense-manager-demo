@@ -36,7 +36,7 @@ class TransactionDialogElement extends ExpenseManager.ReduxMixin(Polymer.Element
         },
         ironUrl: {
             type: String,
-            value: () => constant.url.dev.burn_vouch
+            value: () => constant.url.staging.burn_vouch
         },
         trx: {
             type: Object,
