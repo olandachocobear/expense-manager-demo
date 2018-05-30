@@ -116,42 +116,45 @@ class TransactionDialogElement extends ExpenseManager.ReduxMixin(Polymer.Element
 
     _updateBodyRequest(){
         // remaining Logic (recalculate,etc.)
-        this._toggleRemaining();
-        
-        var voucher_arr = [];
-        var discount_amount = 0;
+        // ONLY if the voucher is eligible!
+        var last_voucher = this.trx.vouchers.slice(-1)[0]
+        if (last_voucher.voucherEligible){
+            this._toggleRemaining();
+            
+            var voucher_arr = [];
+            var discount_amount = 0;
 
-        if(this.trx.vouchers[0]['voucherAmount']>0){
-            for(var i=0; i<this.trx.vouchers.length; i++){
-                // remember to only update body with Eligible vouchers..
-                if(this.trx.vouchers[i]['voucherEligible']){
-                    voucher_arr.push(this.trx.vouchers[i]['uniqueCode']);
-                    discount_amount += this.trx.vouchers[i]['voucherAmount'];
+            if(this.trx.vouchers[0]['voucherAmount']>0){
+                for(var i=0; i<this.trx.vouchers.length; i++){
+                    // remember to only update body with Eligible vouchers..
+                    if(this.trx.vouchers[i]['voucherEligible']){
+                        voucher_arr.push(this.trx.vouchers[i]['uniqueCode']);
+                        discount_amount += this.trx.vouchers[i]['voucherAmount'];
+                    }
+                }
+                var current_remaining = parseInt(this._strip(this.fieldAmount))-discount_amount
+                
+                /*  barrier to limit remaining amount to minimum of 0 (not minus) */
+                if(current_remaining < 0){
+                    console.log('limit amount 0 broken')
+                    current_remaining = 0;
                 }
             }
-            var current_remaining = parseInt(this._strip(this.fieldAmount))-discount_amount
+
+            this.dispatch('updateRemaining', current_remaining)
             
-            /*  barrier to limit remaining amount to minimum of 0 (not minus) */
-            if(current_remaining < 0){
-                console.log('limit amount 0 broken')
-                current_remaining = 0;
-            }
+            this.bodyRequest = {
+                amount: parseInt(this._strip(this.fieldAmount)),
+                uniqueCodes: voucher_arr,
+                mid: this.userDetail.mid, 
+                merchantCode: this.userDetail.merchantCode, 
+                tid: this.userDetail.tid,
+                transactionDate: new Date(),
+                traceNumber: this.trx.trxNumber,
+                transactionTypeId: 2,
+                username: this.userDetail.username
+            };
         }
-
-        this.dispatch('updateRemaining', current_remaining)
-        
-        this.bodyRequest = {
-            amount: parseInt(this._strip(this.fieldAmount)),
-            uniqueCodes: voucher_arr,
-            mid: this.userDetail.mid, 
-            merchantCode: this.userDetail.merchantCode, 
-            tid: this.userDetail.tid,
-            transactionDate: new Date(),
-            traceNumber: this.trx.trxNumber,
-            transactionTypeId: 2,
-            username: this.userDetail.username
-          };
-
     } 
     /**
      * Closes the dialog.

@@ -122,12 +122,7 @@
       //update TRX first, so voucher area will get validTrx and add + button
       this.dispatch('updateTransactionable', true);
 
-      var $this = this;
-      setTimeout( () => {
-        $this.dispatch('removeVoucher', removed_node);
-        console.log($this.listVouchers)
-      }, 1500)
-      
+      this.dispatch('removeVoucher', removed_node);
     }
 
     /**

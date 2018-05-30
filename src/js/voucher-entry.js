@@ -37,6 +37,7 @@
     
     _removeNode(e){
       console.log('removing entry #: ' + e.target.dataId)
+      this.dispatch('updateTransactionable', true);
       this.dispatch('removeVoucher', e.target.dataId);
     }
     updateShaker() {
