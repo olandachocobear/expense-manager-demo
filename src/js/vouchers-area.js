@@ -17,7 +17,8 @@
         },
          validList: {
            type: Boolean,
-           statePath: 'transaction.validTrx'
+           statePath: 'transaction.validTrx',
+           observer: '_voucherChanged'
          },
          addAllowed: {
            type: Boolean,
@@ -119,13 +120,14 @@
       console.log('removing element #' + e.detail.target)
       var removed_node = parseInt(e.detail.target.id);
       
+      this.dispatch('removeVoucher', removed_node);
+
       //update TRX first, so voucher area will get validTrx and add + button
       // BUT.. ONLY WHEN THE LAST ONE IS ELIGIBLE!
       var lastVoucher = this.listVouchers.slice(-1)[0]
       if (lastVoucher.voucherEligible)      
         this.dispatch('updateTransactionable', true);
 
-      this.dispatch('removeVoucher', removed_node);
     }
 
     /**
