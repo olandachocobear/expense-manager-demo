@@ -36,14 +36,20 @@
     }
     
     _removeNode(e){
-      console.log('removing entry #: ' + e.target.dataId)
-      this.dispatch('updateTransactionable', true);
-      this.dispatch('removeVoucher', e.target.dataId);
+      if(this.vouchers.length==1)
+        this._shakeMomentarily()
+      else {
+        console.log('removing entry #: ' + e.target.dataId)
+        this.dispatch('updateTransactionable', true);
+        this.dispatch('removeVoucher', e.target.dataId);
+      }
     }
+
     updateShaker() {
       if(this.voucher.shake)
         this._shakeMomentarily()
     }
+
     _shakeMomentarily() {
       this.shaking = true;
       this.voucher.shake = true;
