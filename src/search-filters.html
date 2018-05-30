@@ -73,8 +73,8 @@
         <span>Filter Redeem</span>
         <vaadin-button on-click="_clearFilters" theme="tertiary-inline small">Clear</vaadin-button>
       </div>
-      <vaadin-date-picker label="From" value="{{filters.start}}" max="[[filters.end]]"></vaadin-date-picker>
-      <vaadin-date-picker label="To" value="{{filters.end}}" min="[[filters.start]]"></vaadin-date-picker>
+      <vaadin-date-picker label="From" value="{{filters.txnStartTransactionDate}}" max="[[filters.txnEndTransactionDate]]"></vaadin-date-picker>
+      <vaadin-date-picker label="To" value="{{filters.txnEndTransactionDate}}" min="[[filters.txnStartTransactionDate]]"></vaadin-date-picker>
       <div class="row">
         <vaadin-text-field label="Min" value="{{filters.min}}" pattern="[0-9]+">
           <div slot="prefix">Rp</div>

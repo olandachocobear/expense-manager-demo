@@ -36,7 +36,7 @@
     <expenses-list lists=[[rawResult]]></expenses-list>
     <!-- <history-panel phone="[[phone]]" tablet="[[tablet]]"></history-panel> -->
   
-    <iron-ajax id="vouchersLoader" auto
+    <iron-ajax id="vouchersLoader"
           url=[[ironUrl]] method="get"
           params='{{_getParams()}}'
           headers='{
@@ -135,7 +135,7 @@
         }
 
         updateList() {
-          this.$.vouchersLoader.generateRequest();
+          //this.$.vouchersLoader.generateRequest();
         }
 
         _displayList(result) {

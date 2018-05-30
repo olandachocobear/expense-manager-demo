@@ -10,7 +10,9 @@
 <link rel="import" href="data/store.html">
 <link rel="import" href="icons.html">
 
-<link rel="import" href="../bower_components/iron-scroll-threshold/iron-scroll-threshold.html">
+<link rel="import" href="constant.html">
+
+<!-- <link rel="import" href="../bower_components/iron-scroll-threshold/iron-scroll-threshold.html"> -->
 
 <dom-module id="expenses-list">
   <template>
@@ -22,7 +24,7 @@
       }
       
       :host input{
-        display: none
+        /* display: none */
       }
       #add-button {
         position: absolute;
@@ -105,7 +107,14 @@
           </vaadin-grid-sorter>
           <vaadin-grid-filter aria-label="#" path="txnUniqueCode" value="[[_filterVoucher]]">
               <input placeholder="Voucher #" value="{{_filterVoucher::input}}" id="voucherCode" focus-target>
-            </vaadin-grid-filter>
+          </vaadin-grid-filter>
+          <vaadin-grid-filter aria-label="#" path="txnStartTransactionDate" value="[[_filterStart]]">
+              <input placeholder="Voucher #" value="{{_filterStart::input}}" id="startDate" focus-target>
+          </vaadin-grid-filter>
+          <vaadin-grid-filter aria-label="#" path="txnEndTransactionDate" value="[[_filterEnd]]">
+              <input placeholder="Voucher #" value="{{_filterEnd::input}}" id="endDate" focus-target>
+          </vaadin-grid-filter>
+
         </template>
         <template>
            <span class="total">[[item.txnUniqueCode]] </span><!--[[_formatTotal(item.total)]]</span> -->
@@ -244,6 +253,11 @@
             _loading: {
               type: Boolean
             },
+            filters: {
+              type: Object,
+              statePath: 'filters',
+              observer: '_detectFilterChange'
+            }
           };
         }
 
@@ -259,28 +273,26 @@
           super.ready();
           
           // we can stitch it to a method! 
-          this.addEventListener('state-changed', this._detectFilterChange);
+          // this.addEventListener('state-changed', this._detectFilterChangeCustomEvent);
 
-          console.log(this.dataProvider);
-
-          this.$.expenses.size = 10;
+          this.$.expenses.size = 100;
+          this.$.expenses.pageSize = 10;
           this.$.expenses.dataProvider = function(params, callback) {
             var xhr = new XMLHttpRequest();
             var $this = this;
             xhr.onload = function() {
                 callback(JSON.parse(xhr.responseText).content);
-                // console.log($this.dispatch('l'));//appendRows(xhr.responseText.content)
             };
-            var index = params.page * params.pageSize;
             
-            //console.log(this.getState());
+            var url = constant.url.staging.list_vouchers + '?size=' + params.pageSize + '&page=' + params.page + '&sort=txnTransactionDate,DESC' //+ this.customFilters; //'https://demo.vaadin.com/demo-data/1.0/people?index=' + index + '&count=' + params.pageSize;
 
-            var url = '../src/data/manual-redeem.json?'; //'https://demo.vaadin.com/demo-data/1.0/people?index=' + index + '&count=' + params.pageSize;
+            //var url = '../src/data/manual-redeem.json?'; //'https://demo.vaadin.com/demo-data/1.0/people?index=' + index + '&count=' + params.pageSize;
 
             // `params.filters` format: [{path: 'lastName', direction: 'asc'}, ...];
             params.filters.forEach(function(filter) {
               url += '&' + filter.path + '=' + encodeURIComponent(filter.value);
             });
+            
 
             xhr.open('GET', url, true);
             xhr.send();
@@ -288,7 +300,7 @@
          
         }
         
-        _detectFilterChange(event){
+        _detectFilterChangeCustomEvent(event){
           const state = event.detail;
           let lastFilters = {};
 
@@ -296,7 +308,60 @@
             this._filterVoucher = "73255656532" //state.filters.uniqueCode;
             lastFilters = state.filters;
           }
+
+          this.refreshDataProvider()
         }
+        
+
+        refreshDataProvider(){
+          //effin hard to 'slip-in' a variable so dataProvider function can get it
+          this.$.expenses.customFilters = this._getParams();
+
+          this.$.expenses.dataProvider = function(params, callback) {
+            var xhr = new XMLHttpRequest();
+            xhr.onload = function() {
+            };
+            // var index = params.page * params.pageSize;
+
+            var url = constant.url.staging.list_vouchers + '?size=20&page=' + params.page //+ this.customFilters; //'https://demo.vaadin.com/demo-data/1.0/people?index=' + index + '&count=' + params.pageSize;
+            console.log(url)
+            xhr.open('GET', url, true);
+            xhr.send();
+          };
+        }
+
+        _detectFilterChange(){
+          this.$.expenses.customFilters = this._getParams();
+          console.log('=========== ' + this.$.expenses.customFilters)
+          console.log(this.$.expenses.dataProvider)
+
+          // change the inputbox for filters
+          if(this.filters.specificVoucher!='')
+            this._filterVoucher = this.filters.specificVoucher
+          if(this.filters.filters.txnStartTransactionDate!=undefined)
+            this._filterStart = this.filters.filters.txnStartTransactionDate + ' 00:00:00'
+          if(this.filters.filters.txnEndTransactionDate!=undefined)
+            this._filterEnd = this.filters.filters.txnEndTransactionDate + ' 23:59:59'
+          
+
+        }
+
+        _getParams() {
+          this.filters.sort = (this.filters.sort==undefined) ? "txnTransactionDate,DESC" : this.filters.sort;
+          console.log(this.filters)
+          
+          let params = ""
+          Object.entries(this.filters).forEach((entry) => {
+              const [key, value] = entry;
+              params += `&${key}=${value}`;
+              //console.log(`${key}: ${value}`);
+          });
+
+          return params;
+        }
+
+
+
 
         _showExpenseEditor() {
           this.dispatch('editExpense');
