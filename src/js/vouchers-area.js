@@ -43,10 +43,25 @@
          remainingAmount: {
            type: String,
            statePath: 'transaction.remaining'
+         },
+         swipeable: {
+           type: String,
+           computed: 'swipeableOrNot(item)'
          }
       };
     }
 
+    getClass(id){
+      if (this.listVouchers.length==1)
+        return `disable-swipe`;
+    }
+    swipeableOrNot(id){
+      if(id==1)
+        return"disable-swipe";
+      else
+        return "";
+      
+    }
     _voucherChanged(){
       // alert('!!'+)
       if(this.validList && this.remainingAmount>0)

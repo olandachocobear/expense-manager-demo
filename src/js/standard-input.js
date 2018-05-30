@@ -43,7 +43,7 @@
           statePath: 'vouchers.trxNumber'
         },
         ironUrl: {
-          value: () => constant.url.staging.eligible_cek
+          value: () => constant.url.dev.eligible_cek
         },
         remaining: {
           type: String,
@@ -173,7 +173,7 @@
         this.invalidCode(new_result);
       }
       */
-     
+
       this.dispatch('updateTransactionable', true);
       this._flagVoucherAsValid();
       this.dispatch('updateErrorMsg', result.responseDetailEnglish);

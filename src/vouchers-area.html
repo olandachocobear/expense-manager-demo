@@ -45,11 +45,11 @@
       
     </style>
     <iron-swipeable-container id="swiper" swipe-style="curve" width-ratio="3"
-    on-iron-swipe="_deleteNode" destroy
+    on-iron-swipe="_deleteNode" destroy 
   >
     <!-- <dom-repeat items={{listExample}}> -->
       <template is="dom-repeat" items={{listVouchers}} mutable-data index-as="nomor">
-        <div id=[[item.id]]>
+        <div id=[[item.id]] class$=[[getClass(item.id)]] >
           <voucher-entry voucher=[[item]]> </voucher-entry>
         </div>  
       </template>

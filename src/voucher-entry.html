@@ -2,6 +2,9 @@
 
 <link rel="import" href="./standard-input.html">
 <link rel="import" href="./voucher-label.html">
+<link rel="import" href="../bower_components/iron-icon/iron-icon.html">
+<link rel="import" href="../bower_components/vaadin-button/vaadin-button.html">
+
 <link rel="import" href="../bower_components/iron-swipeable-container/iron-swipeable-container.html">
 
 <script src="./js/voucher-entry.js"></script>
@@ -136,6 +139,12 @@
       <!-- <template> -->
         
         <div>
+          <vaadin-button on-click="_removeNode" data-id=[[voucher.id]] style="z-index:9999;display:inline-block;width:33px;padding-left:1px;margin-top:3px">
+            <img src="../images/trash-icon.png"  >
+          </vaadin-button>
+          <!-- <iron-icon icon="lumo:new" slot="suffix"></iron-icon>
+          <iron-icon icon="expense-manager:delete" slot="suffix"></iron-icon> -->
+          
           <!-- <h5>[[voucher.uniqueCode]]</h5> -->
           <div style=position:relative shake$=[[shaking]]>
               <standard-input current-voucher=[[voucher]] 
@@ -145,13 +154,13 @@
 
           <overlay shown$="[[voucher.voucherEligible]]">.</overlay>
           
-          <voucher-label 
+          <!-- <voucher-label 
             bgColor="red"
             label=[[voucher.voucherType]]
             id=[[voucher.id]]
             shown$="[[voucher.voucherEligible]]"
           >
-          </voucher-label>
+          </voucher-label> -->
 
           <div class="preload" shown$="[[voucher.onCheck]]">
             <img src="images/preload2.gif" >

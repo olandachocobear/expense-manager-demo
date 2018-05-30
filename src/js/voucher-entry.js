@@ -35,6 +35,10 @@
       };
     }
     
+    _removeNode(e){
+      console.log('removing entry #: ' + e.target.dataId)
+      this.dispatch('removeVoucher', e.target.dataId);
+    }
     updateShaker() {
       if(this.voucher.shake)
         this._shakeMomentarily()
