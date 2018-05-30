@@ -136,13 +136,19 @@
       return count;
     }
 
+    calcRemaining() {
+      var vouchers = this.wholeVoucher;
+      var discount_amount = 0;
+      for (var i = 0; i<vouchers.length; i++){
+          discount_amount += vouchers[i].voucherAmount;
+      }
+      return (this.trxAmount-discount_amount);
+    }
     validCode(result) { // result={trsLable:'a',responseCode:0,responseDetailEnglish:'ff'}
       this.currentVoucher.onCheck = false;
       var voucherValue = result.originalAmount-result.remainingAmount;
       this.currentVoucher.voucherType = result.trsLabel; //`Voucher Rp${result.trsValue}`; 
-      this.currentVoucher.voucherAmount = result.trsValue;
-      /* Checkin out if the amount is smaller than the Voucher */
-      // comparison here..
+      this.currentVoucher.voucherAmount = result.trsValue
 
       /*
         Checking if it has inputted before..
@@ -156,8 +162,18 @@
         return;
         // this.invalidCode({new={...}})
       }
-        
       
+      /* 
+        Checkin out if the amount is smaller than the Voucher. 
+      
+      if(this.calcRemaining()>0){
+        var new_result = result
+        new_result.responseCode = Math.random() * 1000;
+        new_result.responseDetailEnglish = "Discount exceed remaini"
+        this.invalidCode(new_result);
+      }
+      */
+     
       this.dispatch('updateTransactionable', true);
       this._flagVoucherAsValid();
       this.dispatch('updateErrorMsg', result.responseDetailEnglish);

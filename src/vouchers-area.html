@@ -56,7 +56,7 @@
     <!-- </dom-repeat> -->
   </iron-swipeable-container>
     
-    <paper-icon-button-light id="add-button" shown>
+    <paper-icon-button-light id="add-button" shown$="[[addAllowed]]">
         <button aria-label="Add voucher" on-click="_add">
           <iron-icon icon="expense-manager:add"></iron-icon>
         </button>

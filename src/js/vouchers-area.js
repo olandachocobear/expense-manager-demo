@@ -39,16 +39,17 @@
           //    {id: 6},
           //  ]
           observer: '_listRefreshed'
+         },
+         remainingAmount: {
+           type: String,
+           statePath: 'transaction.remaining'
          }
       };
     }
 
     _voucherChanged(){
       // alert('!!'+)
-      if(this.listVouchers.length==1 ){
-        this.addAllowed = true
-      }
-      else if(this.listVouchers.length>1 && this.validList)
+      if(this.validList && this.remainingAmount>0)
         this.addAllowed = true
       else
         this.addAllowed = false

@@ -1,4 +1,3 @@
-
 (function() {
 /**
  * @memberof ExpenseManager
@@ -90,6 +89,13 @@ class TransactionDialogElement extends ExpenseManager.ReduxMixin(Polymer.Element
     }
     _amountChanged (){
         var remaining = this._calcRemaining();
+
+        /*  barrier to limit remaining amount to minimum of 0 (not minus) */
+        if(remaining < 0){
+            console.log('limit amount 0 broken')
+            remaining = 0;
+        }
+
         this.dispatch('updateTransactionAmount', this._strip(this.fieldAmount));
         this.dispatch('updateRemaining', remaining);
     }
@@ -124,6 +130,12 @@ class TransactionDialogElement extends ExpenseManager.ReduxMixin(Polymer.Element
                 }
             }
             var current_remaining = parseInt(this._strip(this.fieldAmount))-discount_amount
+            
+            /*  barrier to limit remaining amount to minimum of 0 (not minus) */
+            if(current_remaining < 0){
+                console.log('limit amount 0 broken')
+                current_remaining = 0;
+            }
         }
 
         this.dispatch('updateRemaining', current_remaining)
