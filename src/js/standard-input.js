@@ -13,6 +13,9 @@
         url: {
           type: String
         },
+        readOnly: {
+          type: Boolean
+        },
         currentVoucher: {
           type: Object,
         },

@@ -13,6 +13,7 @@
     </style>
     
     <vaadin-text-field name="total" value="{{code}}" 
+        readonly=[[readOnly]]
         required 
         mutable-data on-keyup="delayCheck" 
         value="{{fieldAmount}}" 

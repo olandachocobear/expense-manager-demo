@@ -40,8 +40,12 @@
         this._shakeMomentarily()
       else {
         console.log('removing entry #: ' + e.target.dataId)
-        this.dispatch('updateTransactionable', true);
-        this.dispatch('removeVoucher', e.target.dataId);
+        //must check if the last one is already Eligible'd
+        var lastVoucher = this.vouchers.slice(-1)[0]
+        if (lastVoucher.voucherEligible)     
+          this.dispatch('updateTransactionable', true);
+        
+          this.dispatch('removeVoucher', e.target.dataId);
       }
     }
 

@@ -147,8 +147,9 @@
           
           <!-- <h5>[[voucher.uniqueCode]]</h5> -->
           <div style=position:relative shake$=[[shaking]]>
-              <standard-input current-voucher=[[voucher]] 
-              code={{voucher.uniqueCode}}>
+              <standard-input read-only=[[voucher.voucherEligible]]
+                current-voucher=[[voucher]] 
+                code={{voucher.uniqueCode}}>
               </standard-input>
           </div>
 
