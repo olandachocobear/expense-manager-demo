@@ -24,7 +24,7 @@
       }
       
       :host input{
-        /* display: none */
+        display: none
       }
       #add-button {
         position: absolute;
@@ -85,7 +85,7 @@
     <vaadin-grid id="expenses" active-item="{{activeItem}}"
        >
 
-      <vaadin-grid-column width="10em" frozen>
+      <vaadin-grid-column width="11em" frozen>
         <template class="header">
           <vaadin-grid-sorter path="date" direction="desc">
             <div class="header-cell">
@@ -113,6 +113,9 @@
           </vaadin-grid-filter>
           <vaadin-grid-filter aria-label="#" path="txnEndTransactionDate" value="[[_filterEnd]]">
               <input placeholder="Voucher #" value="{{_filterEnd::input}}" id="endDate" focus-target>
+          </vaadin-grid-filter>
+          <vaadin-grid-filter aria-label="#" path="txnTraceNumber" value="[[_filterInvoice]]">
+              <input placeholder="Voucher #" value="{{_filterInvoice::input}}" id="invoiceNumber" focus-target>
           </vaadin-grid-filter>
 
         </template>
@@ -160,6 +163,20 @@
         </template>
       </vaadin-grid-column>
 
+      <vaadin-grid-column width="7em">
+          <template class="header">
+            <vaadin-grid-sorter path="status">
+              <div class="header-cell">
+                Invoice #
+              </div>
+            </vaadin-grid-sorter>
+          </template>
+          <template>
+            <span> [[item.txnTraceNumber]]  </span> 
+          </template>
+        </vaadin-grid-column>
+
+<!--
       <vaadin-grid-column width="8em">
         <template class="header">
           <vaadin-grid-sorter path="status">
@@ -169,10 +186,10 @@
           </vaadin-grid-sorter>
         </template>
         <template>
-          <span class$="status-[[item.status]] status"> [[item.txnResponseDetail]]  </span> <!--[[_formatStatus(item.status)]] -->
+          <span class$="status-[[item.status]] status"> [[item.txnResponseDetail]]  </span> <!--[[_formatStatus(item.status)]]
         </template>
       </vaadin-grid-column>
-
+ -->
       <vaadin-grid-column width="14em" flex-grow="3">
         <template class="header">
           <vaadin-grid-sorter path="comment">
@@ -290,7 +307,8 @@
 
             // `params.filters` format: [{path: 'lastName', direction: 'asc'}, ...];
             params.filters.forEach(function(filter) {
-              url += '&' + filter.path + '=' + encodeURIComponent(filter.value);
+              if (filter.value!='') //remove the unneceseary filter
+               url += '&' + filter.path + '=' + encodeURIComponent(filter.value);
             });
             
 
@@ -336,12 +354,16 @@
           console.log(this.$.expenses.dataProvider)
 
           // change the inputbox for filters
-          if(this.filters.specificVoucher!='')
+          if ( this.filters.specificVoucher!=null)
             this._filterVoucher = this.filters.specificVoucher
+          
+          
           if(this.filters.filters.txnStartTransactionDate!=undefined)
             this._filterStart = this.filters.filters.txnStartTransactionDate + ' 00:00:00'
           if(this.filters.filters.txnEndTransactionDate!=undefined)
             this._filterEnd = this.filters.filters.txnEndTransactionDate + ' 23:59:59'
+          if(this.filters.filters.txnTraceNumber!=undefined)
+            this._filterInvoice = this.filters.filters.txnTraceNumber
           
 
         }
