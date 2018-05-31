@@ -35,7 +35,7 @@ class TransactionDialogElement extends ExpenseManager.ReduxMixin(Polymer.Element
         },
         ironUrl: {
             type: String,
-            value: () => constant.url.dev.burn_vouch
+            value: () => constant.url.staging.burn_vouch
         },
         trx: {
             type: Object,
@@ -112,6 +112,9 @@ class TransactionDialogElement extends ExpenseManager.ReduxMixin(Polymer.Element
     _updateRedeemable (){
         this.redeemable = this.validTrx ? "primary" : "error";
         this.resetable = true
+        //add remainig showing here also
+        
+        this._toggleRemaining()
     }
 
     _updateBodyRequest(){

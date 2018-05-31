@@ -105,6 +105,12 @@
               No. Voucher
             </div>
           </vaadin-grid-sorter>
+          <vaadin-grid-filter aria-label="#" path="txnMid" value$="[[mid]]">
+              <input placeholder="Voucher #" value$="[[mid]]" focus-target>
+          </vaadin-grid-filter>
+          <vaadin-grid-filter aria-label="#" path="txnTid" value="[[tid]]">
+              <input placeholder="Voucher #" value="[[tid]]" focus-target>
+          </vaadin-grid-filter>
           <vaadin-grid-filter aria-label="#" path="txnUniqueCode" value="[[_filterVoucher]]">
               <input placeholder="Voucher #" value="{{_filterVoucher::input}}" id="voucherCode" focus-target>
           </vaadin-grid-filter>
@@ -274,6 +280,14 @@
               type: Object,
               statePath: 'filters',
               observer: '_detectFilterChange'
+            },
+            mid: {
+              type: String,
+              statePath: 'user.data.mid'
+            },
+            tid: {
+              type: String,
+              statePath: 'user.data.tid'
             }
           };
         }

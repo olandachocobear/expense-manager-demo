@@ -21,8 +21,8 @@
         position: relative;
         /* left:42%; */
         box-shadow: 1px 2px 4px darkslateblue;
-        top: -23px;
-        left: 38%;
+        top: -20px;
+        left: 37%;
         z-index: 2;
         line-height: 1;
         vertical-align: baseline;
@@ -73,12 +73,12 @@
       -moz-filter: blur(25px);
       -o-filter: blur(25px);
       -ms-filter: blur(25px);
-      filter: blur(7px);
+      filter: blur(6px);
       opacity: 1;
-      height: 13px;
+      height: 11px;
     width: 95%;
     margin-left: 2%;
-    margin-top: -29px;
+    margin-top: -36px;
     visibility: hidden;
     
       }
@@ -139,8 +139,9 @@
       <!-- <template> -->
         
         <div>
-          <vaadin-button on-click="_removeNode" data-id=[[voucher.id]] style="z-index:9999;display:inline-block;width:33px;padding-left:1px;margin-top:3px">
-            <img src="../images/trash-icon.png"  >
+          <vaadin-button on-click="_removeNode" data-id=[[voucher.id]] 
+            style="z-index:9999;display:inline-block;float:left;background:lightcoral;margin-top:3px">
+            <img src="../images/trash-icon.png"  style="width:25px">
           </vaadin-button>
           <!-- <iron-icon icon="lumo:new" slot="suffix"></iron-icon>
           <iron-icon icon="expense-manager:delete" slot="suffix"></iron-icon> -->
@@ -149,19 +150,20 @@
           <div style=position:relative shake$=[[shaking]]>
               <standard-input read-only=[[voucher.voucherEligible]]
                 current-voucher=[[voucher]] 
-                code={{voucher.uniqueCode}}>
+                code={{voucher.uniqueCode}}
+                style="margin-left:-5%">
               </standard-input>
           </div>
 
           <overlay shown$="[[voucher.voucherEligible]]">.</overlay>
           
-          <!-- <voucher-label 
+          <voucher-label 
             bgColor="red"
             label=[[voucher.voucherType]]
             id=[[voucher.id]]
             shown$="[[voucher.voucherEligible]]"
           >
-          </voucher-label> -->
+          </voucher-label>
 
           <div class="preload" shown$="[[voucher.onCheck]]">
             <img src="images/preload2.gif" >
