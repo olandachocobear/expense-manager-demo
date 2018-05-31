@@ -31,7 +31,8 @@
       body='{{bodyRequest}}'
       headers='{{header}}'
       on-response="eligibleResponse"
-      on-error="onError">
+      on-error="onError"
+      timeout=30000>
      </iron-ajax>
 
   </template>

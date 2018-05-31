@@ -24,7 +24,9 @@
           url={{ironUrl}} method="post" 
           body="{{bodyRequest}}"
           headers='{"Content-Type": "application/json"}'
-          on-response="eligibleResponse">
+          on-response="eligibleResponse"
+          on-error="onError"
+          timeout=30000>
       </iron-ajax>
 
     

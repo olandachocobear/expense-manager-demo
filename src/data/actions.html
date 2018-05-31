@@ -157,6 +157,18 @@
     const resetTrx = () => {
       return {type: 'RESET_TX'}
     }
+    const showConnectionAlert = () => {
+      return {type: 'SHOW_SMILEY_DIALOG'}
+    }
+    const hideConnectionAlert = () => {
+      return {type: 'HIDE_SMILEY_DIALOG'}
+    }
+    const increaseConnAttempt = () => {
+      return {type: 'ADD_CONN_ATTEMPT'}
+    }
+    const resetConnAttempt = () => {
+      return {type: 'RESET_CONN_ATTEMPT'}
+    }
 
     window.ExpenseManager = window.ExpenseManager || {};
     window.ExpenseManager.actions = {
@@ -199,7 +211,13 @@
       insertBurned,
 
       searchVoucher,
-      resetTrx
+      resetTrx,
+
+      showConnectionAlert,
+      hideConnectionAlert,
+
+      increaseConnAttempt,
+      resetConnAttempt
 
 
     };

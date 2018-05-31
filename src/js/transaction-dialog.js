@@ -35,7 +35,7 @@ class TransactionDialogElement extends ExpenseManager.ReduxMixin(Polymer.Element
         },
         ironUrl: {
             type: String,
-            value: () => constant.url.staging.burn_vouch
+            value: () => constant.url.dev.burn_vouch
         },
         trx: {
             type: Object,
@@ -210,6 +210,8 @@ class TransactionDialogElement extends ExpenseManager.ReduxMixin(Polymer.Element
     }
 
     onError(e,detail){
+        this.dispatch('showConnectionAlert')
+
         console.log(e)
         console.log(e.target.lastRequest.xhr.status)
         console.log(detail.error); //the error object

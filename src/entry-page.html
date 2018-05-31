@@ -24,6 +24,7 @@
 <link rel="import" href="../bower_components/app-toasts/app-toasts.html">
 <link rel="import" href="../bower_components/metaui/m2-dialog.html">
 
+<link rel="import" href="../bower_components/confirm-dialog/confirm-dialog.html">
 <dom-module id="entry-page">
   <template>
     <style include="lumo-color">
@@ -86,6 +87,16 @@
         </receipt-paper>
       </div>
     </m2-dialog>
+
+    <confirm-dialog id="dialog" on-result="closeAlert">
+      <center>
+        <h1>Welp!</h1>
+        <br>
+        <img style=margin-top:-9px src="images/sad.png" width=135>
+        <H3 style=color:#555;margin-top:20px;margin-bottom:-4px;line-height:139%>It seems like you're currently having a bad connection.</H3>
+      </center>
+    </confirm-dialog>
+
     <frame name=print_frame id=print_frame></frame>
   </template>
 
@@ -170,10 +181,26 @@
             listVouchers: {
               type: Array,
               statePath: 'lastTrx.vouchers'
+            },
+            showAlert: {
+              type: Boolean,
+              statePath: 'uiState.modalAlert',
+              observer: 'toggleAlert'
             }
           };
         }
         
+        closeAlert() {
+          this.dispatch('hideConnectionAlert')
+        }
+        toggleAlert(){
+          if (this.showAlert)
+            this.$.dialog.show({
+              delay: 10,
+              confirm: 'Try again later'
+            })
+        }
+
         _setReceiptClosed() {
           this.dispatch('hideReceipt');
         }
