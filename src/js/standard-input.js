@@ -55,6 +55,10 @@
         wholeVoucher: {
           type: Array,
           statePath: 'vouchers.vouchers'
+        },
+        showReload: {
+          type: Boolean,
+          observer: 'showReloader'
         }
       };
     }
@@ -70,6 +74,9 @@
             //launch 'delayed' checker
             var $this = this;
             setTimeout( ()=> {
+
+                //hide the 'reload' button
+                this.currentVoucher.unchecked = false;
                 $this._compareVoucher(curr)
             }, constant.delay);
         }
@@ -82,6 +89,11 @@
             this.updateIronParams()
             this._checkEligible()
         }
+    }
+
+    showReloader() {
+      if (!this.currentVoucher.unchecked && this.currentVoucher.uniqueCode != '')
+        this._checkEligible();
     }
 
     _amountChanged() {
@@ -214,11 +226,12 @@
      
     onError(e, detail) {
       this.currentVoucher.onCheck = false;
+      this.currentVoucher.unchecked = true;
       // remember to update the state, to remoce preload icon
       var $this = this;
       setTimeout( () => {
           $this.dispatch('updateVoucher', this.currentVoucher)
-      }, 1250);
+      }, 1000);
       
       this.dispatch('updateErrorCode', 66);
       console.log(e);

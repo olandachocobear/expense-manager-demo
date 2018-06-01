@@ -18,21 +18,32 @@
 <dom-module id="receipt-paper">
   <template>
     <style>
+        #receiptBlock{
+            width: 300px;
+            margin: auto;
+        }
     </style>
+
 <div id=receiptBlock >
   <div style=text-align:center>
         <center><h2>{{merchant}}</h2></center>
-          <div style="display: flex;margin-top:-25px"></div>
-            <h5 style=margin-top:16px>MID: {{mid}}</h5>
-            <h5 style=margin-top:-20px>TID: {{tid}}</h5>
-            <div style=margin-top:-20px>
-              ==================================
-            </div>
-  
+          <div style="display:inline;margin-top:-25px"></div>
+
+            <h5 style=float:left;margin-top:5px;margin-bottom:-4px>MID: {{mid}}</h5>
+            <h5 style=float:right;margin-top:5px;margin-bottom:-4px>TID: {{tid}}</h5>
+
             <!-- <dom-repeat items={{listVouchers}} mutable-data> -->
                 <!-- <template> -->
-                    <div value={{item}} on-keypress="_clearBox" on-keyup="_moveIt">
+                    <div value={{item}} style="margin-top:8px" on-keypress="_clearBox" on-keyup="_moveIt">
                       <center>
+                          =======================================
+                          <h5 style=float:left;margin-top:-1px;margin-bottom:-5px>TRACE: {{mid}}</h5>
+                          <h5 style=float:right;margin-top:-1px;margin-bottom:-5px>DATE: {{tid}}</h5>
+                          <br>
+                          <h5 style=float:left;margin-top:5px;margin-bottom:5px>BATCH: {{tid}}</h5>
+                          <h5 style=float:right;margin-top:5px;margin-bottom:5px>TIME: {{tid}}</h5>
+                          
+            
                         <img src="images/voucher_burn.png" style=max-width:280px>
                         <br><h3 style=margin-bottom:5px>{{voucher_distinct}}</h3>
                         

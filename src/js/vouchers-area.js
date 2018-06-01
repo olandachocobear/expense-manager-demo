@@ -53,8 +53,11 @@
     }
 
     getClass(id){
-      if (this.listVouchers.length==1)
+      // if (this.listVouchers.length==1)
+
+      /* REQUEST TO ALWAYS DISABLE SWIPE */
         return `disable-swipe`;
+      
     }
     swipeableOrNot(id){
       if(id==1)
@@ -120,7 +123,11 @@
       console.log('removing element #' + e.detail.target)
       var removed_node = parseInt(e.detail.target.id);
       
-      this.dispatch('removeVoucher', removed_node);
+      var $this = this;
+      setTimeout( () => {
+        $this.dispatch('removeVoucher', removed_node);
+        console.log($this.listVouchers)
+      }, 750)
 
       //update TRX first, so voucher area will get validTrx and add + button
       // BUT.. ONLY WHEN THE LAST ONE IS ELIGIBLE!

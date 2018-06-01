@@ -35,6 +35,11 @@
       };
     }
     
+    _reload (){
+      this.voucher.unchecked = false;
+      this.dispatch('updateVoucher', this.vouchers);
+    }
+
     _removeNode(e){
       if(this.vouchers.length==1)
         this._shakeMomentarily()

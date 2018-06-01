@@ -10,6 +10,8 @@
 <link rel="import" href="data/store.html">
 <link rel="import" href="icons.html">
 
+<link rel="import" href="../bower_components/iron-ajax/iron-ajax.html">
+
 <link rel="import" href="constant.html">
 
 <!-- <link rel="import" href="../bower_components/iron-scroll-threshold/iron-scroll-threshold.html"> -->
@@ -85,6 +87,14 @@
     <vaadin-grid id="expenses" active-item="{{activeItem}}"
        >
 
+      <vaadin-grid-column frozen>
+        <template class="header">Action</template>
+        <template>
+          <button on-click="_reprint"
+              invoice-number="[[item.txnTraceNumber]]">Print</button>
+        </template>
+      </vaadin-grid-column>
+      
       <vaadin-grid-column width="11em" frozen>
         <template class="header">
           <vaadin-grid-sorter path="date" direction="desc">
@@ -213,6 +223,14 @@
 
     <button on-tap="nextPage"> <h4>LOAD MORE</h4> </button>
 
+    <iron-ajax id="txnInfoFetcher" 
+          url=[[fetchUrl]] method="get" 
+          params="[[queryParams]]"
+          headers='{"Content-Type": "application/json"}'
+          on-response="eligibleResponse"
+          on-error="onError"
+          timeout=30000>
+      </iron-ajax>
   </template>
   <script>
     (function() {
@@ -288,6 +306,20 @@
             tid: {
               type: String,
               statePath: 'user.data.tid'
+            },
+            fetchUrl: {
+              type: String,
+              value: () => constant.url.staging.list_vouchers
+            },
+            queryParams: {
+              type: Object,
+              value: () => {
+                return {
+                  page: 0,
+                  size: 10,
+                  sort: "txnTransactionDate,DESC"
+                }
+              }
             }
           };
         }
@@ -397,7 +429,55 @@
         }
 
 
+        _reprint(e) {
+          console.log('fetching TxnNumber #:'+ e.target.invoiceNumber)
+          console.log(this.queryParams)
+          this.queryParams.txnTraceNumber = e.target.invoiceNumber;
+          this.$.txnInfoFetcher.generateRequest();
+        }
 
+        eligibleResponse(result){
+          console.log(result.detail.response.content);
+          this.createCacheFromFetch(result.detail.response.content);
+        }
+
+        onError(e){
+          console.log(e)
+          console.log(e.target.lastRequest.xhr.status)
+          console.log(detail.error); //the error object
+          console.log(detail.request.status); //the status code
+          console.log(detail.request.statusText);  //the error status text
+        }
+
+        createCacheFromFetch(t){
+          // destructure the transaction info
+          var selectedTrx = {};
+          
+          // should choose the first Invoice (if happens to be more than one transactions)
+          t = t[0];
+          selectedTrx.trxAmount = t.txnOriginalAmount;
+          selectedTrx.trxNumber = t.txnTraceNumber;
+          selectedTrx.remaining = t.txnRemainingAmount;
+          selectedTrx.storeName = t.txnStoreName;
+          selectedTrx.merchantName = t.txnMerchantName;
+          selectedTrx.burnDate = t.txnTransactionDate;
+
+          //container for burned voucher(s) info..
+          selectedTrx.vouchers = [];
+          for (var k in t.txnLogDetails ){
+            selectedTrx.vouchers[k] = {};
+            selectedTrx.vouchers[k].uniqueCode = t.txnLogDetails[k].txnRedeemCode;
+            selectedTrx.vouchers[k].voucherType = t.txnLogDetails[k].txnRedeemLabel;
+            selectedTrx.vouchers[k].voucherAmount = t.txnLogDetails[k].txnRedeemValue;
+          }
+
+          console.log(selectedTrx)
+          this.dispatch('addLastTransaction', selectedTrx);
+          
+          setTimeout( () => {
+              this.dispatch('showReceipt')
+          }, 800);
+        }
 
         _showExpenseEditor() {
           this.dispatch('editExpense');
@@ -414,7 +494,8 @@
         /**
          * @param {Object|null} expense the selected expense, if any.
          */
-        _activeItemChanged(expense) {
+        _activeItemChanged(voucher) {
+          console.log(voucher)
           // disable list-clicking
           // if (this.expenses && this.expenses.length > 0) { // don't trigger on init
           //   this.$.expenses.selectedItems = expense ? [expense] : [];

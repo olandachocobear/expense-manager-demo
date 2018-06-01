@@ -91,11 +91,19 @@
       voucher-label[shown] {visibility: visible;}
 
       .preload{display:none;float: right;
-    margin-top: -23px;
+    margin-top: -44px;
     transition: visibility 2s linear,opacity 2s linear;
     margin-right: 4px;opacity:0.9};
       .preload[shown]{display: inline;}
-
+      
+      #reloader {
+        opacity:0;
+        transition: opacity 0.15s linear;
+        /* transition-delay: 0.8s; */
+      }
+      #reloader[shown]{
+        opacity:1;
+      }
       div [shake]{  
         animation: wrong-log 0.3s;
       }
@@ -140,8 +148,8 @@
         
         <div>
           <vaadin-button on-click="_removeNode" data-id=[[voucher.id]] 
-            style="z-index:9999;display:inline-block;float:left;background:lightcoral;margin-top:3px">
-            <img src="../images/trash-icon.png"  style="width:25px">
+            style="z-index:9999;display:inline-block;float:left;background:#b0c4de85;margin-top:3px">
+            <img src="images/trash-icon.png"  style="width:25px">
           </vaadin-button>
           <!-- <iron-icon icon="lumo:new" slot="suffix"></iron-icon>
           <iron-icon icon="expense-manager:delete" slot="suffix"></iron-icon> -->
@@ -151,8 +159,14 @@
               <standard-input read-only=[[voucher.voucherEligible]]
                 current-voucher=[[voucher]] 
                 code={{voucher.uniqueCode}}
-                style="margin-left:-5%">
+                style="margin-left:-5%"
+                show-reload=[[voucher.unchecked]]>
               </standard-input>
+          </div>
+
+          <div id=reloader on-click='_reload' shown$=[[voucher.unchecked]]
+            style="top:-47px;right:24%;border:2px solid #666;padding:3px 4px;background:#ccc;background:#7be668eb;border-radius:20px;width:20px;height:20px;position:relative;float:right">
+            <img src="images/rotate-left.png">
           </div>
 
           <overlay shown$="[[voucher.voucherEligible]]">.</overlay>

@@ -1,3 +1,9 @@
+function _logOut(e){
+    // window.location.href='https://evoucher-dev.kartuku.co.id/loyalty-web/#/login'
+    window.location.replace("https://evoucher-dev.kartuku.co.id/loyalty-web/#/login");
+    // window.location.assign("https://www.google.com");
+    (e)=>e.stopPropagation()
+}
 (function() {
 /**
  * @memberof ExpenseManager
@@ -174,9 +180,10 @@ class TransactionDialogElement extends ExpenseManager.ReduxMixin(Polymer.Element
     }
 
     _reset() {
-        this.dispatch('resetForm');
-        this.dispatch('resetTrx');
-        this.fieldAmount = "";
+        // this.dispatch('resetForm');
+        // this.dispatch('resetTrx');
+        // this.fieldAmount = "";
+        this.dispatch('showReceipt')
     }
 
     checkUsr() {
