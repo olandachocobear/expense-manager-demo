@@ -126,6 +126,14 @@
     const hideReceipt = () => {
       return {type: 'HIDE_RECEIPT'}
     }
+    
+    const showREreceipt = () => {
+      return {type: 'SHOW_RERECEIPT'}
+    }
+
+    const hideREreceipt = () => {
+      return {type: 'HIDE_RERECEIPT'}
+    }
 
     const addLastTransaction = (trx) => {
       return {type: 'APPEND_TX', trx}
@@ -199,6 +207,8 @@
 
       showReceipt,
       hideReceipt,
+      showREreceipt,
+      hideREreceipt,
 
       addLastTransaction,
       

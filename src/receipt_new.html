@@ -37,23 +37,32 @@
                     <div value={{item}} style="margin-top:8px" on-keypress="_clearBox" on-keyup="_moveIt">
                       <center>
                           =======================================
-                          <h5 style=float:left;margin-top:-1px;margin-bottom:-5px>TRACE: {{mid}}</h5>
-                          <h5 style=float:right;margin-top:-1px;margin-bottom:-5px>DATE: {{tid}}</h5>
+                          <h5 style=float:left;margin-top:-1px;margin-bottom:-5px>TRACE: {{trxNo}}</h5>
+                          <h5 style=float:right;margin-top:-1px;margin-bottom:-5px>DATE: {{date}}</h5>
                           <br>
-                          <h5 style=float:left;margin-top:5px;margin-bottom:5px>BATCH: {{tid}}</h5>
-                          <h5 style=float:right;margin-top:5px;margin-bottom:5px>TIME: {{tid}}</h5>
+                          <br>
+                          <h5 style=float:left;margin-top:0px;margin-bottom:5px>BATCH: - </h5>
+                          <h5 style=float:right;margin-top:0px;margin-bottom:5px>TIME: {{time}}</h5>
                           
             
                         <img src="images/voucher_burn.png" style=max-width:280px>
-                        <br><h3 style=margin-bottom:5px>{{voucher_distinct}}</h3>
-                        
-                        -------------------------------------------------------------
-                      </center>  
-                        <h5 style=margin-top:8px>Original Amount: Rp {{origAmount}},-</h5>
-                        <h5 style=margin-top:-20px>Discount Amount: Rp {{total_discount}},-</h5>
+                        <!-- <h3 style=margin-bottom:5px>{{voucher_distinct}}</h3> -->
                         <br>
-                        <H2 style=margin-top:-15px>Nett Amount: Rp {{remaining}},-</H4>
-                      
+                        ------------------------------------------------------------------
+                      </center>  
+
+                      <dom-repeat items=[[voucher_distinct]]>
+                          <template>
+                        <h3 style=margin-bottom:5px;margin-top:10px>{{item.voucherType}}</h3>
+                        ------------------------------------------------------------------      
+                        <h5 style=margin-top:8px>Voucher Qty: {{item.qty}}</h5>
+                        <h5 style=margin-top:-18px>Original Amount: Rp {{item.original}},-</h5>
+                        <h5 style=margin-top:-18px>Discount Amount: Rp {{item.discount}},-</h5>
+                        <div style=margin-top:-7px>===================================</div>
+                          </template>
+                      </dom-repeat>
+                        
+                      <H2 style=margin-bottom:23px>Remaining Amount: Rp {{remaining}},-</H2>
                     </div>
                 <!-- </template> -->
             <!-- </dom-repeat> -->
@@ -100,6 +109,24 @@
         
         static get properties() {
           return {
+            trxNo: {
+              type: String,
+              statePath: 'lastTrx.trxNumber'
+            },
+            date: {
+              type: String,
+              value: () => {
+                var tgl = new Date()  
+                return `${tgl.getDate()}/${tgl.getMonth()+1}/${tgl.getFullYear()}`
+              }
+            },
+            time: {
+              type: String,
+              value: () => {
+                var tgl = new Date() 
+                return `${tgl.getHours()}:${tgl.getMinutes()}`
+              } 
+            },
             voucher_distinct: {
               type: String,
               statePath: ExpenseManager.select.vouchers_group

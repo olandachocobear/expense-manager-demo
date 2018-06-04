@@ -27,11 +27,11 @@
       authState = JSON.parse(authState)
     }
 
-
     function uiReducer(state = {
       authenticated: savedState ? savedState.uiState.authenticated : false,
       activePage: '',
       receiptDialogVisible: false,
+      REreceiptDialogVisible: false,
       pagination: 0,
       page_loading: false,
       modalAlert: false,
@@ -56,6 +56,12 @@
         
         case 'HIDE_RECEIPT':
           return Object.assign({}, state, {receiptDialogVisible: false});
+        
+        case 'SHOW_RERECEIPT':
+          return Object.assign({}, state, {REreceiptDialogVisible: true});
+        
+        case 'HIDE_RERECEIPT':
+          return Object.assign({}, state, {REreceiptDialogVisible: false});
 
         case 'SWITCH_PAGE':
           return Object.assign({}, state, {activePage: action.page});
@@ -94,7 +100,7 @@
     }
 */
     function lastTxReducer( state = { 
-        trxNumber: uuid(),
+        trxNumber: txid(),
         trxAmount: 150000,
         remaining: 125000,
         validTrx: false,
@@ -125,7 +131,7 @@
     }
         
     function transactionReducer( state = {
-        trxNumber: uuid(),
+        trxNumber: txid(),
         trxAmount: '',
         remaining: '',
         validTrx: false,
@@ -175,7 +181,7 @@
           case 'RESET_TX':
               return Object.assign({}, state, {
                 validTrx: false,
-                trxNumber: uuid(),
+                trxNumber: txid(),
                 trxAmount: '',
                 remaining: '0'
             });
@@ -417,6 +423,21 @@
     // No-dependency UUID generator https://gist.github.com/jed/982883, good enough for this demo
     function uuid() {
       return ([1e7] + -1e3 + -4e3 + -8e3 + -1e11).replace(/[018]/g, a => (a ^ Math.random() * 16 >> a / 4).toString(16));
+    }
+
+    function hashCode(str){
+        var hash = 0;
+        if (str.length == 0) return hash;
+        for (i = 0; i < str.length; i++) {
+            char = str.charCodeAt(i);
+            hash = ((hash<<5)-hash)+char;
+            hash = hash & hash; // Convert to 32bit integer
+        }
+        return hash;
+    }
+    function txid() {
+      var _tgl = new Date().getTime().toString()
+      return hashCode(_tgl);
     }
 
     function _generateDemoExpensesAsyncHandler() {

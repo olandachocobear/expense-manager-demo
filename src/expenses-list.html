@@ -112,7 +112,7 @@
         <template class="header">
           <vaadin-grid-sorter path="total" class="numeric">
             <div class="header-cell">
-              No. Voucher
+              Voucher Code
             </div>
           </vaadin-grid-sorter>
           <vaadin-grid-filter aria-label="#" path="txnMid" value$="[[mid]]">
@@ -157,7 +157,20 @@
         <template class="header">
           <vaadin-grid-sorter path="total" class="numeric">
             <div class="header-cell">
-              Disc. Amount
+              Original Amount
+            </div>
+          </vaadin-grid-sorter>
+        </template>
+        <template>
+           <span class="total">[[item.txnOriginalAmount]] </span><!--[[_formatTotal(item.total)]]</span> -->
+        </template>
+      </vaadin-grid-column>
+
+      <vaadin-grid-column width="6em">
+        <template class="header">
+          <vaadin-grid-sorter path="total" class="numeric">
+            <div class="header-cell">
+              Voucher Amount
             </div>
           </vaadin-grid-sorter>
         </template>
@@ -166,20 +179,20 @@
         </template>
       </vaadin-grid-column>
 
-      <vaadin-grid-column width="7em" flex-grow="2">
+      <vaadin-grid-column width="6em">
         <template class="header">
-          <vaadin-grid-sorter path="merchant">
+          <vaadin-grid-sorter path="total" class="numeric">
             <div class="header-cell">
-              Cashier Name
+              Remaining Amount
             </div>
           </vaadin-grid-sorter>
         </template>
         <template>
-          [[item.txnLogDetails.0.username]]
+           <span class="total">[[item.txnLogDetails.0.txnAdjustedAmount]] </span><!--[[_formatTotal(item.total)]]</span> -->
         </template>
       </vaadin-grid-column>
 
-      <vaadin-grid-column width="7em">
+      <vaadin-grid-column width="8em">
           <template class="header">
             <vaadin-grid-sorter path="status">
               <div class="header-cell">
@@ -206,18 +219,6 @@
         </template>
       </vaadin-grid-column>
  -->
-      <vaadin-grid-column width="14em" flex-grow="3">
-        <template class="header">
-          <vaadin-grid-sorter path="comment">
-            <div class="header-cell">
-              Comment
-            </div>
-          </vaadin-grid-sorter>
-        </template>
-        <template>
-          <div class="comment">[[item.txnLogDetails.0.txnRewardMessage]]</div>
-        </template>
-      </vaadin-grid-column>
 
     </vaadin-grid>
 
@@ -449,12 +450,12 @@
           console.log(detail.request.statusText);  //the error status text
         }
 
-        createCacheFromFetch(t){
+        createCacheFromFetch(trans){
           // destructure the transaction info
           var selectedTrx = {};
           
           // should choose the first Invoice (if happens to be more than one transactions)
-          t = t[0];
+          var t = trans[0];
           selectedTrx.trxAmount = t.txnOriginalAmount;
           selectedTrx.trxNumber = t.txnTraceNumber;
           selectedTrx.remaining = t.txnRemainingAmount;
@@ -475,7 +476,7 @@
           this.dispatch('addLastTransaction', selectedTrx);
           
           setTimeout( () => {
-              this.dispatch('showReceipt')
+              this.dispatch('showREreceipt')
           }, 800);
         }
 

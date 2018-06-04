@@ -95,6 +95,16 @@
     <!-- this is for modal/layered stuffs -->
     <expense-editor></expense-editor>
     <transaction-dialog></transaction-dialog>
+
+    <m2-dialog id="rereceipt" on-dialog-closed="_setReceiptClosed" stop-auto-dismiss 
+      style=z-index:1000;max-width:500px>
+      <div slot="container">
+        <!-- TRX RECEIPT -->
+        <receipt-paper style="width:300px;margin:auto;z-index:999999999">
+
+        </receipt-paper>
+      </div>
+    </m2-dialog>
   </template>
 
   <script>
@@ -117,9 +127,25 @@
             mid: {
               type: String,
               statePath: 'user.data.mid'
-            }
+            },
+            receiptVisible: {
+              type: Boolean,
+              statePath: 'uiState.REreceiptDialogVisible',
+              observer: '_toggleReceipt'
+            },
           }
         }
+        
+        _setReceiptClosed() {
+          this.dispatch('hideREreceipt');
+        }
+
+        _toggleReceipt() {
+          if (this.receiptVisible){
+            this.$.rereceipt.open();
+          }
+        }
+        
         
       }
 

@@ -180,10 +180,11 @@ class TransactionDialogElement extends ExpenseManager.ReduxMixin(Polymer.Element
     }
 
     _reset() {
-        // this.dispatch('resetForm');
-        // this.dispatch('resetTrx');
-        // this.fieldAmount = "";
-        this.dispatch('showReceipt')
+        this.dispatch('resetForm');
+        this.dispatch('resetTrx');
+        this.fieldAmount = "";
+        // this.createCache();
+        // this.dispatch('showReceipt')
     }
 
     checkUsr() {

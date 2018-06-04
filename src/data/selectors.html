@@ -8,6 +8,9 @@
     const getExpenses = state => state.expenses.expenses;
     const getFilters = state => state.filters.filters;
     const getVouchers = state => state.lastTrx.vouchers;
+    const getTrxAmount = state => state.lastTrx.trxAmount;
+    const getTransaction = state => state.transaction;
+    const getUserDetails = state => state.user.data;
     const getList = state => state.burned;
 
     const helpers = ExpenseManager.dateHelpers;
@@ -73,32 +76,76 @@
     });*/
     
     const vouchers_group = Reselect.createSelector(
-      [getVouchers],
-      (vouchers) => {
+      [getVouchers,getTrxAmount,getTransaction,getUserDetails],
+      (vouchers,orig_amount) => {
           let vouch_arr = []
           for(var v in vouchers) 
             {
-              vouch_arr.push(vouchers[v]['voucherType'])
+              vouch_arr.push({
+                voucherType: vouchers[v]['voucherType'],
+                voucherAmount: vouchers[v]['voucherAmount']
+              })
             }
-          let voucherCount = vouch_arr.
-                  reduce( (tmp, key) => {
-                      if (! tmp[key])
-                        tmp[key]= 1;
-                      else
-                        tmp[key]++;
-
-                      return tmp;
-                  }, {});
           
-          var string_count = "";
+            let voucherCount = vouch_arr.
+                  reduce( (tmp, key) => {
+                      var {voucherType, voucherAmount} = key 
+                      
+                      if(tmp.vouchers.length == 0 )
+                        tmp.remainingAmount = tmp.txAmount
+                      else
+                        tmp.remainingAmount = tmp.remainingAmount - voucherAmount;
 
-          for (var i in voucherCount){
-              if (string_count!= "")
-                string_count += " & ";
-              string_count += `${voucherCount[i]} ${i} `;
+                      // check if it has been indexed before..
+                      if (! tmp[voucherType]){
+                        tmp[voucherType]= 1;
+                        
+                        tmp['vouchers'].push({
+                          voucherType: voucherType,
+                          voucherAmount: voucherAmount,
+                          qty: 1,
+                          // original: 
+                          // remaining: tmp.txAmount
+                        })
+                      }
+                      else { // new entry of voucher Type
+                        tmp[voucherType]++;
+                        
+                        // find the index that we want to change
+                        var idx;
+                        for (var i in tmp['vouchers'])
+                        {
+                          if (tmp['vouchers'][i]['voucherType']==voucherType)
+                            idx = i;
+                        }
+                        tmp['vouchers'][idx]['qty'] = tmp['vouchers'][idx]['qty']+1;
+                        // tmp['vouchers'][idx]['remaining'] = tmp.txAmount;
+
+
+                      }
+                      return tmp;
+                  }, {txAmount: orig_amount, vouchers:[]});
+          
+          // var string_count = "";
+
+          // for (var i in voucherCount){
+          //     if (string_count!= "")
+          //       string_count += " & ";
+          //     string_count += `${voucherCount[i]} ${i} `;
+          // }
+          
+          var voucherGroupSorted = voucherCount.vouchers;
+          for (var i in voucherGroupSorted){
+              if (i==0)
+                voucherGroupSorted[i]['original'] = orig_amount;
+              else
+                voucherGroupSorted[i]['original'] = voucherGroupSorted[i-1]['remaining'] 
+
+              voucherGroupSorted[i]['discount'] = voucherGroupSorted[i]['voucherAmount'] * voucherGroupSorted[i]['qty'] ;
+              voucherGroupSorted[i]['remaining'] = voucherGroupSorted[i]['original'] - voucherGroupSorted[i]['discount'];
           }
 
-          return string_count;
+          return voucherGroupSorted;
 
     });
 
