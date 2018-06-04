@@ -163,8 +163,13 @@
       this.currentVoucher.onCheck = false;
       var voucherValue = result.originalAmount-result.remainingAmount;
       this.currentVoucher.voucherType = result.trsLabel; //`Voucher Rp${result.trsValue}`; 
-      this.currentVoucher.voucherAmount = result.trsValue
-
+      
+      /* Checking if it was a Coupon (rewardType: 2) */
+      if (result.trsRewardTypeId!=2)
+        this.currentVoucher.voucherAmount = result.trsValue
+      else 
+        this.currentVoucher.voucherAmount = 0;
+      
       /*
         Checking if it has inputted before..
        */

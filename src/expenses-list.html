@@ -480,7 +480,11 @@
             selectedTrx.vouchers[k] = {};
             selectedTrx.vouchers[k].uniqueCode = t.txnLogDetails[k].txnRedeemCode;
             selectedTrx.vouchers[k].voucherType = t.txnLogDetails[k].txnRedeemLabel;
-            selectedTrx.vouchers[k].voucherAmount = t.txnLogDetails[k].txnRedeemValue;
+            //adding filter to not add up discount amount for Coupon type
+            if (t.txnLogDetails[k].trsRewardTypeId!=2)
+              selectedTrx.vouchers[k].voucherAmount = t.txnLogDetails[k].txnRedeemValue;
+            else
+              selectedTrx.vouchers[k].voucherAmount = 0;
           }
 
           console.log(selectedTrx)
