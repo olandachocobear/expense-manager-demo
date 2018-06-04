@@ -131,7 +131,7 @@ class TransactionDialogElement extends ExpenseManager.ReduxMixin(Polymer.Element
         var voucher_arr = [];
         var discount_amount = 0;
   
-        if(this.trx.vouchers[0]['voucherAmount'] != ''){ //have at least 1 valid
+        if(this.trx.vouchers[0]['voucherAmount'] >= 0){ //have at least 1 valid
             for(var i=0; i<this.trx.vouchers.length; i++){
                 // remember to only update body with Eligible vouchers..
                 if(this.trx.vouchers[i]['voucherEligible']){
