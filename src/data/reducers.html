@@ -378,7 +378,8 @@
     function filtersReducer(state = {
       // filters: {status: ['new', 'in_progress', 'reimbursed', 'ok', 'invalid', 'already']}
       specificVoucher: '',
-      filters: {status: ['ok', 'failed', 'error']}
+      filters: {status: ['ok', 'failed', 'error']},
+      applyUpdate: false
     }, action) {
       switch (action.type) {
 
@@ -393,13 +394,22 @@
 
         case 'CLEAR_FILTERS':
           return Object.assign({}, state, {
-            filters: {status: ['new', 'in_progress', 'reimbursed']}
+            filters: {
+                status: ['new', 'in_progress', 'reimbursed'],
+                txnTraceNumber: ''      
+            }
           });
         
         case 'SEARCH_VOUCHER':
           return Object.assign({}, state, {
             specificVoucher: action.voucher
           });
+        
+        case 'UPDATE_REQUEST':
+          return Object.assign({}, state, {applyUpdate: true});
+        
+        case 'UPDATE_DONE':
+          return Object.assign({}, state, {applyUpdate: false});
 
         default:
           return state;

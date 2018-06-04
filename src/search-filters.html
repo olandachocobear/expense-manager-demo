@@ -89,6 +89,8 @@
         <vaadin-button on-click="_clearFilters" theme="tertiary">Clear Filters</vaadin-button>
         <vaadin-button on-click="_hideFilters">Done</vaadin-button>
       </div> -->
+      <br>
+      <vaadin-button on-click="_apply">UPDATE</vaadin-button>
     </div>
   </template>
 
@@ -160,6 +162,11 @@
 
         _clearFilters() {
           this.dispatch('clearFilters');
+          this.dispatch('updateFilter')
+        }
+
+        _apply() {
+          this.dispatch('updateFilter')
         }
       }
 

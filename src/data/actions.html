@@ -177,6 +177,12 @@
     const resetConnAttempt = () => {
       return {type: 'RESET_CONN_ATTEMPT'}
     }
+    const updateFilter = () => {
+      return {type: 'UPDATE_REQUEST'}
+    }
+    const updateDone = () => {
+      return {type: 'UPDATE_DONE'}
+    }
 
     window.ExpenseManager = window.ExpenseManager || {};
     window.ExpenseManager.actions = {
@@ -227,7 +233,10 @@
       hideConnectionAlert,
 
       increaseConnAttempt,
-      resetConnAttempt
+      resetConnAttempt,
+
+      updateFilter,
+      updateDone
 
 
     };
