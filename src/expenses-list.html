@@ -481,7 +481,7 @@
             selectedTrx.vouchers[k].uniqueCode = t.txnLogDetails[k].txnRedeemCode;
             selectedTrx.vouchers[k].voucherType = t.txnLogDetails[k].txnRedeemLabel;
             //adding filter to not add up discount amount for Coupon type
-            if (t.txnLogDetails[k].trsRewardTypeId!=2)
+            if (t.txnLogDetails[k].txnRedeemType == 'VOUCHER')
               selectedTrx.vouchers[k].voucherAmount = t.txnLogDetails[k].txnRedeemValue;
             else
               selectedTrx.vouchers[k].voucherAmount = 0;

@@ -158,7 +158,7 @@ class TransactionDialogElement extends ExpenseManager.ReduxMixin(Polymer.Element
             merchantCode: this.userDetail.merchantCode, 
             tid: this.userDetail.tid,
             transactionDate: new Date(),
-            traceNumber: this.trx.trxNumber,
+            traceNumber: this.trans_detail.trxNumber,
             transactionTypeId: 2,
             username: this.userDetail.username
         };
