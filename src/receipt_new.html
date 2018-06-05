@@ -38,10 +38,10 @@
                       <center>
                           =======================================
                           <h5 style=float:left;margin-top:-1px;margin-bottom:-5px>TRACE: {{trxNo}}</h5>
-                          <h5 style=float:right;margin-top:-1px;margin-bottom:-5px>DATE: {{date}}</h5>
+                          <h5 style=float:right;margin-top:-1px;margin-bottom:-5px>DATE: {{formatted_date}}</h5>
                           <br>
                           <br>
-                          <h5 style=float:left;margin-top:0px;margin-bottom:5px>BATCH: - </h5>
+                          <!-- <h5 style=float:left;margin-top:0px;margin-bottom:5px>BATCH: - </h5> -->
                           <h5 style=float:right;margin-top:0px;margin-bottom:5px>TIME: {{time}}</h5>
                           
             
@@ -115,11 +115,18 @@
             },
             date: {
               type: String,
+              statePath: 'lastTrx.burnDate',
+              observer: '_dateChanged'
+              /*
               value: () => {
-                var tgl = new Date()  
                 return `${tgl.getDate()}/${tgl.getMonth()+1}/${tgl.getFullYear()}`
               }
+              */
             },
+            formatted_date: {
+                type: String,
+            },
+
             time: {
               type: String,
               value: () => {
@@ -175,6 +182,21 @@
           newWin.document.close();
           setTimeout(function(){newWin.close();},5);
           
+        }
+
+        _dateChanged() {
+            if (this.date == undefined)
+                var tgl = new Date();
+            else {
+                // fixing formate dd-mm to mm-dd that JS understands..
+                var tgl_server = this.date.split(' ')[0].split('-');
+                var sorted_tgl = [tgl_server[1], tgl_server[0], tgl_server[2]].join('-');
+                var correct_format_date = [sorted_tgl, this.date.split(' ')[1]].join(' ');
+
+                var tgl = new Date(correct_format_date);
+            }
+  
+            this.formatted_date = `${tgl.getDate()}/${tgl.getMonth()+1}/${tgl.getFullYear()}` 
         }
     }
       customElements.define(ReceiptElement.is, ReceiptElement);

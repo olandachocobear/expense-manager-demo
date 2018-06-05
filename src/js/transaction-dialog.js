@@ -237,13 +237,14 @@ class TransactionDialogElement extends ExpenseManager.ReduxMixin(Polymer.Element
         
         var cachedTrx = {trxNumber,trxAmount,remaining,vouchers}
 
+        cachedTrx.remaining = numeral(t.txnRemainingAmount).format(0.0)
+        
         console.log(cachedTrx)
         this.dispatch('addLastTransaction', cachedTrx);
         
-        var $this=this;
         setTimeout( () => {
             this.dispatch('showReceipt')
-        }, 800);
+        }, 500);
     }
 }
 

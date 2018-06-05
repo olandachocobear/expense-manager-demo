@@ -467,7 +467,7 @@
           var t = trans[0];
           selectedTrx.trxAmount = t.txnOriginalAmount;
           selectedTrx.trxNumber = t.txnTraceNumber;
-          selectedTrx.remaining = t.txnRemainingAmount;
+          selectedTrx.remaining = numeral(t.txnRemainingAmount).format(0.0);
           selectedTrx.storeName = t.txnStoreName;
           selectedTrx.merchantName = t.txnMerchantName;
           selectedTrx.burnDate = t.txnTransactionDate;
@@ -490,7 +490,7 @@
           
           setTimeout( () => {
               this.dispatch('showREreceipt')
-          }, 800);
+          }, 500);
         }
 
         _showExpenseEditor() {

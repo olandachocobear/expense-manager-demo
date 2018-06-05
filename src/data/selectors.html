@@ -143,11 +143,19 @@
 
               voucherGroupSorted[i]['discount'] = voucherGroupSorted[i]['voucherAmount'] * voucherGroupSorted[i]['qty'] ;
               voucherGroupSorted[i]['remaining'] = voucherGroupSorted[i]['original'] - voucherGroupSorted[i]['discount'];
+   
+              voucherGroupSorted[i]['original'] = decimalize(voucherGroupSorted[i]['original'])
+              voucherGroupSorted[i]['discount'] = decimalize(voucherGroupSorted[i]['discount'])
+              voucherGroupSorted[i]['remaining'] = decimalize(voucherGroupSorted[i]['remaining'])
           }
 
           return voucherGroupSorted;
 
     });
+    
+    var decimalize = function(numbers){
+      return numeral(numbers).format(0.0);
+    }
 
     const total_discount = Reselect.createSelector(
       [getVouchers], vouchers => {
