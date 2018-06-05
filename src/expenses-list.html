@@ -222,8 +222,6 @@
 
     </vaadin-grid>
 
-    <button on-tap="nextPage"> <h4>LOAD MORE</h4> </button>
-
     <iron-ajax id="txnInfoFetcher" 
           url=[[fetchUrl]] method="get" 
           params="[[queryParams]]"
@@ -400,11 +398,11 @@
           console.log('=========== ' + this.$.expenses.customFilters)
           console.log(this.$.expenses.dataProvider)
 
-          // change the inputbox for filters
-          if ( this.filters.specificVoucher!=null)
-            this._filterVoucher = this.filters.specificVoucher
-          
           if (this.filters.applyUpdate){
+
+            // change the inputbox for filters
+            if ( this.filters.specificVoucher!=null)
+              this._filterVoucher = this.filters.specificVoucher
 
             if(this.filters.filters.txnStartTransactionDate!=undefined )
               if(this.filters.filters.txnStartTransactionDate!='')

@@ -390,7 +390,10 @@
           return Object.assign({}, state, {filtersVisible: false});
 
         case 'FILTERS_UPDATED':
-          return Object.assign({}, state, {filters: action.filters});
+          return Object.assign({}, state, {
+            filters: action.filters,
+            specificVoucher: action.filters.specificVoucher
+          });
 
         case 'CLEAR_FILTERS':
           return Object.assign({}, state, {
