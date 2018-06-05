@@ -25,7 +25,7 @@
     </style>
 
 <div id=receiptBlock >
-  <div style=text-align:center>
+  <div class=printable style="text-align:center">
         <center><h2>{{merchant}}</h2></center>
           <div style="display:inline;margin-top:-25px"></div>
 
@@ -45,7 +45,7 @@
                           <h5 style=float:right;margin-top:0px;margin-bottom:5px>TIME: {{time}}</h5>
                           
             
-                        <img src="images/voucher_burn.png" style=max-width:280px>
+                        <img src="images/voucher_burn.png" style="max-width:280px;margin: 0 10%">
                         <!-- <h3 style=margin-bottom:5px>{{voucher_distinct}}</h3> -->
                         <br>
                         ------------------------------------------------------------------
@@ -178,7 +178,7 @@
           
           var newWin=window.open('','Print-Window');
           newWin.document.open();
-          newWin.document.write('<html><body onload="window.print()">'+this.$.receiptBlock.innerHTML+'</body></html>');
+          newWin.document.write('<html><style>.printable{ width:360px }</style><body style="display:grid;justify-content:center" onload="window.print()">'+this.$.receiptBlock.innerHTML+'</body></html>');
           newWin.document.close();
           setTimeout(function(){newWin.close();},5);
           
