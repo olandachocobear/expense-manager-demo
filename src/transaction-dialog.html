@@ -138,7 +138,7 @@
 
             <vaadin-text-field name="total" 
               prevent-invalid-input pattern="[0-9.]*" value="{{fieldAmount}}" 
-              on-change="detectChanges" label="Total transaction" 
+              on-change="detectChanges" on-blur="_checkEmpty" label="Total transaction" 
               required apply-format
               style="--lumo-text-field-size: var(--lumo-size-l);
                     font-size: var(--lumo-font-size-xl);

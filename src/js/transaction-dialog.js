@@ -39,6 +39,11 @@ class TransactionDialogElement extends ExpenseManager.ReduxMixin(Polymer.Element
             // observer: '_amountChanged'
             //statePath: 'transaction.trxAmount'
         },
+        srcAmount: {
+            type: String,
+            statePath: 'transaction.trxAmount',
+            observer: '_reflectNewAmount'
+        },
         ironUrl: {
             type: String,
             value: () => constant.url.staging.burn_vouch
@@ -231,13 +236,22 @@ class TransactionDialogElement extends ExpenseManager.ReduxMixin(Polymer.Element
         console.log(detail.request.statusText);  //the error status text
     }
 
+    __checkEmpty() {
+        this.fieldAmount = 0;
+    }
+
+    _reflectNewAmount() {
+        this.fieldAmount = this.srcAmount
+    }
+    
     createCache(){
         var {trxNumber,trxAmount,remaining} = this.trans_detail
         var {vouchers} = this.trx
         
         var cachedTrx = {trxNumber,trxAmount,remaining,vouchers}
 
-        cachedTrx.remaining = numeral(t.txnRemainingAmount).format(0.0)
+        cachedTrx.remaining = numeral(cachedTrx.remaining).format(0.0)
+        cachedTrx.burnDate = '';
         
         console.log(cachedTrx)
         this.dispatch('addLastTransaction', cachedTrx);

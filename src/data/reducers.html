@@ -399,8 +399,9 @@
           return Object.assign({}, state, {
             filters: {
                 status: ['new', 'in_progress', 'reimbursed'],
-                txnTraceNumber: ''      
-            }
+                txnTraceNumber: ''     
+            },
+            specificVoucher: ''
           });
         
         case 'SEARCH_VOUCHER':

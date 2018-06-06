@@ -66,6 +66,11 @@
     delayCheck() {
         //create temporary to be compared
         var curr = this.code;
+
+        //check if amount is still empty
+        if (this.trxAmount=='')
+          this.dispatch('updateTransactionAmount', 0);
+          
         if(curr){
             //update to Store
             this.currentVoucher.uniqueCode = curr;
@@ -123,9 +128,11 @@
          */
     _checkEligible() {
       //  var ajaxCall =document.querySelector("#radial-button-template");
-      this.currentVoucher.onCheck = true;
-      this.dispatch('updateVoucher', this.currentVoucher);
-      this.$.eligibilityCheck.generateRequest();
+      // if(this.trxAmount!='' && this.trxAmount>0) {
+        this.currentVoucher.onCheck = true;
+        this.dispatch('updateVoucher', this.currentVoucher);
+        this.$.eligibilityCheck.generateRequest();
+      // }
     }
     
     eligibleResponse(result) {

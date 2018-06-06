@@ -55,14 +55,14 @@
                           <template>
                         <h3 style=margin-bottom:5px;margin-top:10px>{{item.voucherType}}</h3>
                         ------------------------------------------------------------------      
-                        <h5 style=margin-top:8px>Voucher Qty: {{item.qty}}</h5>
-                        <h5 style=margin-top:-18px>Original Amount: Rp {{item.original}},-</h5>
-                        <h5 style=margin-top:-18px>Discount Amount: Rp {{item.discount}},-</h5>
+                        <h5 style=text-align:left;margin-top:11px;margin-left:19px>Voucher Qty: {{item.qty}}</h5>
+                        <h5 style=text-align:left;margin-top:-18px;margin-left:19px>Original Amount: Rp. {{item.original}},-</h5>
+                        <h5 style=text-align:left;margin-top:-18px;margin-left:19px>Discount Amount: Rp. {{item.discount}},-</h5>
                         <div style=margin-top:-7px>===================================</div>
                           </template>
                       </dom-repeat>
                         
-                      <H2 style=margin-bottom:23px>Remaining Amount: Rp {{remaining}},-</H2>
+                      <H2 style=margin-bottom:23px>Remaining Amount: <br>Rp. {{remaining}},-</H2>
                     </div>
                 <!-- </template> -->
             <!-- </dom-repeat> -->
@@ -185,7 +185,7 @@
         }
 
         _dateChanged() {
-            if (this.date == undefined)
+            if (this.date == '')
                 var tgl = new Date();
             else {
                 // fixing formate dd-mm to mm-dd that JS understands..
