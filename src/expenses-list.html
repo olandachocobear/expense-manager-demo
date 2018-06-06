@@ -97,7 +97,7 @@
       
       <vaadin-grid-column width="11em" frozen>
         <template class="header">
-          <vaadin-grid-sorter path="txnTransactionDate" direction="desc">
+          <vaadin-grid-sorter path="txnTransactionDate" direction="DESC">
             <div class="header-cell">
               Date
             </div>
@@ -466,7 +466,33 @@
         createCacheFromFetch(trans){
           // destructure the transaction info
           var selectedTrx = {};
-          
+          selectedTrx.vouchers = [];
+
+          for (var l in trans){
+             // getting the 1st transaction (real original amount)
+             if (l==0){
+               selectedTrx.trxAmount = trans[l].txnOriginalAmount;
+               selectedTrx.trxNumber = trans[l].txnTraceNumber;
+               selectedTrx.merchantName = trans[l].txnMerchantName;
+               selectedTrx.burnDate = trans[l].txnTransactionDate;
+               selectedTrx.storeName = trans[l].txnStoreName;
+             }
+
+             // getting the last remaining amount (from the lastest trans member)
+             if(l==(trans.length-1))
+              selectedTrx.remaining = trans[l].txnRemainingAmount;
+            
+             // routine getting each vouchers' info..
+             selectedTrx.vouchers[l] = {}
+             selectedTrx.vouchers[l].uniqueCode = trans[l].txnUniqueCode;
+             selectedTrx.vouchers[l].voucherType = trans[l].txnLogDetails[0].txnRedeemLabel;
+             if(trans[l].txnLogDetails[0].txnRedeemType == 'VOUCHER')
+                selectedTrx.vouchers[l].voucherAmount = trans[l].txnLogDetails[0].txnRedeemValue;
+             else
+                selectedTrx.vouchers[l].voucherAmount = 0;
+          }
+
+          /* ========= OLD LOGIC (before change on web-api listinfo) ========
           // should choose the first Invoice (if happens to be more than one transactions)
           var t = trans[0];
           selectedTrx.trxAmount = t.txnOriginalAmount;
@@ -488,7 +514,7 @@
             else
               selectedTrx.vouchers[k].voucherAmount = 0;
           }
-
+          */
           console.log(selectedTrx)
           this.dispatch('addLastTransaction', selectedTrx);
           
