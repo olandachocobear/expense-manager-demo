@@ -97,7 +97,7 @@
       
       <vaadin-grid-column width="11em" frozen>
         <template class="header">
-          <vaadin-grid-sorter path="date" direction="desc">
+          <vaadin-grid-sorter path="txnTransactionDate" direction="desc">
             <div class="header-cell">
               Date
             </div>
@@ -110,7 +110,7 @@
 
       <vaadin-grid-column width="9em">
         <template class="header">
-          <vaadin-grid-sorter path="total" class="numeric">
+          <vaadin-grid-sorter path="txnUniqueCode" class="numeric">
             <div class="header-cell">
               Voucher Code
             </div>
@@ -142,7 +142,7 @@
 
       <vaadin-grid-column width="9em" flex-grow="2">
         <template class="header">
-          <vaadin-grid-sorter path="merchant">
+          <vaadin-grid-sorter path="txnLogDetails[0].txnRedeemLabel">
             <div class="header-cell">
               Voucher Name
             </div>
@@ -155,7 +155,7 @@
 
       <vaadin-grid-column width="6em">
         <template class="header">
-          <vaadin-grid-sorter path="total" class="numeric">
+          <vaadin-grid-sorter path="txnOriginalAmount" class="numeric">
             <div class="header-cell">
               Original Amount
             </div>
@@ -168,7 +168,7 @@
 
       <vaadin-grid-column width="6em">
         <template class="header">
-          <vaadin-grid-sorter path="total" class="numeric">
+          <vaadin-grid-sorter path="txnLogDetails[0].txnRedeemValue" class="numeric">
             <div class="header-cell">
               Voucher Amount
             </div>
@@ -181,7 +181,7 @@
 
       <vaadin-grid-column width="6em">
         <template class="header">
-          <vaadin-grid-sorter path="total" class="numeric">
+          <vaadin-grid-sorter path="txnRemainingAmount" class="numeric">
             <div class="header-cell">
               Remaining Amount
             </div>
@@ -194,7 +194,7 @@
 
       <vaadin-grid-column width="8em">
           <template class="header">
-            <vaadin-grid-sorter path="status">
+            <vaadin-grid-sorter path="txnTraceNumber">
               <div class="header-cell">
                 Invoice #
               </div>
@@ -346,7 +346,7 @@
                 callback(JSON.parse(xhr.responseText).content);
             };
             
-            var url = constant.url.staging.list_vouchers + '?size=' + params.pageSize + '&page=' + params.page + '&sort=txnTransactionDate,DESC' //+ this.customFilters; //'https://demo.vaadin.com/demo-data/1.0/people?index=' + index + '&count=' + params.pageSize;
+            var url = constant.url.staging.list_vouchers + '?size=' + params.pageSize + '&page=' + params.page //+ '&sort=txnTransactionDate,DESC' //+ this.customFilters; //'https://demo.vaadin.com/demo-data/1.0/people?index=' + index + '&count=' + params.pageSize;
 
             //var url = '../src/data/manual-redeem.json?'; //'https://demo.vaadin.com/demo-data/1.0/people?index=' + index + '&count=' + params.pageSize;
 
@@ -356,6 +356,10 @@
                url += '&' + filter.path + '=' + encodeURIComponent(filter.value);
             });
             
+            // `params.sortOrders` format: [{path: 'lastName', direction: 'asc'}, ...];
+            params.sortOrders.forEach(function(sort) {
+              url += `&sort=${sort.path},${sort.direction}`;
+            });
 
             xhr.open('GET', url, true);
             xhr.send();
