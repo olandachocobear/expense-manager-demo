@@ -142,11 +142,11 @@
 
       <vaadin-grid-column width="9em" flex-grow="2">
         <template class="header">
-          <vaadin-grid-sorter path="txnLogDetails[0].txnRedeemLabel">
+          <!-- <vaadin-grid-sorter path="txnLogDetails[0].txnRedeemLabel"> -->
             <div class="header-cell">
               Voucher Name
             </div>
-          </vaadin-grid-sorter>
+          <!-- </vaadin-grid-sorter> -->
         </template>
         <template>
           [[item.txnLogDetails.0.txnRedeemLabel]]
@@ -168,11 +168,11 @@
 
       <vaadin-grid-column width="6em">
         <template class="header">
-          <vaadin-grid-sorter path="txnLogDetails[0].txnRedeemValue" class="numeric">
+          <!-- <vaadin-grid-sorter path="txnLogDetails[0].txnRedeemValue" class="numeric"> -->
             <div class="header-cell">
               Voucher Amount
             </div>
-          </vaadin-grid-sorter>
+          <!-- </vaadin-grid-sorter> -->
         </template>
         <template>
            <span class="total">[[item.txnLogDetails.0.txnRedeemValue]] </span><!--[[_formatTotal(item.total)]]</span> -->

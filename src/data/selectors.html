@@ -142,7 +142,9 @@
                 voucherGroupSorted[i]['original'] = voucherGroupSorted[i-1]['remaining'] 
 
               voucherGroupSorted[i]['discount'] = voucherGroupSorted[i]['voucherAmount'] * voucherGroupSorted[i]['qty'] ;
-              voucherGroupSorted[i]['remaining'] = voucherGroupSorted[i]['original'] - voucherGroupSorted[i]['discount'];
+              
+              // remember to UN-decimalize the original (because of decimalize from the last 3 steps)
+              voucherGroupSorted[i]['remaining'] = numeral(voucherGroupSorted[i]['original'])._value - voucherGroupSorted[i]['discount'];
    
               voucherGroupSorted[i]['original'] = decimalize(voucherGroupSorted[i]['original'])
               voucherGroupSorted[i]['discount'] = decimalize(voucherGroupSorted[i]['discount'])

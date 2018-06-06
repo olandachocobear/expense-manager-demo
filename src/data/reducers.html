@@ -132,7 +132,7 @@
         
     function transactionReducer( state = {
         trxNumber: txid(),
-        trxAmount: '',
+        trxAmount: 0,
         remaining: '',
         validTrx: false,
         trxProcess: false,
@@ -182,7 +182,7 @@
               return Object.assign({}, state, {
                 validTrx: false,
                 trxNumber: txid(),
-                trxAmount: '',
+                trxAmount: 0,
                 remaining: '0'
             });
           

@@ -241,7 +241,7 @@ class TransactionDialogElement extends ExpenseManager.ReduxMixin(Polymer.Element
     }
 
     _reflectNewAmount() {
-        this.fieldAmount = this.srcAmount
+        this.fieldAmount = numeral(this.srcAmount).format(0.0)
     }
     
     createCache(){
