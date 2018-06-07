@@ -15,19 +15,20 @@
 
 <link rel="import" href="receipt_new.html">
 
-<link rel="import" href="../bower_components/app-layout/app-drawer/app-drawer.html">
-<link rel="import" href="../bower_components/app-layout/app-drawer-layout/app-drawer-layout.html">
-<link rel="import" href="../bower_components/app-layout/app-header/app-header.html">
-<link rel="import" href="../bower_components/app-layout/app-header-layout/app-header-layout.html">
 <link rel="import" href="../bower_components/app-layout/app-scroll-effects/app-scroll-effects.html">
-<link rel="import" href="../bower_components/app-layout/app-toolbar/app-toolbar.html">
 <link rel="import" href="../bower_components/app-toasts/app-toasts.html">
 <link rel="import" href="../bower_components/metaui/m2-dialog.html">
 
 <link rel="import" href="../bower_components/confirm-dialog/confirm-dialog.html">
+
+<link rel="import" href="new-transaction.html">
+<link rel="import" href="styles-reskin.html">
+
+<link rel="stylesheet" type="text/css" href="custom_styling.css">
+
 <dom-module id="entry-page">
   <template>
-    <style include="lumo-color">
+    <style include="lumo-color responsive-layout">
       :host {
         display: block;
       }
@@ -41,7 +42,8 @@
         flex: auto;
         height: 0.001px;
         /* background: var(--lumo-base-color); */
-        background: url("../images/spots-bg.png");
+        /* background: url("../images/spots-bg.png"); */
+        background: #e6e6e6;
       }
 
       filters-toolbar[phone] {
@@ -65,9 +67,9 @@
       }
     </style>
 
-    <app-header-layout fullbleed>
+    <app-header-layout>
       <app-header slot="header" fixed condenses>
-        <nav-bar theme="dark"></nav-bar>
+        <nav-bar style=height:100px theme="light"></nav-bar>
       </app-header>
 
       <div id="ok" class="content">
@@ -77,6 +79,7 @@
     
     <app-toasts id="toast2" intense mutable-data></app-toasts>
 
+    <new-transaction-layout style=margin-top:-90px></new-transaction-layout>
 
     <m2-dialog id="receipt" on-dialog-closed="_setReceiptClosed" stop-auto-dismiss 
       style=z-index:1000;max-width:500px>

@@ -1,0 +1,21 @@
+.entry_page {
+    display:grid;
+    grid-template-columns: 2fr 4fr 1fr;
+    grid-template-rows: 2fr 1fr;
+    /* grid-template-areas */
+}
+
+.header {
+    display:grid;
+    grid-template-columns: 1fr 4fr 1fr;
+    grid-template-areas: "logo . user";
+    grid-gap: 1rem;
+}
+
+.header.logo {
+    grid-area: logo;
+}
+
+.header.user_info{
+    grid-area: user;
+}

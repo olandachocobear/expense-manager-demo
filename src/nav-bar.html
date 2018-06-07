@@ -16,12 +16,27 @@
   <template>
     <style include="lumo-color-legacy">
       :host {
+        display:grid;
+        grid-template-columns: 5fr 1fr;
+        grid-template-areas: "left right";
+
+        height: 64px;
+      }
+
+      .left {
+        grid-area: left;
+
         display: flex;
         align-items: center;
         box-sizing: border-box;
         width: 100%;
-        height: 64px;
         padding: 0 var(--lumo-space-m);
+      }
+
+      .right {
+        grid-area: right;
+
+        height: 64px;
       }
 
       h1 {
@@ -44,8 +59,13 @@
       #search[shown]{
        opacity: 1;
       }
+      #userinfo {
+        float:right;
+        margin-right:2%;
+      }
     </style>
     <!-- <h1></h1> -->
+  <div class=left>
     <spots-logo></spots-logo>
 
     <a href="#/entry">
@@ -61,7 +81,29 @@
       <iron-icon icon="lumo:bar-chart" slot="suffix"></iron-icon>
     </vaadin-button>
     </a>
+  </div>  
 
+  <div class=right>
+    <div id=userinfo style="font-size: 12px;
+        opacity: 0.8;
+        margin-top:-4px;margin-right:3px;text-align:right;
+        color:#4d4d4d">
+          <p>
+            Hi,
+            <u><b><span style=color:blue>[[username]]</span></b></u>!</i>
+            <br>
+            
+            <div style=margin-top:9px;>Not You?</div>
+            <div style=margin-top:-5px>
+              <a href="#" 
+                onclick="_logOut()"
+                target="_self">
+                Logout.
+              </a>
+            </div>
+          </p>
+        </div>
+  </div>
     <!-- 
     <custom-style>
       <style is="custom-style" include="demo-pages-shared-styles">
@@ -97,6 +139,10 @@
         
         static get properties() {
           return {
+            username: {
+              type: String,
+              statePath: 'user.data.username'
+            },
             logBtnState: {
               type: String
             },

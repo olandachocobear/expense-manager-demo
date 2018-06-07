@@ -66,14 +66,15 @@
         justify-content: space-between;
         align-items: baseline;
       }
+
     </style>
 
     <div class="filters">
       <div class="title section-title" hidden="[[phone]]">
-        <span>Filter Redeem</span>
+        <span>Filter </span>
         <vaadin-button on-click="_clearFilters" theme="tertiary-inline small">Clear</vaadin-button>
       </div>
-      <vaadin-text-field label="Voucher Number" value="{{filters.specificVoucher}}" pattern="[0-9]+"></vaadin-text-field>
+      <vaadin-text-field class="" label="Voucher Number" value="{{filters.specificVoucher}}" pattern="[0-9]+"></vaadin-text-field>
       <vaadin-date-picker label="From" value="{{filters.filters.txnStartTransactionDate}}" max="[[filters.filters.txnEndTransactionDate]]"></vaadin-date-picker>
       <vaadin-date-picker label="To" value="{{filters.filters.txnEndTransactionDate}}" min="[[filters.filters.txnStartTransactionDate]]"></vaadin-date-picker>
       <vaadin-text-field label="Invoice Number" value="{{filters.filters.txnTraceNumber}}" pattern="[0-9]+"></vaadin-text-field>

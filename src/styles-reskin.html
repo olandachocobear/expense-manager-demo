@@ -1,0 +1,105 @@
+<link rel="import" href="../bower_components/vaadin-lumo-styles/color.html">
+<link rel="import" href="../bower_components/vaadin-lumo-styles/sizing.html">
+<link rel="import" href="../bower_components/vaadin-lumo-styles/spacing.html">
+<link rel="import" href="../bower_components/vaadin-lumo-styles/typography.html">
+
+<dom-module id="shared-styles">
+  <template>
+    <style>
+      .section-title{
+        display:block !important;
+      }
+    </style>
+  </template>
+</dom-module>
+
+<dom-module id="dialog-styles" theme-for="vaadin-dialog-overlay">
+  <template>
+    <style include="lumo-typography">
+      h2 {
+        margin-top: 0;
+      }
+
+      .buttons {
+        margin-top: var(--lumo-space-l);
+      }
+    </style>
+  </template>
+</dom-module>
+
+<dom-module id="textbox-styles" theme-for="vaadin-text-field">
+  <template>
+    <style>
+      .test {
+        border: 1px solid #ccc;
+        background-color: #fff;
+      }
+      :host {
+        --lumo-contrast-10pct: #fff;
+        /* border: 1px solid #ccc;
+        background-color: #fff !important;         
+        --lumo-font-family: 'Roboto Condensed';
+        */
+      }
+      vaadin-text-field[part="input-field"] {
+        border-radius: var(--lumo-border-radius);
+        background-color: var(--lumo-contrast-10pct);
+        padding: 0 calc(0.375em + var(--lumo-border-radius) / 4 - 1px);
+        font-weight: 500;
+        line-height: 1;
+        position: relative;
+        cursor: text;
+        box-sizing: border-box;
+      }
+    </style>
+  </template>
+</dom-module>
+
+<dom-module id="responsive-layout">
+  <template>
+    <style>
+      .wrapper {
+        display: grid;
+        grid-gap: 20px;
+        grid-template-areas: 
+            "nav"
+            "big_logo"
+            "main"
+            "footer";
+      }
+      @media (min-width: 500px) {
+        .wrapper {
+            grid-template-columns: 3fr 2fr;
+            grid-template-areas: 
+            "nav    nav"
+            "main   big_logo"
+            "footer footer";
+        }
+        nav ul {
+            display: flex;
+            justify-content: space-between;
+        }
+      }
+      
+      big-voucher{
+          grid-area: big_logo;
+          width: 100%;
+          display:flex;
+          justify-content: center;
+          align-items: center;
+          padding-top:24%;
+          padding-left:3%;
+      }
+
+      #main {
+          grid-area: main;
+          padding: 20px 2% 0 5.8%;
+      }
+
+      copyright{
+          grid-area: footer;
+      }
+    </style>
+  </template>
+</dom-module>
+

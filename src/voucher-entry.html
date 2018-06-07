@@ -21,7 +21,7 @@
         position: relative;
         /* left:42%; */
         box-shadow: 1px 2px 4px darkslateblue;
-        top: -20px;
+        top: -18px;
         left: 37%;
         z-index: 2;
         line-height: 1;
@@ -90,11 +90,16 @@
       voucher-label { visibility: hidden;}
       voucher-label[shown] {visibility: visible;}
 
-      .preload{display:none;float: right;
-    margin-top: -44px;
-    transition: visibility 2s linear,opacity 2s linear;
-    margin-right: 4px;opacity:0.9};
-      .preload[shown]{display: inline;}
+      .preload{
+        display:none;
+        float: right;
+        margin-top: -24px;
+        transition: visibility 2s linear,opacity 2s linear;
+        margin-right: 14%;
+        opacity:0.94
+      };
+
+      .preload[shown]{display: inline-block;}
       
       #reloader {
         opacity:0;
@@ -141,6 +146,19 @@
           left: -15px;
         }
       }
+
+      #reloader {
+        top:8px;
+        right:2%;
+        z-index:800;
+        border:2px solid #666;
+        padding:4px 4px;
+        background:#7be668eb;
+        border-radius:18px;
+        width:18px;height:17px;
+        position:relative;float:right;
+        display: inline-block;
+      }
     </style>
 
     <!-- <dom-repeat items={{vouchers}}> -->
@@ -148,25 +166,25 @@
         
         <div>
           <vaadin-button on-click="_removeNode" data-id=[[voucher.id]] 
-            style="z-index:9999;display:inline-block;float:left;background:#b0c4de85;margin-top:3px">
+            style="z-index:100;display:inline-block;float:right;background:#b0c4de85;margin-top:3px">
             <img src="images/trash-icon.png"  style="width:25px">
           </vaadin-button>
           <!-- <iron-icon icon="lumo:new" slot="suffix"></iron-icon>
           <iron-icon icon="expense-manager:delete" slot="suffix"></iron-icon> -->
-          
+
+          <div id=reloader on-click='_reload' shown$=[[voucher.unchecked]]
+            >
+            <img src="images/rotate-left.png">
+          </div>
+
           <!-- <h5>[[voucher.uniqueCode]]</h5> -->
           <div style=position:relative shake$=[[shaking]]>
               <standard-input read-only=[[voucher.voucherEligible]]
                 current-voucher=[[voucher]] 
                 code={{voucher.uniqueCode}}
-                style="margin-left:-5%"
+                style="margin-left:13%"
                 show-reload=[[voucher.unchecked]]>
               </standard-input>
-          </div>
-
-          <div id=reloader on-click='_reload' shown$=[[voucher.unchecked]]
-            style="top:-47px;right:24%;border:2px solid #666;padding:3px 4px;background:#ccc;background:#7be668eb;border-radius:20px;width:20px;height:20px;position:relative;float:right">
-            <img src="images/rotate-left.png">
           </div>
 
           <overlay shown$="[[voucher.voucherEligible]]">.</overlay>

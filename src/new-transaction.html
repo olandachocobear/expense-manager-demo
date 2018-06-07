@@ -7,20 +7,12 @@
 <link rel="import" href="constant.html">
 
 <link rel="import" href="./vouchers-area.html">
-<link rel="import" href="styles-reskin.html">
+<link rel="import" href="./styles-reskin.html">
 
-<script src="./js/transaction-dialog.js"></script>
+<script src="./js/new-transaction.js"></script>
 
-<dom-module id="transaction-dialog">
+<dom-module id="new-transaction-layout">
   <template>
-      <!-- <iron-ajax id="ajax"
-        url="https://reqres.in/api/login" method="post" 
-        handle-as="json"
-        on-response="onResponse"
-        on-error="onError"
-        last-response="{{response}}">
-      </iron-ajax> -->
-
       <iron-ajax id="processRedeem" 
           url={{ironUrl}} method="post" 
           body="{{bodyRequest}}"
@@ -29,13 +21,10 @@
           on-error="onError"
           timeout=30000>
       </iron-ajax>
-
-    
-    <vaadin-dialog style="z-index:0" modeless=false id="dialog" no-close-on-esc no-close-on-outside-click opened="[[open]]">
-      <template>
-          <style include="textbox-styles">
+  
+          <style include="responsive-layout">
               .wrapper {
-                display: flex;
+                /* display: flex; */
                 margin-top: var(--lumo-space-s);
               }
     
@@ -106,29 +95,17 @@
               }
           </style>
 
-        <div style="float:right;line-height: 22px;
-        font-size: 12px;
-        opacity: 0.8;
-        margin-top:-4px;margin-right:3px;text-align:right">
-          <p>
-            Hi,
-            <u><b><span style=color:blue>[[username]]</span></b></u>!</i>
-            <br>
-            
-            <div style=margin-top:9px;>Not You?</div>
-            <div style=margin-top:-5px>
-              <a href="#" 
-                onclick="_logOut()"
-                target="_self">
-                Logout.
-              </a>
-            </div>
-          </p>
-        </div>
+        
 
-        <h3 style=font-size:1em;margin-top:3px>VOUCHER REDEMPTION</h3>
-        <h2 style=margin-top:4px>[[merchantName]]</h2>
-        <h3 style="margin-top: -11px; font-size:0.9em;color: rgb(0,0,0,0.6);">
+    <div class="wrapper">
+      <big-voucher>
+          <img src='images/voucher-hand.png'>
+      </big-voucher>
+
+      <div id=main>
+        <h3 style=color:#4d4d4d;font-weight:normal;font-size:1.4em;margin-top:60px>VOUCHER REDEMPTION</h3>
+        <h1 style=margin-top:-12px;color:#246eb6;font-size:2.2em>[[merchantName]]</h1>
+        <h3 style="margin-top: -15px; font-size:1.1em;color:#808184;">
           [[storeName]]
         </h3>
 
@@ -137,13 +114,15 @@
             
             <!-- <vaadin-combo-box name="merchant" items='[{"label": "Voucher", "value": 0}, {"label": "Coupon", "value": 1}]' value="{{_expense.transType}}" selected="Voucher" label="Type Promotion" required></vaadin-combo-box> -->
 
-            <vaadin-text-field class=test name="total" 
+            <vaadin-text-field name="total" 
               prevent-invalid-input pattern="[0-9.]*" value="{{fieldAmount}}" 
-              on-change="detectChanges" label="Total transaction" 
+              on-change="detectChanges" label="TOTAL TRANSACTION" 
               required apply-format
               style="--lumo-text-field-size: var(--lumo-size-l);
                     font-size: var(--lumo-font-size-xl);
-                    margin-top:10px;">
+                    margin-top:10px;
+                    --lumo-font-size-s: 18px;
+                    --lumo-secondary-text-color: #246eb6;">
               <div slot="prefix">Rp</div>
             </vaadin-text-field>
 
@@ -169,8 +148,7 @@
             
             <vaadin-text-field readonly id="remaining" theme="align-right" 
               value="Rp [[remainingTxt]]" label="Remaining Amount" pattern="[0-9]*"
-              shown$="[[displayRemaining]]"
-              style="background-color: white !important;">
+              shown$="[[displayRemaining]]">
                 <div slot="prefix"></div>
             </vaadin-text-field>
 
@@ -178,14 +156,6 @@
             <div style="display:none;margin-top:31px;
             margin-bottom:28px; text-align:center">
               
-              <vaadin-text-field value="Go-Cafe 25k!!" readonly style="
-                font-size:15px;
-                opacity:90%;
-                width:121px;
-                height:53px;
-                background-color:darkseagreen"
-              ></vaadin-text-field>
-
             </div>
           </div>
 <!-- 
@@ -193,15 +163,17 @@
 
 
         <!-- disabled=[[!validTrx]]  -->
-        <div class="buttons" style=text-align:center;margin-bottom:-10px>
+        <div class="buttons" style=text-align:center;margin-bottom:-10px;margin-top:8px>
           <vaadin-button theme$="[[redeemable]]" disabled=[[!validTrx]] on-click="_burn" style="opacity:0.84;height:50px;width:100%">Redeem!</vaadin-button>
           <vaadin-button id=reset_btn shown$="[[resetable]]" theme="tertiary" on-click="_reset"
             style="font-weight:normal;color:red;margin-left:15px"><u>Reset</u></vaadin-button>
         </div>
+      </div>
 
-      </template>
-    </vaadin-dialog>
-
+    <copyright>
+        2017 MAP
+    </copyright>
+   </div>
   </template>
   
 </dom-module>

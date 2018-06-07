@@ -18,7 +18,7 @@
         height: var(--lumo-size-xl);
         width: var(--lumo-size-xl);
         bottom: 10px;
-        margin-top: -2px;
+        margin-top: 4px;
         float: right;
         z-index: 9999;
         background: var(--loyalty-primary-color);
@@ -44,9 +44,7 @@
       }
       
     </style>
-    <iron-swipeable-container id="swiper" swipe-style="curve" width-ratio="3"
-    on-iron-swipe="_deleteNode" destroy 
-  >
+    
     <!-- <dom-repeat items={{listExample}}> -->
       <template is="dom-repeat" items={{listVouchers}} mutable-data index-as="nomor">
         <div id=[[item.id]] class$=[[getClass(item.id)]] >
@@ -54,7 +52,6 @@
         </div>  
       </template>
     <!-- </dom-repeat> -->
-  </iron-swipeable-container>
     
     <paper-icon-button-light id="add-button" shown$="[[addAllowed]]">
         <button aria-label="Add voucher" on-click="_add">

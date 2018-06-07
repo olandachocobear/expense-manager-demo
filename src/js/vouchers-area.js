@@ -39,7 +39,7 @@
           //    {id: 5},
           //    {id: 6},
           //  ]
-          observer: '_listRefreshed'
+          // observer: '_listRefreshed'
          },
          remainingAmount: {
            type: String,
@@ -73,7 +73,7 @@
       else
         this.addAllowed = false
       
-      this._listRefreshed()
+      // this._listRefreshed()
     }
 
     _listRefreshed() {
