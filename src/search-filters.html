@@ -72,7 +72,7 @@
     <div class="filters">
       <div class="title section-title" hidden="[[phone]]">
         <span>Filter </span>
-        <vaadin-button on-click="_clearFilters" theme="tertiary-inline small">Clear</vaadin-button>
+        <vaadin-button on-click="_clearFilters" style=float:right theme="tertiary-inline small">Clear</vaadin-button>
       </div>
       <vaadin-text-field class="" label="Voucher Number" value="{{filters.specificVoucher}}" pattern="[0-9]+"></vaadin-text-field>
       <vaadin-date-picker label="From" value="{{filters.filters.txnStartTransactionDate}}" max="[[filters.filters.txnEndTransactionDate]]"></vaadin-date-picker>

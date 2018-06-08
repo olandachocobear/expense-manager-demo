@@ -17,7 +17,7 @@
     <style include="lumo-color-legacy">
       :host {
         display:grid;
-        grid-template-columns: 5fr 1fr;
+        grid-template-columns: 5fr 2fr;
         grid-template-areas: "left right";
 
         height: 64px;
@@ -84,7 +84,8 @@
   </div>  
 
   <div class=right>
-    <div id=userinfo style="font-size: 12px;
+    <div id=userinfo style="padding-top:11px;padding-right:7px;
+        font-size: 16px;
         opacity: 0.8;
         margin-top:-4px;margin-right:3px;text-align:right;
         color:#4d4d4d">
@@ -93,14 +94,16 @@
             <u><b><span style=color:blue>[[username]]</span></b></u>!</i>
             <br>
             
-            <div style=margin-top:9px;>Not You?</div>
-            <div style=margin-top:-5px>
+          <div style=font-size:12px>
+            <div style=margin-top:-2px;>Not You?</div>
+            <div style=font-size:11px;margin-top:0px>
               <a href="#" 
                 onclick="_logOut()"
                 target="_self">
                 Logout.
               </a>
             </div>
+          </div>
           </p>
         </div>
   </div>
