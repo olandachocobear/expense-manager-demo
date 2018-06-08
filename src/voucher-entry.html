@@ -13,16 +13,14 @@
   <template>
     
     <style>
-      div {
-        margin-bottom:10px;
-      }
+      
       voucher-label{
         /* float:left; strange..if commented, it will be floating */
         position: relative;
         /* left:42%; */
-        box-shadow: 1px 2px 4px darkslateblue;
-        top: -18px;
-        left: 37%;
+        box-shadow: 3px 2px 3px hsl(119, 0%, 61%);
+        /* top: -42px; */ /* i'm putting it into @media query */
+        left: 64%;
         z-index: 2;
         line-height: 1;
         vertical-align: baseline;
@@ -30,12 +28,19 @@
         background-color: lightsteelblue;
         background-image: none;
         padding: .4983em 1.403em; /* .5833em .833em; */
-        color: #556b2fee;
+        color: #246eb6;
+        text-shadow: 0 1px 1px #fff;
+        letter-spacing: 0.2pt
         /* color: rgba(0,0,0,.6); */
         text-transform: none;
-        font-weight: 500;
+        font-weight: 800;
         border: 0 solid transparent;
         opacity: 0.95;
+      }
+      @media (min-width:1000px){
+        voucher-label {
+          left:264px;
+        }
       }
       voucher-label:before {
         position: absolute;
@@ -93,9 +98,9 @@
       .preload{
         display:none;
         float: right;
-        margin-top: -24px;
+        /* margin-top: -47px; */ /* moving it into @media query */
         transition: visibility 2s linear,opacity 2s linear;
-        margin-right: 14%;
+        margin-right: 23%;
         opacity:0.94
       };
 
@@ -159,14 +164,52 @@
         position:relative;float:right;
         display: inline-block;
       }
+
+      @media(min-width:777px){
+        #deleteBig {
+          display:inline;
+        }
+        #deleteSmall {
+          display:none;
+        }
+
+        div {
+          margin-bottom:0px;
+        }
+        voucher-label {
+          top: -31px;
+        }
+        .preload {
+          margin-top: -36px;
+        }
+      }
+      
+      @media(max-width:776px){
+        #deleteBig{
+          display:none;
+        }
+        #deleteSmall{
+          display:block;
+        }
+
+        div {
+          margin-bottom:11px;
+        }
+        voucher-label {
+          top: -42px;
+        }
+        .preload {
+          margin-top: -47px;
+        }
+      }
     </style>
 
     <!-- <dom-repeat items={{vouchers}}> -->
       <!-- <template> -->
         
         <div>
-          <vaadin-button on-click="_removeNode" data-id=[[voucher.id]] 
-            style="z-index:100;display:inline-block;float:right;background:#b0c4de85;margin-top:3px">
+          <vaadin-button id=deleteBig on-click="_removeNode" data-id=[[voucher.id]] 
+            style="z-index:100;float:right;background:#b0c4de85;margin-top:5px">
             <img src="images/trash-icon.png"  style="width:25px">
           </vaadin-button>
           <!-- <iron-icon icon="lumo:new" slot="suffix"></iron-icon>
@@ -182,13 +225,11 @@
               <standard-input read-only=[[voucher.voucherEligible]]
                 current-voucher=[[voucher]] 
                 code={{voucher.uniqueCode}}
-                style="margin-left:13%"
+                style="width:100%"
                 show-reload=[[voucher.unchecked]]>
               </standard-input>
           </div>
-
-          <overlay shown$="[[voucher.voucherEligible]]">.</overlay>
-          
+ 
           <voucher-label 
             bgColor="red"
             label=[[voucher.voucherType]]
@@ -200,6 +241,14 @@
           <div class="preload" shown$="[[voucher.onCheck]]">
             <img src="images/preload2.gif" >
          </div>
+
+        <div id=deleteSmall style="color:#23609cdd;font-weight:600;margin-top:-26px;margin-left:2px;text-decoration:underline"
+            on-click="_removeNode" data-id=[[voucher.id]]
+        >
+          <span style=font-size:13px>
+            Delete
+         </span>
+        </div>
           <!-- extra information on the right..-->
           
         </div>

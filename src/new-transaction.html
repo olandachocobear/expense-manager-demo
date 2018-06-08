@@ -136,8 +136,7 @@
             </div>
 
             <div style="margin-top:7px;
-                        width: 100%;
-                        text-align: center;">
+                        width: 100%;">
 
             <vouchers-area add-allowed=false> </vouchers-area>
             </div>  
@@ -148,7 +147,12 @@
             
             <vaadin-text-field readonly id="remaining" theme="align-right" 
               value="Rp [[remainingTxt]]" label="Remaining Amount" pattern="[0-9]*"
-              shown$="[[displayRemaining]]">
+              shown$="[[displayRemaining]]"
+              style="--lumo-text-field-size: var(--lumo-size-l);
+                    font-size: var(--lumo-font-size-xl);
+                    margin-top:-60px;
+                    --lumo-font-size-s: 17px;
+                    --lumo-secondary-text-color: #4d4d4d;">
                 <div slot="prefix"></div>
             </vaadin-text-field>
 
