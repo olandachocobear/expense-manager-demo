@@ -93,10 +93,22 @@
 
     <confirm-dialog id="dialog" on-result="closeAlert">
       <center>
-        <h1>Welp!</h1>
+        <h1 style=margin-top:7px>[[alertTitle]]</h1>
         <br>
-        <img style=margin-top:-9px src="images/sad.png" width=135>
-        <H3 style=color:#555;margin-top:20px;margin-bottom:-4px;line-height:139%>It seems like you're currently having a bad connection.</H3>
+        <img style=margin-top:22px src="images/[[smileyIcon]]" width=147>
+        <H3 style="color: #666;
+            margin-top: 40px;
+            margin-bottom: 0px;
+            line-height: 200%;
+            ">
+          <!-- It seems like you're currently having a bad connection. -->
+          <span style="font-size: 21px;color: #555;font-weight: 12000;text-decoration: underline;">
+            [[alertHeader]]
+          </span><br>
+          <span style="letter-spacing: 0.3pt;font-size: 20px;font-weight: normal;">
+            [[alertBody]]
+          </span>
+        </H3>
       </center>
     </confirm-dialog>
 
@@ -138,6 +150,26 @@
         
         static get properties() {
           return {
+            smileyIcon: {
+              type: String,
+              statePath: 'errors.smileyIcon'
+            },
+            alertBody: {
+              type: String,
+              statePath: 'errors.alertBody'
+            },
+            alertTitle: {
+              type: String,
+              statePath: 'errors.alertTitle'
+            },
+            alertHeader: {
+              type: String,
+              statePath: 'errors.alertHeader'
+            },
+            alertButton: {
+              type: String,
+              statePath: 'errors.alertButton'
+            },
             errorMsg: {
               type: String,
               statePath: 'errors.msg'
@@ -189,18 +221,32 @@
               type: Boolean,
               statePath: 'uiState.modalAlert',
               observer: 'toggleAlert'
+            },
+            transNo: {
+              type: String,
+              statePath: 'transaction.trxNumber'
             }
           };
         }
         
-        closeAlert() {
-          this.dispatch('hideConnectionAlert')
+        closeAlert(result) {
+          this.dispatch('hideAlert')
+          if(this.alertTitle == 'Success') {
+            if(result.detail==true){ // if click 'Print Receipt'
+              setTimeout(() => {
+                this.dispatch('generateReceipt', this.transNo)
+                //this.dispatch('showReceipt')
+              }, 400);
+            }
+          }
         }
+
         toggleAlert(){
           if (this.showAlert)
             this.$.dialog.show({
               delay: 10,
-              confirm: 'Try again later'
+              confirm: this.alertButton, //'Try again later'
+              cancel: (this.alertTitle == 'Success') ? 'Close' : ''
             })
         }
 
@@ -227,13 +273,13 @@
               case '00': 
                 return //this.successToast();
               case 200:
-                return this.showSuccessToast()
+                return //this.showSuccessToast()
               case "B2": 
                 return this.showWarningToast(this.errorMsg);
               case 66: 
                 return this.showCustomToast("Can't connect. Check your device's connection..")
               default:
-                this.showErrorToast(this.errorMsg);
+                //this.showErrorToast(this.errorMsg);
             }
           }
         }
@@ -250,7 +296,8 @@
         }
         showWarningToast(warning){  
           let toasts2 = this.$.toast2;
-          toasts2.showWarningToast("Invalid voucher.", {fitBottom:true});
+          // toasts2.showWarningToast("Invalid voucher.", {fitBottom:true});
+          toasts2.showWarningToast(`ERROR: ${this.errorMsg}`, {fitBottom:true})
           this._resetToast();
         }
         showErrorToast(err){  

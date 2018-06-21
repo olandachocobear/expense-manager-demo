@@ -214,8 +214,23 @@
       this.currentVoucher.shake = true;
       this.dispatch('updateVoucher', this.currentVoucher);
       this.dispatch('updateTransactionable', false);
-      this.dispatch('updateErrorMsg', result.responseDetailEnglish);
-      this.dispatch('updateErrorCode', result.responseCode);
+      
+
+      //new Popup alert for errors..
+      /// but check if it has reached certain length 
+      if (this.currentVoucher.uniqueCode.length == 12){
+        this.dispatch('changeTitleAlert', "Whoops, something's wrong..");
+        this.dispatch('changeHeaderAlert', "Error Msg:");
+        this.dispatch('changeMessageAlert', result.responseDetailEnglish);
+        this.dispatch('changeAlertIcon', 'sad.png');
+        this.dispatch('changeAlertButton', 'Close');
+        this.dispatch('showAlert');
+      }
+      else {
+        this.dispatch('updateErrorMsg', 'Panjang voucher tidak valid.');
+        this.dispatch('updateErrorCode', result.responseCode);
+      }
+
     }
     otherError(result) {
       this.currentVoucher.onCheck = false;
@@ -227,6 +242,14 @@
       this.dispatch('updateTransactionable', false);
       this.dispatch('updateErrorMsg', result.responseDetailEnglish);
       this.dispatch('updateErrorCode', result.responseCode);
+
+      //new Popup alert for errors..
+      this.dispatch('changeTitleAlert', "Whoops, something's wrong..");
+      this.dispatch('changeHeaderAlert', "Error Msg:");
+      this.dispatch('changeMessageAlert', result.responseDetailEnglish);
+      this.dispatch('changeAlertIcon', 'sad.png');      
+      this.dispatch('changeAlertButton', 'Close');
+      this.dispatch('showAlert');
     }
 
     _flagVoucherAsValid() {
@@ -246,6 +269,16 @@
       }, 1000);
       
       this.dispatch('updateErrorCode', 66);
+
+      //adding attempt of connection..
+      if(this.connectionAttempt==3){
+        this.dispatch('showAlert');
+        this.dispatch('resetConnAttempt');
+      }
+      else {
+        this.dispatch('increaseConnAttempt');
+      }
+
       console.log(e);
       console.log(e.target.lastRequest.xhr.status);
       console.log(detail.error); // the error object

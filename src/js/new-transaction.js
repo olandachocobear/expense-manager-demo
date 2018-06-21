@@ -83,6 +83,11 @@ class NewTransactionLayout extends ExpenseManager.ReduxMixin(Polymer.Element) {
         trans_detail: {
             type: Object,
             statePath: 'transaction'
+        },
+        lastReceipt: {
+            type: String,
+            statePath: 'uiState.lastReceiptNo',
+            observer: 'createCache'
         }
     };
     }
@@ -217,13 +222,20 @@ class NewTransactionLayout extends ExpenseManager.ReduxMixin(Polymer.Element) {
     eligibleResponse(result) {
         console.log(result.detail.response);
 
-        this.createCache();
+        //this.createCache(); --> nomore showing on top of popup,
+                        // wait until user click the close button..
 
         //this._close()
-        this.dispatch('updateErrorMsg', result.detail.responseDetailBahasa);
-        this.dispatch('updateErrorCode', 200);
-        
-        this._reset();
+        //this.dispatch('updateErrorMsg', result.detail.responseDetailBahasa);
+        //this.dispatch('updateErrorCode', 200);
+
+        //new Popup Modal 
+        this.dispatch('changeTitleAlert', "Success");
+        this.dispatch('changeHeaderAlert', "");
+        this.dispatch('changeMessageAlert', "Hore! Transaksi Anda berhasil!!");
+        this.dispatch('changeAlertIcon', 'happy.png');
+        this.dispatch('changeAlertButton', 'Print Receipt');
+        this.dispatch('showAlert');
     }
 
     onError(e,detail){
@@ -257,7 +269,8 @@ class NewTransactionLayout extends ExpenseManager.ReduxMixin(Polymer.Element) {
         this.dispatch('addLastTransaction', cachedTrx);
         
         setTimeout( () => {
-            this.dispatch('showReceipt')
+            this.dispatch('showReceipt');
+            this._reset();
         }, 500);
     }
 }

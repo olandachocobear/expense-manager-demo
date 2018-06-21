@@ -35,7 +35,9 @@
       pagination: 0,
       page_loading: false,
       modalAlert: false,
-      connectionAttempt: 0
+      connectionAttempt: 0,
+      alertBody: '',
+      alertTitle: '',
     }, action) {
       switch (action.type) {
 
@@ -74,13 +76,18 @@
         
         case 'HIDE_SMILEY_DIALOG':
           return Object.assign({}, state, {modalAlert: false});
-        
+
         case 'ADD_CONN_ATTEMPT':
           return Object.assign({}, state, {connectionAttempt: state.connectionAttempt + 1});
         
         case 'RESET_CONN_ATTEMPT':
           return Object.assign({}, state, {connectionAttempt: 0});
         
+        case 'GENERATE_RECEIPT':
+          return Object.assign({}, state, {
+            lastReceiptNo: action.traceNo
+        })
+
         default:
           return state;
       }
@@ -305,6 +312,26 @@
             return Object.assign({}, state, {
                 msg: action.msg
             });
+  
+          case 'MODIFY_TITLE':
+            return Object.assign({}, state,
+            {alertTitle: action.title});
+
+          case 'MODIFY_MSG':
+            return Object.assign({}, state,
+            {alertBody: action.msg});
+
+          case 'MODIFY_HEADER':
+            return Object.assign({}, state,
+            {alertHeader: action.header});
+
+          case 'MODIFY_BUTTON':
+            return Object.assign({}, state,
+            {alertButton: action.button});
+
+          case 'CHANGE_SMILEY':
+            return Object.assign({}, state, {smileyIcon: action.icon}
+          );
 
           default:
               return state;

@@ -165,10 +165,25 @@
     const resetTrx = () => {
       return {type: 'RESET_TX'}
     }
-    const showConnectionAlert = () => {
+    const showAlert = () => {
       return {type: 'SHOW_SMILEY_DIALOG'}
     }
-    const hideConnectionAlert = () => {
+    const changeTitleAlert = (title) => {
+      return {type: 'MODIFY_TITLE', title}
+    }
+    const changeHeaderAlert = (header) => {
+      return {type: 'MODIFY_HEADER', header}
+    }
+    const changeMessageAlert = (msg) => {
+      return {type: 'MODIFY_MSG', msg}
+    }
+    const changeAlertButton = (button) => {
+      return {type: 'MODIFY_BUTTON', button}
+    }
+    const changeAlertIcon = (icon) => {
+      return {type: 'CHANGE_SMILEY', icon}
+    }
+    const hideAlert = () => {
       return {type: 'HIDE_SMILEY_DIALOG'}
     }
     const increaseConnAttempt = () => {
@@ -182,6 +197,9 @@
     }
     const updateDone = () => {
       return {type: 'UPDATE_DONE'}
+    }
+    const generateReceipt = (traceNo) => {
+      return {type: 'GENERATE_RECEIPT', traceNo}
     }
 
     window.ExpenseManager = window.ExpenseManager || {};
@@ -215,6 +233,7 @@
       hideReceipt,
       showREreceipt,
       hideREreceipt,
+      generateReceipt,
 
       addLastTransaction,
       
@@ -229,8 +248,13 @@
       searchVoucher,
       resetTrx,
 
-      showConnectionAlert,
-      hideConnectionAlert,
+      showAlert,
+      hideAlert,
+      changeMessageAlert,
+      changeTitleAlert,
+      changeHeaderAlert,
+      changeAlertButton,
+      changeAlertIcon,
 
       increaseConnAttempt,
       resetConnAttempt,
