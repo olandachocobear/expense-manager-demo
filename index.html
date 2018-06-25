@@ -60,9 +60,21 @@
       /* background: hsl(214, 35%, 21%); */
       background: #e6e6e6;
       color: #fff;
-      font-family: -apple-system, BlinkMacSystemFont, "Roboto", "Segoe UI", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+      /* font-family: -apple-system, BlinkMacSystemFont, "Roboto", "Segoe UI", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"; */
+      font-family: "DINPro"; /*, "Segoe UI", Helvetica, Arial, sans-serif; */
       -webkit-tap-highlight-color: transparent;
       -webkit-font-smoothing: antialiased;
+    }
+
+    @font-face {
+        font-family: "DINPro";
+        font-weight: normal;
+        src: local('DINPro'), url("src/fonts/DINPro-Medium.otf") format("opentype");
+    }
+    @font-face {
+        font-family: "DINPro";
+        font-weight: bold;
+        src: local('DINPro'), url("src/fonts/DINPro-Bold.otf") format("opentype");
     }
 
     /* styling for render while resources are loading */

@@ -36,7 +36,8 @@
         display: flex;
         flex: auto;
         height: 0.001px;
-        background: var(--lumo-base-color);
+        /* background: var(--lumo-base-color); */
+        background:#e6e6e6;
       }
 
       filters-toolbar[phone] {
@@ -58,6 +59,32 @@
       content-panel {
         flex: 1;
       }
+
+      .links {
+        background:#e6e6e6;
+        position: absolute;
+        float:left;
+        font-size: 18px;
+        padding-left: 2.2%;
+        width: 360px;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-evenly;
+        margin-top: 46px;
+        margin-bottom: -15px;
+      }
+      .header_link {
+
+      }
+      .link_active {
+        font-weight: bold;
+        color: #246eb6;
+      }
+      .link_inactive {
+        color: #808184 !important;
+        text-decoration: none !important;
+        cursor: pointer;
+      }
     </style>
 
     <app-header-layout fullbleed>
@@ -65,9 +92,21 @@
         <nav-bar style=height:100px theme="light"></nav-bar>
       </app-header>
 
-      <div class="content">
-        <filters-toolbar style="background:#e6e6e6" phone="[[phone]]" tablet="[[tablet]]"></filters-toolbar>
-        <content-panel tid=[[tid]] mid=[[mid]] phone="[[phone]]" tablet="[[tablet]]"></content-panel>
+      <div class="content" style=>
+        <div class=links>
+          <div class="header_link ">
+              <a href="#/entry" class="link_inactive">NEW TRANSACTION</a>
+          </div>
+          |
+          <div class="header_link link_active">
+            REDEEM LOG
+          </div>
+        </div>
+        
+        <br><br><br><br><br><br>
+
+        <filters-toolbar style="margin-top:100px;background:#e6e6e6" phone="[[phone]]" tablet="[[tablet]]"></filters-toolbar>
+        <content-panel style="margin-top:100px;" tid=[[tid]] mid=[[mid]] phone="[[phone]]" tablet="[[tablet]]"></content-panel>
       </div>
     </app-header-layout>
 

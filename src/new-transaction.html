@@ -93,11 +93,42 @@
                   font-size: 20px !important;
                   font-style: oblique;
               }
+
+              .links {
+                font-size: 18px;
+                padding-left: 3.82%;
+                width: 360px;
+                display: flex;
+                flex-direction: row;
+                justify-content: space-evenly;
+                margin-top: 38px;
+                margin-bottom: -19px;
+              }
+              .header_link {
+
+              }
+              .link_active {
+                font-weight: bold;
+                color: #246eb6;
+              }
+              .link_inactive {
+                color: #808184 !important;
+                text-decoration: none !important;
+                cursor: pointer;
+              }
           </style>
 
         
 
     <div class="wrapper">
+      <div class=links>
+        <div class="header_link link_active">NEW TRANSACTION</div>
+        |
+        <div class="header_link ">
+          <a href="#/list" class="link_inactive">REDEEM LOG</a>
+        </div>
+      </div>
+
       <big-voucher>
           <img src='images/voucher-hand.png'>
       </big-voucher>
