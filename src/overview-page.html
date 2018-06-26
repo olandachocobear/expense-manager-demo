@@ -20,6 +20,7 @@
 <link rel="import" href="../bower_components/app-layout/app-scroll-effects/app-scroll-effects.html">
 <link rel="import" href="../bower_components/app-layout/app-toolbar/app-toolbar.html">
 
+<link rel="import" href="./styles-reskin.html">
 
 <dom-module id="overview-page">
   <template>
@@ -62,16 +63,24 @@
 
       .links {
         background:#e6e6e6;
-        position: absolute;
+        position: fixed;
         float:left;
         font-size: 18px;
-        padding-left: 2.2%;
+        padding-left: 2%;
         width: 360px;
         display: flex;
         flex-direction: row;
         justify-content: space-evenly;
-        margin-top: 46px;
-        margin-bottom: -15px;
+        margin-top: 16px;
+        margin-bottom: -50px;
+        position: fixed;
+      }
+      .link_container {
+        width: 100%;
+        height: 50px;
+        position: fixed;
+        background: #e6e6e6;
+        z-index: 99999;
       }
       .header_link {
 
@@ -93,20 +102,24 @@
       </app-header>
 
       <div class="content" style=>
-        <div class=links>
-          <div class="header_link ">
-              <a href="#/entry" class="link_inactive">NEW TRANSACTION</a>
+        <nav-menu>
+          <div class=link_container>
+            <div class=links>
+              <div class="header_link ">
+                  <a href="#/entry" class="link_inactive">NEW TRANSACTION</a>
+              </div>
+              |
+              <div class="header_link link_active">
+                REDEEM LOG
+              </div>
+            </div>
           </div>
-          |
-          <div class="header_link link_active">
-            REDEEM LOG
-          </div>
-        </div>
-        
-        <br><br><br><br><br><br>
+        </nav-menu>         
 
-        <filters-toolbar style="margin-top:100px;background:#e6e6e6" phone="[[phone]]" tablet="[[tablet]]"></filters-toolbar>
-        <content-panel style="margin-top:100px;" tid=[[tid]] mid=[[mid]] phone="[[phone]]" tablet="[[tablet]]"></content-panel>
+        <br><br>
+
+        <filters-toolbar style="margin-top:80px;background:#e6e6e6" phone="[[phone]]" tablet="[[tablet]]"></filters-toolbar>
+        <content-panel style="margin-top:80px;" tid=[[tid]] mid=[[mid]] phone="[[phone]]" tablet="[[tablet]]"></content-panel>
       </div>
     </app-header-layout>
 

@@ -63,15 +63,17 @@
         grid-gap: 20px;
         grid-template-areas: 
             "nav"
+            "subnav"
             "big_logo"
             "main"
             "footer";
       }
       @media (min-width: 500px) {
         .wrapper {
-            grid-template-columns: 3fr 2fr;
+            grid-template-columns: 4fr 2fr;
             grid-template-areas: 
             "nav    nav"
+            "subnav  subnav"
             "main   big_logo"
             "footer footer";
         }
@@ -98,6 +100,17 @@
 
       copyright{
           grid-area: footer;
+      }
+
+      nav-menu{
+          background: #e6e6e6;
+          position: fixed;
+          height: 50px;
+          z-index:999999;
+      }
+
+      nav-links{
+          grid-area: subnav;
       }
     </style>
   </template>
