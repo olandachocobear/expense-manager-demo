@@ -8,7 +8,8 @@
   "sources": [
     "src/**/*",
     "images/**/*",
-    "bower.json"
+    "bower.json",
+    "fonts/**/*"
   ],
   "extraDependencies": [
     "bower_components/webcomponentsjs/*.js",

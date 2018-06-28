@@ -63,7 +63,13 @@
       };
     }
    
-    delayCheck() {
+    delayCheck(e) {
+        console.log(e)
+        //new Bug-fix; when backspace hit repeatedly to clear the field:
+        if (e.code=='Backspace'){
+          // alert(this.fieldAmount);
+        }
+
         //create temporary to be compared
         var curr = this.code;
 
@@ -71,28 +77,32 @@
         if (this.trxAmount=='')
           this.dispatch('updateTransactionAmount', 0);
           
-        if(curr){
+        // if(curr){ --> edit because of Bug, moving checking code is empty on the `_compareVoucher`
             //update to Store
             this.currentVoucher.uniqueCode = curr;
             this.dispatch ('updateVoucher',this.currentVoucher)
 
             //launch 'delayed' checker
             var $this = this;
+            console.log('sending delayed signal...')
             setTimeout( ()=> {
 
                 //hide the 'reload' button
                 this.currentVoucher.unchecked = false;
                 $this._compareVoucher(curr)
             }, constant.delay);
-        }
+        // }
     }
 
     _compareVoucher(val){
+      console.log('sending: ' +val);
         if(val!=this.currentVoucher.uniqueCode)
             console.log('still waiting input..')
         else   {
-            this.updateIronParams()
+          if(val){
+            this.updateIronParams(val)
             this._checkEligible()
+          }
         }
     }
 
@@ -105,10 +115,10 @@
         this.updateIronParams();
     }
 
-    updateIronParams(){
+    updateIronParams(check_code){
         this.bodyRequest = {
             amount: parseInt(this.trxAmount),
-            uniqueCode: this.code,
+            uniqueCode: check_code,
             mid: this.userDetail.mid, 
             merchantCode: this.userDetail.merchantCode, 
             tid: this.userDetail.tid,

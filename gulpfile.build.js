@@ -37,6 +37,7 @@ gulp.task('default', function () {
         "manifest.json",
 	    "**/*.png",
         "**/*.gif",
+        "**/*.otf",
         ])
         .pipe(war({
             welcome: 'index.html',
