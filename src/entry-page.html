@@ -65,6 +65,14 @@
       content-panel {
         flex: 1;
       }
+
+      .red_header{
+        color: maroon
+      }
+      .green_header{
+        color: seagreen;
+      }
+
     </style>
 
     <app-header-layout>
@@ -91,9 +99,9 @@
       </div>
     </m2-dialog>
 
-    <confirm-dialog id="dialog" on-result="closeAlert">
+    <confirm-dialog id="dialog" on-result="closeAlert" modal=true>
       <center>
-        <h1 style=margin-top:7px>[[alertTitle]]</h1>
+        <h1 style=margin-top:7px class$=[[_giveHeaderColor(alertTitle)]] >[[alertTitle]]</h1>
         <br>
         <img style=margin-top:22px src="images/[[smileyIcon]]" width=147>
         <H3 style="color: #666;
@@ -239,6 +247,14 @@
               }, 400);
             }
           }
+          
+          // bug fix "form not reset when clicked close button on popup"
+          if(result.detail==false) // --> false if it's clicked 'cancel'
+          {
+            this.dispatch('resetForm');
+            this.dispatch('resetTrx');
+            this.fieldAmount = "0";
+          }
         }
 
         toggleAlert(){
@@ -248,6 +264,13 @@
               confirm: this.alertButton, //'Try again later'
               cancel: (this.alertTitle == 'Success') ? 'Close' : ''
             })
+        }
+
+        _giveHeaderColor(title){
+          if(title=='Success')
+            return "green_header";
+          else
+            return "red_header";
         }
 
         _setReceiptClosed() {

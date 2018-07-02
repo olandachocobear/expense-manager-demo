@@ -193,7 +193,7 @@ class NewTransactionLayout extends ExpenseManager.ReduxMixin(Polymer.Element) {
     _reset() {
         this.dispatch('resetForm');
         this.dispatch('resetTrx');
-        this.fieldAmount = "";
+        this.fieldAmount = "0";
         // this.createCache();
         // this.dispatch('showReceipt')
     }

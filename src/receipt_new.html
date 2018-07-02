@@ -42,7 +42,7 @@
                           <br>
                           <br>
                           <!-- <h5 style=float:left;margin-top:0px;margin-bottom:5px>BATCH: - </h5> -->
-                          <h5 style=float:right;margin-top:0px;margin-bottom:5px>TIME: {{time}}</h5>
+                          <h5 style=float:right;margin-top:0px;margin-bottom:5px>TIME: {{formatted_time}}</h5>
                           
             
                         <img src="images/voucher_burn.png" style="max-width:280px;margin: 0 6%">
@@ -95,6 +95,10 @@
       newWin.document.close();
 
       setTimeout(function(){newWin.close();},10);
+    }
+    
+    function paddingize(value,length){
+      return ("00" + value).slice(-length);
     }
 
     (function() {
@@ -185,8 +189,10 @@
         }
 
         _dateChanged() {
-            if (this.date == '')
+            if (this.date == '') {
                 var tgl = new Date();
+                var jam = paddingize(tgl.getHours(), 2) + ':' + paddingize(tgl.getMinutes(), 2);
+            }
             else {
                 // fixing formate dd-mm to mm-dd that JS understands..
                 var tgl_server = this.date.split(' ')[0].split('-');
@@ -194,9 +200,14 @@
                 var correct_format_date = [sorted_tgl, this.date.split(' ')[1]].join(' ');
 
                 var tgl = new Date(correct_format_date);
+                
+                // getting HH:MM
+                var jams = this.date.split(' ')[1].split(':');
+                var jam = jams[0] + ':' + jams[1];
             }
   
-            this.formatted_date = `${tgl.getDate()}/${tgl.getMonth()+1}/${tgl.getFullYear()}` 
+            this.formatted_date = `${paddingize(tgl.getDate(),2)}/${paddingize(tgl.getMonth()+1 , 2)}/${tgl.getFullYear()}` 
+            this.formatted_time = `${jam}`; 
         }
     }
       customElements.define(ReceiptElement.is, ReceiptElement);

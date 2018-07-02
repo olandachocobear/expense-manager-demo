@@ -228,18 +228,23 @@
 
       //new Popup alert for errors..
       /// but check if it has reached certain length 
-      if (this.currentVoucher.uniqueCode.length == 12){
+      
+      // disable the length-checker temporarily
+      //if (this.currentVoucher.uniqueCode.length == 12){
         this.dispatch('changeTitleAlert', "Whoops, something's wrong..");
-        this.dispatch('changeHeaderAlert', "Error Msg:");
+        this.dispatch('changeHeaderAlert', "");
         this.dispatch('changeMessageAlert', result.responseDetailEnglish);
         this.dispatch('changeAlertIcon', 'sad.png');
         this.dispatch('changeAlertButton', 'Close');
         this.dispatch('showAlert');
+      
+      /*
       }
       else {
         this.dispatch('updateErrorMsg', 'Panjang voucher tidak valid.');
         this.dispatch('updateErrorCode', result.responseCode);
       }
+      */
 
     }
     otherError(result) {
@@ -255,7 +260,7 @@
 
       //new Popup alert for errors..
       this.dispatch('changeTitleAlert', "Whoops, something's wrong..");
-      this.dispatch('changeHeaderAlert', "Error Msg:");
+      this.dispatch('changeHeaderAlert', "");
       this.dispatch('changeMessageAlert', result.responseDetailEnglish);
       this.dispatch('changeAlertIcon', 'sad.png');      
       this.dispatch('changeAlertButton', 'Close');

@@ -476,7 +476,7 @@
 
              // getting the last remaining amount (from the lastest trans member)
              if(l==(trans.length-1))
-              selectedTrx.remaining = trans[l].txnRemainingAmount;
+              selectedTrx.remaining = numeral(trans[l].txnRemainingAmount).format(0.0);
             
              // routine getting each vouchers' info..
              selectedTrx.vouchers[l] = {}

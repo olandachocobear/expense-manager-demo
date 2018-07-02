@@ -37,11 +37,13 @@
         border: 0 solid transparent;
         opacity: 0.95;
       }
-      @media (min-width:1000px){
+      
+      /* @media (min-width:1000px){ */
         voucher-label {
           left:264px;
         }
-      }
+      /* } */
+      
       voucher-label:before {
         position: absolute;
         -webkit-transform: translateY(-50%) translateX(50%) rotate(-45deg);
@@ -209,7 +211,7 @@
         
         <div>
           <vaadin-button id=deleteBig on-click="_removeNode" data-id=[[voucher.id]] 
-            style="z-index:100;float:right;background:#b0c4de85;margin-top:5px">
+            style="z-index:100;float:left;background:#b0c4de85;margin-top:5px">
             <img src="images/trash-icon.png"  style="width:25px">
           </vaadin-button>
           <!-- <iron-icon icon="lumo:new" slot="suffix"></iron-icon>
@@ -242,10 +244,8 @@
             <img src="images/preload2.gif" >
          </div>
 
-        <div id=deleteSmall style="color:#23609cdd;font-weight:600;margin-top:-26px;margin-left:2px;text-decoration:underline"
-            on-click="_removeNode" data-id=[[voucher.id]]
-        >
-          <span style=font-size:13px>
+        <div id=deleteSmall style="cursor:pointer;color:#23609cdd;font-weight:600;margin-top:-26px;margin-left:2px;text-decoration:underline">
+          <span style=font-size:13px on-click="_removeNode" data-id=[[voucher.id]]>
             Delete
          </span>
         </div>
