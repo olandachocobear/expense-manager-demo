@@ -196,7 +196,9 @@
             else {
                 // fixing formate dd-mm to mm-dd that JS understands..
                 var tgl_server = this.date.split(' ')[0].split('-');
-                var sorted_tgl = [tgl_server[1], tgl_server[0], tgl_server[2]].join('-');
+                
+                // Firefox couldnt make new Date using hyphen:
+                var sorted_tgl = [tgl_server[1], tgl_server[0], tgl_server[2]].join('/');
                 var correct_format_date = [sorted_tgl, this.date.split(' ')[1]].join(' ');
 
                 var tgl = new Date(correct_format_date);
