@@ -395,8 +395,9 @@
 
         _detectFilterChange(){
           this.$.expenses.customFilters = this._getParams();
-          console.log('=========== ' + this.$.expenses.customFilters)
+          /* console.log('=========== ' + this.$.expenses.customFilters)
           console.log(this.$.expenses.dataProvider)
+          */
 
           if (this.filters.applyUpdate){
 
@@ -426,7 +427,7 @@
 
         _getParams() {
           this.filters.sort = (this.filters.sort==undefined) ? "txnTransactionDate,DESC" : this.filters.sort;
-          console.log(this.filters)
+          /* console.log(this.filters) */
           
           let params = ""
           Object.entries(this.filters).forEach((entry) => {
@@ -535,7 +536,7 @@
          * @param {Object|null} expense the selected expense, if any.
          */
         _activeItemChanged(voucher) {
-          console.log(voucher)
+          /* console.log(voucher) */
           // disable list-clicking
           // if (this.expenses && this.expenses.length > 0) { // don't trigger on init
           //   this.$.expenses.selectedItems = expense ? [expense] : [];

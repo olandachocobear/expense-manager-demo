@@ -106,10 +106,12 @@
 
         ready() {
           super.ready();
+          /*
           console.log(this.route)
           console.log(this.queryParams)
           console.log(this.routeData)
           console.log(this.subRoute)
+          */
 
           // Custom elements polyfill safe way to indicate an element has been upgraded.
           this.removeAttribute('unresolved');
@@ -136,8 +138,7 @@
           }
         }
         _viewChanged(view) {
-          console.log('rend')
-          console.log(this.routeData)
+          /* console.log(this.routeData) */
           // if(this.routeData.page=='entry')
           //   this.dispatch('showInfoDialog')
           // else
