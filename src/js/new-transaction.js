@@ -194,6 +194,7 @@ class NewTransactionLayout extends ExpenseManager.ReduxMixin(Polymer.Element) {
         this.dispatch('resetForm');
         this.dispatch('resetTrx');
         this.fieldAmount = "0";
+        console.log(this.trx);
         // this.createCache();
         // this.dispatch('showReceipt')
     }
@@ -232,7 +233,7 @@ class NewTransactionLayout extends ExpenseManager.ReduxMixin(Polymer.Element) {
         //new Popup Modal 
         this.dispatch('changeTitleAlert', "Success");
         this.dispatch('changeHeaderAlert', "");
-        this.dispatch('changeMessageAlert', "Hore! Transaksi Anda berhasil!!");
+        this.dispatch('changeMessageAlert', constant.alert.BURN_SUCCESS_MSG); //"Hore! Transaksi Anda berhasil!!");
         this.dispatch('changeAlertIcon', 'happy.png');
         this.dispatch('changeAlertButton', 'Print Receipt');
         this.dispatch('showAlert');

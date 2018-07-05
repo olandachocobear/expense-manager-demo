@@ -75,8 +75,10 @@
         <vaadin-button on-click="_clearFilters" style=float:right theme="tertiary-inline small">Clear</vaadin-button>
       </div>
       <vaadin-text-field class="" label="Voucher Number" value="{{filters.specificVoucher}}" pattern="[0-9]+"></vaadin-text-field>
-      <vaadin-date-picker label="From" value="{{filters.filters.txnStartTransactionDate}}" max="[[filters.filters.txnEndTransactionDate]]"></vaadin-date-picker>
-      <vaadin-date-picker label="To" value="{{filters.filters.txnEndTransactionDate}}" min="[[filters.filters.txnStartTransactionDate]]"></vaadin-date-picker>
+      <vaadin-date-picker 
+        style="z-index:25" label="From" value="{{filters.filters.txnStartTransactionDate}}" max="[[filters.filters.txnEndTransactionDate]]"></vaadin-date-picker>
+      <vaadin-date-picker 
+        style="z-index:25" label="To" value="{{filters.filters.txnEndTransactionDate}}" min="[[filters.filters.txnStartTransactionDate]]"></vaadin-date-picker>
       <vaadin-text-field label="Invoice Number" value="{{filters.filters.txnTraceNumber}}" pattern="[0-9]+"></vaadin-text-field>
       <!-- <div class="row">
         <vaadin-text-field label="Min" value="{{filters.min}}" pattern="[0-9]+">
