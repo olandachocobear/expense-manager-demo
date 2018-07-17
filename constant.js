@@ -25,7 +25,9 @@ window.CONST = {
         LIST_REMAIN: "Remaining Amount",
         LIST_TRX: "Invoice #"
     },
-    ROOT: "https://evoucher-dev.kartuku.co.id/loyalty-web-api/web/3.0/",
+    // ROOT: "https://evoucher-dev.kartuku.co.id/loyalty-web-api/web/3.0",
+    ROOT: "http://172.30.35.64:8080/web/3.0",
+    VER: "3.0",
     URL: {
         ELIGIBLE_CEK:"/manualredeem/eligible",
         BURN_VOUCH: "/manualredeem/codes",

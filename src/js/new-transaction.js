@@ -177,8 +177,26 @@ class NewTransactionLayout extends ExpenseManager.ReduxMixin(Polymer.Element) {
         if(this.trx.vouchers[0]['voucherAmount'] >= 0){ //have at least 1 valid
             for(var i=0; i<this.trx.vouchers.length; i++){
                 // remember to only update body with Eligible vouchers..
+                
+                // =============================================================
+                //  OLD Params: [uniqueCode, uniqueCode, uniqueCode]
+                // =============================================================
+                /*
                 if(this.trx.vouchers[i]['voucherEligible']){
                     voucher_arr.push(this.trx.vouchers[i]['uniqueCode']);
+                    discount_amount += this.trx.vouchers[i]['voucherAmount'];
+                }
+                */
+
+                // =============================================================
+                // NEW Params: [{code, hash}, {code, hash}]
+                // =============================================================
+                if(this.trx.vouchers[i]['voucherEligible']){
+                    var voucher = {}
+                    voucher.code = this.trx.vouchers[i]['uniqueCode']
+                    voucher.hash =this.trx.vouchers[i]['voucherHash']
+                    voucher_arr.push(voucher);
+                    
                     discount_amount += this.trx.vouchers[i]['voucherAmount'];
                 }
             }
