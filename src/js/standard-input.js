@@ -115,6 +115,14 @@
         this.updateIronParams();
     }
 
+    _paddingize(value,length){
+      return ("00" + value).slice(-length);
+    }
+    _convertDate(tgl) {
+        //complete format to match Backend DD-MM-YYYYTHH:MM:SS.mmmZ
+        return `${this._paddingize(tgl.getDate(),2)}-${this._paddingize(tgl.getMonth()+1,2)}-${tgl.getFullYear()}T${tgl.getHours()}:${tgl.getMinutes()}:00.000Z`;
+    }
+    
     updateIronParams(new_code){
         // =====================================================================
         // New eligible-checker logic: (09/07)
@@ -125,17 +133,31 @@
         
         var eligible_vouchers = this.wholeVoucher;
 
-        eligible_vouchers.forEach( voucher => {
+        // =====================================================================
+        // PREVIOUSLY: [code, code, code, ...] ==> no HASH!  
+        // =====================================================================
+        /*
+          eligible_vouchers.forEach( voucher => {
             voucher_list.push(voucher.uniqueCode);
-        })
+          })
+        */
+
+        // =====================================================================
+        // NOW: [{code, (hash)}, {code, (hash)}, ...] 
+        // =====================================================================
+          eligible_vouchers.forEach( voucher => {
+            var current_voucher = {};
+            current_voucher = {code: voucher.uniqueCode, hash: voucher.voucherHash}
+            voucher_list.push(current_voucher);
+          })
 
         this.bodyRequest = {
             amount: parseInt(this.trxAmount),
-            uniqueCode: new_code, //voucher_list, //changin into list/array of Vouchers
+            uniqueCodes: voucher_list, //changin into list/array of Vouchers
             mid: this.userDetail.mid, 
             merchantCode: this.userDetail.merchantCode, 
             tid: this.userDetail.tid,
-            transactionDate: new Date(),
+            transactionDate: this._convertDate(new Date()),
             traceNumber: this.trxId,
             transactionTypeId: 2
         };
@@ -189,6 +211,7 @@
       }
       return (this.trxAmount-discount_amount);
     }
+    
     validCode(result) { // result={trsLable:'a',responseCode:0,responseDetailEnglish:'ff'}
       this.currentVoucher.onCheck = false;
       var voucherValue = result.originalAmount-result.remainingAmount;
@@ -200,6 +223,9 @@
       else 
         this.currentVoucher.voucherAmount = 0;
       
+      /* storing the received Hash for the last Voucher.. */
+      this.currentVoucher.voucherHash = result.trsCodeHash;
+
       /*
         Checking if it has inputted before..
        */

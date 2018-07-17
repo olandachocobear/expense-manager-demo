@@ -22,9 +22,9 @@
       "preset": "es5-bundled"
     },
     {
-      "name": "voucher-redeem",
+      "name": "voucher-redeem-web",
       "preset": "es6-bundled",
-      "basePath": "voucher-redeem/",
+      "basePath": "voucher-redeem-web/",
       "bundle": {
         "stripComments": true,
         "inlineScripts": false

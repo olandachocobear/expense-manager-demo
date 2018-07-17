@@ -44,6 +44,10 @@ class NewTransactionLayout extends ExpenseManager.ReduxMixin(Polymer.Element) {
             statePath: 'transaction.trxAmount',
             observer: '_reflectNewAmount'
         },
+        userSession: {
+            type: String,
+            statePath: 'user.session.jsess'
+        },
         ironUrl: {
             type: String,
             value: () => `${CONST.ROOT}${CONST.URL.BURN_VOUCH}` 
@@ -97,11 +101,22 @@ class NewTransactionLayout extends ExpenseManager.ReduxMixin(Polymer.Element) {
         },
         label: {
             value: () => CONST.LABEL
+        },
+        header: {
+            type: Object
         }
         
     };
     }
 
+    ready() {
+        super.ready();
+        
+        this.header = {
+            "Content-Type": "application/json",
+            "JSESSIONID": this.userSession
+        }
+    }
     refreshRemainingText(){
         this.remainingTxt = numeral(this.remainingAmount).format(0.0)
     }
@@ -143,6 +158,14 @@ class NewTransactionLayout extends ExpenseManager.ReduxMixin(Polymer.Element) {
         this._toggleRemaining()
     }
 
+    _paddingize(value,length){
+      return ("00" + value).slice(-length);
+    }
+    _convertDate(tgl) {
+        //complete format to match Backend DD-MM-YYYYTHH:MM:SS.mmmZ
+        return `${this._paddingize(tgl.getDate(),2)}-${this._paddingize(tgl.getMonth()+1,2)}-${tgl.getFullYear()}T${tgl.getHours()}:${tgl.getMinutes()}:00.000Z`;
+    }
+
     _updateBodyRequest(){
         // remaining Logic (recalculate,etc.)
         
@@ -177,7 +200,7 @@ class NewTransactionLayout extends ExpenseManager.ReduxMixin(Polymer.Element) {
             mid: this.userDetail.mid, 
             merchantCode: this.userDetail.merchantCode, 
             tid: this.userDetail.tid,
-            transactionDate: new Date(),
+            transactionDate: this._convertDate(new Date()),
             traceNumber: this.trans_detail.trxNumber,
             transactionTypeId: 2,
             username: this.userDetail.username

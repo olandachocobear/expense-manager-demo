@@ -43,7 +43,7 @@ gulp.task('default', function () {
             welcome: 'index.html',
             displayName: 'Loyalty Manual Redeem',
         }))
-        .pipe(zip('voucher-redeem.war'))
+        .pipe(zip('voucher-redeem-web.war'))
         .pipe(gulp.dest("./dist"));
 
 });

@@ -223,7 +223,7 @@
     <iron-ajax id="txnInfoFetcher" 
           url=[[fetchUrl]] method="get" 
           params="[[queryParams]]"
-          headers='{"Content-Type": "application/json"}'
+          headers='{{header}}'
           on-response="eligibleResponse"
           on-error="onError"
           timeout=30000>
@@ -257,7 +257,10 @@
             activeItem: {
               observer: '_activeItemChanged'
             },
-
+            userSession: {
+              type: String,
+              statePath: 'user.session.jsess'
+            },
             page: {
               type: Number,
               statePath: 'uiState.pagination'
@@ -317,6 +320,9 @@
                   sort: "txnTransactionDate,DESC"
                 }
               }
+            },
+            header: {
+              type: Object
             }
           };
         }
@@ -331,6 +337,12 @@
 
         ready(){
           super.ready();
+
+          var JSESSID = this.userSession;
+          this.header = {
+            "Content/Type": "application/json",
+            "JSESSIONID": this.userSession
+          }
           
           // we can stitch it to a method! 
           // this.addEventListener('state-changed', this._detectFilterChangeCustomEvent);
@@ -360,6 +372,8 @@
             });
 
             xhr.open('GET', url, true);
+            xhr.setRequestHeader("content-type", "application/json");
+            xhr.setRequestHeader("jsessionid", JSESSID);
             xhr.send();
           };
          

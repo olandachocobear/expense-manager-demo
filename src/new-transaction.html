@@ -18,7 +18,7 @@
       <iron-ajax id="processRedeem" 
           url={{ironUrl}} method="post" 
           body="{{bodyRequest}}"
-          headers='{"Content-Type": "application/json"}'
+          headers='{{header}}'
           on-response="eligibleResponse"
           on-error="onError"
           timeout=30000>
