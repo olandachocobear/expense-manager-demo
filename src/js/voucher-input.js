@@ -36,7 +36,7 @@
           statePath: 'vouchers.trxNumber'
         },
         ironUrl: {
-          value: () => constant.url.staging.eligible_cek
+          value: () => `${CONST.ROOT}${CONST.URL.ELIGIBLE_CEK}`
         },
         remaining: {
           type: String,

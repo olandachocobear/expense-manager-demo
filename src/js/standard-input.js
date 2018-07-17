@@ -46,7 +46,7 @@
           statePath: 'vouchers.trxNumber'
         },
         ironUrl: {
-          value: () => constant.url.staging.eligible_cek
+          value: () => `${CONST.ROOT}${CONST.URL.ELIGIBLE_CEK}`
         },
         remaining: {
           type: String,
@@ -90,7 +90,7 @@
                 //hide the 'reload' button
                 this.currentVoucher.unchecked = false;
                 $this._compareVoucher(curr)
-            }, constant.delay);
+            }, CONST.DELAY);
         // }
     }
 
@@ -115,10 +115,23 @@
         this.updateIronParams();
     }
 
-    updateIronParams(check_code){
+    updateIronParams(new_code){
+        // =====================================================================
+        // New eligible-checker logic: (09/07)
+        //  *) send all inputted voucher as list.
+        // =====================================================================
+        
+        var voucher_list = [];
+        
+        var eligible_vouchers = this.wholeVoucher;
+
+        eligible_vouchers.forEach( voucher => {
+            voucher_list.push(voucher.uniqueCode);
+        })
+
         this.bodyRequest = {
             amount: parseInt(this.trxAmount),
-            uniqueCode: check_code,
+            uniqueCode: new_code, //voucher_list, //changin into list/array of Vouchers
             mid: this.userDetail.mid, 
             merchantCode: this.userDetail.merchantCode, 
             tid: this.userDetail.tid,

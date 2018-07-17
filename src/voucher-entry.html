@@ -8,6 +8,7 @@
 <link rel="import" href="../bower_components/iron-swipeable-container/iron-swipeable-container.html">
 
 <script src="./js/voucher-entry.js"></script>
+<script src="../constant.js"></script>
 
 <dom-module id="voucher-entry">
   <template>
@@ -246,7 +247,7 @@
 
         <div id=deleteSmall style="cursor:pointer;color:#23609cdd;font-weight:600;margin-top:-26px;margin-left:2px;text-decoration:underline">
           <span style=font-size:13px on-click="_removeNode" data-id=[[voucher.id]]>
-            Delete
+            [[label.ENTRY_DELETE]]
          </span>
         </div>
           <!-- extra information on the right..-->

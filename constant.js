@@ -1,25 +1,45 @@
 (() => {
-window.constant = {
-    delay: 700,
-    url: {
-    staging: {
-        eligible_cek:"https://evoucher-dev.kartuku.co.id/loyalty-web-api/web/3.0/manualredeem/eligible",
-        burn_vouch: "https://evoucher-dev.kartuku.co.id/loyalty-web-api/web/3.0/manualredeem/codes",
-        list_vouchers: "https://evoucher-dev.kartuku.co.id/loyalty-web-api/web/3.0/manualredeem-report"
+window.CONST = {
+    NAV: {
+        LINK_1: "TRANSAKSI BARU",
+        LINK_2: "HISTORY REDEEM"
     },
-    dev: {
-        eligible_cek: "http://localhost:8080/api/3.0/promo/manual/eligible",
-        burn_vouch: "http://localhost:8080/api/3.0/promo/manual/codes",
-        // list_vouchers: "https://evoucher-dev.kartuku.co.id/loyalty-web-api/web/3.0/manualredeem-report",
-        list_vouchers: "src/data/manual-redeem.json"
-    }
+    LABEL: {
+        APP_NAME: "VOUCHER REDEMPTION",
+        ENTRY_TRX_VAL: "TOTAL TRANSACTION",
+        ENTRY_UNIQUE_CODE: "Voucher Code",
+        ENTRY_REDEEM_BTN: "Redeem!",
+        ENTRY_REDEEM_RESET: "Reset",
+        ENTRY_DELETE: "Delete",
+        SEARCH_VOUCH_NO: "Voucher Number",
+        SEARCH_DATE_START: "From",
+        SEARCH_DATE_END: "To",
+        SEARCH_TRX_NO: "Invoice Number",
+        SEARCH_BTN: "SEARCH",
+        LIST_ACTION: "Action",
+        LIST_TGL: "Date",
+        LIST_CODE: "Voucher Code",
+        LIST_NAME: "Voucher Name",
+        LIST_ORIG: "Original Amount",
+        LIST_VALUE: "Voucher Amount",
+        LIST_REMAIN: "Remaining Amount",
+        LIST_TRX: "Invoice #"
     },
-    alert: {
-    BURN_SUCCESS_MSG: "Voucher yang dimasukkan berhasil di-burn.",
-    BURN_FAILURE_MSG: "",
-    INVALID_CODE_MSG: "",
-    ALREADY_BURN_MSG: "",
-    ALREADY_ENTRIED_MSG: ""
+    ROOT: "https://evoucher-dev.kartuku.co.id/loyalty-web-api/web/3.0/",
+    URL: {
+        ELIGIBLE_CEK:"/manualredeem/eligible",
+        BURN_VOUCH: "/manualredeem/codes",
+        LIST_VOUCHERS: "/manualredeem-report",
+    },
+    LOYALTY_HOME: "http://evoucher-dev.kartuku.co.id/loyalty-web/",
+    DELAY: 700,
+    ALERT: {
+        BURN_SUCCESS_MSG: "Voucher yang dimasukkan berhasil di-burn.",
+        BURN_FAILURE_MSG: "",
+        INVALID_CODE_MSG: "",
+        ALREADY_BURN_MSG: "",
+        ALREADY_ENTRIED_MSG: ""
     }
+
 };
 })();

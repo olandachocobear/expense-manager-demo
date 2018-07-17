@@ -31,6 +31,9 @@
         vouchers: {
           type: Array,
           statePath: 'vouchers.vouchers'
+        },
+        label: {
+          value: () => CONST.LABEL
         }
       };
     }

@@ -1,6 +1,6 @@
 function _logOut(e){
     // window.location.href='https://evoucher-dev.kartuku.co.id/loyalty-web/#/login'
-    window.location.replace("https://evoucher-dev.kartuku.co.id/loyalty-web/#/login");
+    window.location.replace(`${CONST.LOYALTY_HOME}#login`);
     // window.location.assign("https://www.google.com");
     (e)=>e.stopPropagation()
 }
@@ -46,7 +46,7 @@ class NewTransactionLayout extends ExpenseManager.ReduxMixin(Polymer.Element) {
         },
         ironUrl: {
             type: String,
-            value: () => constant.url.staging.burn_vouch
+            value: () => `${CONST.ROOT}${CONST.URL.BURN_VOUCH}` 
         },
         trx: {
             type: Object,
@@ -88,7 +88,17 @@ class NewTransactionLayout extends ExpenseManager.ReduxMixin(Polymer.Element) {
             type: String,
             statePath: 'uiState.lastReceiptNo',
             observer: 'createCache'
+        },
+        link1 : {
+            value: () => CONST.NAV.LINK_1
+        },
+        link2 : {
+            value: () => CONST.NAV.LINK_2
+        },
+        label: {
+            value: () => CONST.LABEL
         }
+        
     };
     }
 
@@ -233,7 +243,7 @@ class NewTransactionLayout extends ExpenseManager.ReduxMixin(Polymer.Element) {
         //new Popup Modal 
         this.dispatch('changeTitleAlert', "Success");
         this.dispatch('changeHeaderAlert', "");
-        this.dispatch('changeMessageAlert', constant.alert.BURN_SUCCESS_MSG); //"Hore! Transaksi Anda berhasil!!");
+        this.dispatch('changeMessageAlert', CONST.ALERT.BURN_SUCCESS_MSG); //"Hore! Transaksi Anda berhasil!!");
         this.dispatch('changeAlertIcon', 'happy.png');
         this.dispatch('changeAlertButton', 'Print Receipt');
         this.dispatch('showAlert');

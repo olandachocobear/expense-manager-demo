@@ -12,7 +12,9 @@
 
 <link rel="import" href="../bower_components/iron-ajax/iron-ajax.html">
 
-<link rel="import" href="constant.html">
+<!-- <link rel="import" href="../constant.html"> -->
+
+<script src="../constant.js"></script>
 
 <!-- <link rel="import" href="../bower_components/iron-scroll-threshold/iron-scroll-threshold.html"> -->
 
@@ -304,7 +306,7 @@
             },
             fetchUrl: {
               type: String,
-              value: () => constant.url.staging.list_vouchers
+              value: () => `${CONST.ROOT}${CONST.URL.LIST_VOUCHERS}`
             },
             queryParams: {
               type: Object,
@@ -342,7 +344,7 @@
                 callback(JSON.parse(xhr.responseText).content);
             };
             
-            var url = constant.url.staging.list_vouchers + '?size=' + params.pageSize + '&page=' + params.page //+ '&sort=txnTransactionDate,DESC' //+ this.customFilters; //'https://demo.vaadin.com/demo-data/1.0/people?index=' + index + '&count=' + params.pageSize;
+            var url = `${CONST.ROOT}${CONST.URL.LIST_VOUCHERS}?size=${params.pageSize}&page=${params.page}`; //+ '&sort=txnTransactionDate,DESC' //+ this.customFilters; //'https://demo.vaadin.com/demo-data/1.0/people?index=' + index + '&count=' + params.pageSize;
 
             //var url = '../src/data/manual-redeem.json?'; //'https://demo.vaadin.com/demo-data/1.0/people?index=' + index + '&count=' + params.pageSize;
 
@@ -386,7 +388,7 @@
             };
             // var index = params.page * params.pageSize;
 
-            var url = constant.url.staging.list_vouchers + '?size=20&page=' + params.page //+ this.customFilters; //'https://demo.vaadin.com/demo-data/1.0/people?index=' + index + '&count=' + params.pageSize;
+            var url = `${CONST.ROOT}${CONST.URL.LIST_VOUCHERS}?size=20&page=${params.page}` //+ this.customFilters; //'https://demo.vaadin.com/demo-data/1.0/people?index=' + index + '&count=' + params.pageSize;
             console.log(url)
             xhr.open('GET', url, true);
             xhr.send();

@@ -4,10 +4,12 @@
 
 <link rel="import" href="../bower_components/number-input/number-input.html">
 <link rel="import" href="../bower_components/iron-ajax/iron-ajax.html">
-<link rel="import" href="constant.html">
+<!-- <link rel="import" href="../constant.html"> -->
 
 <link rel="import" href="./vouchers-area.html">
 <link rel="import" href="./styles-reskin.html">
+
+<script src="../constant.js"></script>
 
 <script src="./js/new-transaction.js"></script>
 
@@ -123,10 +125,10 @@
     <div class="wrapper">
       <nav-menu style=padding-left:2%>
         <div class=links>
-          <div class="header_link link_active">NEW TRANSACTION</div>
+          <div class="header_link link_active">[[link1]]</div>
           |
           <div class="header_link ">
-            <a href="#/list" class="link_inactive">REDEEM LOG</a>
+            <a href="#/list" class="link_inactive">[[link2]]</a>
           </div>
         </div>
       </nav-menu>
@@ -149,13 +151,14 @@
 
             <vaadin-text-field name="total" 
               prevent-invalid-input pattern="[0-9.]*" value="{{fieldAmount}}" 
-              on-change="detectChanges" label="TOTAL TRANSACTION" 
+              on-change="detectChanges" label="[[label.ENTRY_TRX_VAL]]" 
               required apply-format
               style="--lumo-text-field-size: var(--lumo-size-l);
                     font-size: var(--lumo-font-size-xl);
                     margin-top:10px;
                     --lumo-font-size-s: 18px;
-                    --lumo-secondary-text-color: #246eb6;">
+                    --lumo-secondary-text-color: #246eb6;
+                    z-index:1">
               <div slot="prefix">Rp</div>
             </vaadin-text-field>
 
@@ -165,7 +168,7 @@
                   font-size: var(--lumo-font-size-s); 
                   color: var(--lumo-secondary-text-color);
             ">
-                <label part="label" id="vaadin-text-field-label-11">Voucher code</label>
+                <label part="label" id="vaadin-text-field-label-11">[[label.ENTRY_UNIQUE_CODE]]</label>
             </div>
 
             <div style="margin-top:7px;
@@ -218,5 +221,5 @@
     </copyright>
    </div>
   </template>
-  
+ 
 </dom-module>
