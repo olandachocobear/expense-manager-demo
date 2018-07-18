@@ -8,6 +8,8 @@
 <link rel="import" href="../bower_components/vaadin-lumo-styles/icons.html">
 <link rel="import" href="../bower_components/iron-icon/iron-icon.html">
 
+<link rel="import" href="../bower_components/juicy-popover/src/juicy-popover.html">
+
 <!-- <link rel="import" href="../bower_components/paper-search-input/paper-search-input.html"> -->
 <link rel="import" href="./spots-logo.html">
 <link rel="import" href="data/store.html">
@@ -84,28 +86,62 @@
   </div>  
 
   <div class=right>
-    <div id=userinfo style="padding-top:11px;padding-right:7px;
-        font-size: 16px;
-        opacity: 0.8;
-        margin-top:-4px;margin-right:3px;text-align:right;
-        color:#4d4d4d">
-          <p>
-            Hi,
-            <u><b><span style=color:blue>[[username]]</span></b></u>!</i>
-            <br>
-            
-          <div style=font-size:12px>
-            <div style=margin-top:-2px;>Not You?</div>
-            <div style=font-size:11px;margin-top:0px>
-              <a href="#" 
-                onclick="_logOut()"
-                target="_self">
-                Logout.
-              </a>
+
+      <div id=userinfo style="padding-top:11px;padding-right:7px;
+      font-size: 16px;
+      opacity: 0.8;
+      margin-top:-4px;margin-right:3px;text-align:right;
+      color:#4d4d4d">
+        <p>
+          Hi,
+          <u><b><span style=color:blue>[[username]]</span></b></u>!</i>
+          <br>
+        </p>
+      </div>
+
+    <juicy-popover 
+        position="bottom left"
+        expand-on="hover"
+        style="margin-top:22px">
+          <button slot="handle" 
+            style="">▼</button>
+          <div slot="expandable">
+            <!-- You only see me when the button is pressed -->
+            <div id=userinfo style="padding-top:11px;padding-right:0px;
+              font-size: 16px;
+              opacity: 0.8;
+              margin-top:-14px;
+              margin-left: 12px;
+              margin-right:-32px;
+              text-align:right;
+              color:#4d4d4d">
+                <p>
+                  <!-- Hi,
+                  <u><b><span style=color:blue>[[username]]</span></b></u>!</i>
+                  <br> -->
+                  
+                <div style=font-size:12px>
+                  <div style=margin-top:-2px;>Not You?</div>
+                  <div style=font-size:11px;margin-top:0px>
+                    <a href="#" 
+                      onclick="popChangePwd()">
+                      Ganti Password
+                    </a>
+                    &nbsp; | &nbsp;
+                    <a href="#" 
+                      onclick="_logOut()"
+                      target="_self">
+                      Logout.
+                    </a>
+                  </div>
+                </div>
+                </p>
             </div>
           </div>
-          </p>
-        </div>
+    </juicy-popover>
+
+
+    
   </div>
     <!-- 
     <custom-style>
