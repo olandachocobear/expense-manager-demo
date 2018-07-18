@@ -123,10 +123,13 @@
                 <div style=font-size:12px>
                   <div style=margin-top:-2px;>Not You?</div>
                   <div style=font-size:11px;margin-top:0px>
-                    <a href="#" 
-                      onclick="popChangePwd()">
-                      Ganti Password
-                    </a>
+                    <paper-button on-click="popChangePwd">
+                      <a style="font-weight:500;
+                                text-decoration: underline;
+                                text-transform:none !important">
+                        Ganti Password
+                      </a>
+                    </paper-button>
                     &nbsp; | &nbsp;
                     <a href="#" 
                       onclick="_logOut()"
@@ -195,6 +198,10 @@
             },
             showSearch: {
               type: Boolean
+            },
+            showPwdChange: {
+              type: Boolean,
+              statePath: 'uiState.pwdDialogVisible'
             }
           }
         }
@@ -231,6 +238,10 @@
 
         _logout() {
           this.dispatch('logout');
+        }
+        
+        popChangePwd() {
+          this.dispatch('togglePwdDialog', !this.showPwdChange);
         }
       }
 

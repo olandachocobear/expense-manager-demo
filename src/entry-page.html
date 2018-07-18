@@ -23,6 +23,7 @@
 
 <link rel="import" href="new-transaction.html">
 <link rel="import" href="styles-reskin.html">
+<link rel="import" href="pwd-dialog.html">
 
 <link rel="stylesheet" type="text/css" href="custom_styling.css">
 
@@ -99,6 +100,12 @@
       </div>
     </m2-dialog>
 
+    
+<!-- ======================================================================= -->
+<!-- Adding new dialog for `Change Password` -->
+<!-- ======================================================================= -->
+    <pwd-dialog shown=[[showPwdDialog]]></pwd-dialog>
+    
     <confirm-dialog id="dialog" on-result="closeAlert" modal=true>
       <center>
         <h1 style=margin-top:7px class$=[[_giveHeaderColor(alertTitle)]] >[[alertTitle]]</h1>
@@ -233,6 +240,10 @@
             transNo: {
               type: String,
               statePath: 'transaction.trxNumber'
+            },
+            showPwdDialog: {
+              type: Boolean,
+              statePath: 'uiState.pwdDialogVisible'
             }
           };
         }
@@ -265,7 +276,7 @@
               cancel: (this.alertTitle == 'Success') ? 'Close' : ''
             })
         }
-
+        
         _giveHeaderColor(title){
           if(title=='Success')
             return "green_header";

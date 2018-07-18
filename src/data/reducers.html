@@ -15,7 +15,7 @@
     /* for DEV only! REMEMBER TO COMMENT */
     // localStorage.setItem('ls.cashierData', '{"username":"jono_cashier","jsessionid":"ZFbCLh9C0LPK5Ktm0nVqDgm9DWl8KK","groupCode":"00000738473","storeCode":"JONO01","storeName":"Jono barber shop Flamboyan","merchantCode":"00000738473","merchantName":"Jono Barber shop","mid":"000001121530000","tid":"11120860"}');
 
-    localStorage.setItem('ls.cashierData', '{"username":"jono_cashier","jsessionid":"2qQwm0jGttZuFuD0apUw3eCr5EHPc3","groupCode":"00000738473","storeCode":"ARLP_SOETTA","storeName":"Jono barber shop Flamboyan","merchantCode":"00000066666","merchantName":"Jono Barber shop","mid":"FR704LGI1PPC9G2","tid":"YMWS3EG2"}');
+    // localStorage.setItem('ls.cashierData', '{"username":"jono_cashier","jsessionid":"pJbesLaNFOT300x9PfhcupNlYpDB6H","groupCode":"00000738473","storeCode":"ARLP_SOETTA","storeName":"Jono barber shop Flamboyan","merchantCode":"00000066666","merchantName":"Jono Barber shop","mid":"FR704LGI1PPC9G2","tid":"YMWS3EG2"}');
 
     let savedState = localStorage.getItem('ExpenseManagerState');
     let authState = localStorage.getItem('ls.cashierData');
@@ -38,6 +38,9 @@
       connectionAttempt: 0,
       alertBody: '',
       alertTitle: '',
+      pwdDialogVisible: false,
+      confirmPwdVisible: false,
+      pwdDialogPage: 1
     }, action) {
       switch (action.type) {
 
@@ -86,6 +89,11 @@
         case 'GENERATE_RECEIPT':
           return Object.assign({}, state, {
             lastReceiptNo: action.traceNo
+        })
+
+        case 'TOGGLE_PWD_DIALOG':
+          return Object.assign({}, state, {
+            pwdDialogVisible: action.cond
         })
 
         default:
@@ -362,6 +370,32 @@
       }
     }
 
+  function pwdReducer( state={
+    currentPwd: "",
+    newPwd: "",
+    confirmPwd: ""
+  }, action) {
+      switch (action.type) {
+          case 'APPEND_BURNED_LIST': {
+           var temp = [];
+           for(var i=0; i<state.length;i++)
+              temp.push(state[i])
+
+           var newStuff = action.lists;
+           for(var j=0; j<newStuff.length;j++)
+              temp.push(newStuff[j]);
+           
+           return temp;
+          } 
+
+          case 'FRESH_BURNED_LIST':
+            return action.lists
+
+          default:
+              return state;
+      }
+    }
+
   function expensesReducer(//state = {
       /* 
       expenses: savedState ? savedState.expenses.expenses : _generateDemoExpenses(100),
@@ -459,7 +493,8 @@
       errors: errorsReducer,
       filters: filtersReducer,
       user: userReducer,
-      burned: burnedReducer
+      burned: burnedReducer,
+      password: pwdReducer
     });
 
 

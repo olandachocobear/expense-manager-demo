@@ -201,6 +201,9 @@
     const generateReceipt = (traceNo) => {
       return {type: 'GENERATE_RECEIPT', traceNo}
     }
+    const togglePwdDialog = (cond) => {
+      return {type: 'TOGGLE_PWD_DIALOG', cond}
+    }
 
     window.ExpenseManager = window.ExpenseManager || {};
     window.ExpenseManager.actions = {
@@ -260,9 +263,9 @@
       resetConnAttempt,
 
       updateFilter,
-      updateDone
+      updateDone,
 
-
+      togglePwdDialog
     };
   })();
 </script>

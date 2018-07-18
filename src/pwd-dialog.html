@@ -1,0 +1,125 @@
+<link rel="import" href="../bower_components/polymer/polymer-element.html">
+
+<link rel="import" href="../bower_components/vaadin-button/vaadin-button.html">
+<link rel="import" href="../bower_components/vaadin-lumo-styles/color.html">
+<link rel="import" href="../bower_components/vaadin-lumo-styles/spacing.html">
+<link rel="import" href="../bower_components/vaadin-lumo-styles/typography.html">
+
+<link rel="import" href="../bower_components/vaadin-lumo-styles/icons.html">
+<link rel="import" href="../bower_components/iron-icon/iron-icon.html">
+<link rel="import" href="../bower_components/vaadin-text-field/vaadin-password-field.html">
+
+<dom-module id="pwd-dialog">
+  <template>
+    <style>
+      
+    </style>
+
+    <div>
+    <confirm-dialog id="pwdDialog" 
+        on-result="closePwdDialog"
+        background="#e6e6e6" 
+        modal=true>
+        <center>
+            <h2 style=margin-top:-17px >Ubah Password</h2>
+            <br><br>
+        
+            <vaadin-password-field whiteBg id="oldPwd" theme="align-left" 
+            value="" label="Password Lama:" 
+            style="--lumo-text-field-size: var(--lumo-size-l);
+                    font-size: var(--lumo-font-size-xl);
+                    margin-top:-35px;
+                    --lumo-font-size-xl: 28px;
+                    --lumo-font-family: Arial;
+                    font-weight: bolder;
+                    --lumo-secondary-text-color: #4d4d4d;">
+                <div slot="prefix"></div>
+            </vaadin-password-field>
+            <br><br><br><br>
+            
+            <vaadin-password-field whiteBg id="newPwd" theme="align-left" 
+                value="" label="Password Baru:" 
+                style="--lumo-text-field-size: var(--lumo-size-l);
+                    font-size: var(--lumo-font-size-xl);
+                    margin-top:-60px;
+                    --lumo-font-size-xl: 28px;
+                    --lumo-font-family: Arial;
+                    font-weight: bolder;
+                    --lumo-secondary-text-color: #4d4d4d;">
+                <div slot="prefix"></div>
+            </vaadin-text-field>
+        </center>
+        </confirm-dialog>
+    
+    </div>
+    <!-- 
+    <custom-style>
+      <style is="custom-style" include="demo-pages-shared-styles">
+        .colors {
+          --search-background-color: #233348;
+          --search-text-color: #518ac0;
+          --search-label-color: #b7ccd899;
+          --search-width: 500px;
+          --search-height:47px;
+          --search-border-width: 2px;
+          --search-font-size: 20px;
+        }
+      </style>
+    </custom-style>
+    <paper-search-input id=search shown$=[[showSearch]] 
+      style="margin-left:24px;margin-top:2px" class="colors"
+      on-paper-search-input-execute='doSearch'
+      on-value-changed="checkClear"
+      on-value-cleared='clearSearch'></paper-search-input> 
+    -->
+
+  </template>
+
+  <script>
+    (function() {
+      /**
+       * @memberof ExpenseManager
+       */
+      class PwdDialogElement extends ExpenseManager.ReduxMixin(Polymer.Element) {
+        static get is() {
+          return 'pwd-dialog';
+        }
+        
+        static get properties() {
+          return {
+              shown: {
+                type: Boolean,
+                observer: '_toggleMe'
+              }
+          }
+        }
+        
+        _toggleMe() {
+            if (this.shown){
+                this.$.pwdDialog.show({
+                delay: 10,
+                confirm: "Ganti",
+                cancel: "Batal"
+                })
+            }
+        }
+
+        closePwdDialog(result) {
+            this.dispatch('togglePwdDialog', false);
+        }
+        
+        popChangePwd() {
+          this.dispatch('togglePwdDialog', !this.showPwdChange);
+        }
+      }
+
+      customElements.define(PwdDialogElement.is, PwdDialogElement);
+
+      /**
+       * @namespace ExpenseManager
+       */
+      window.ExpenseManager = window.ExpenseManager || {};
+      ExpenseManager.PwdDialogElement = PwdDialogElement;
+    })();
+  </script>
+</dom-module>
