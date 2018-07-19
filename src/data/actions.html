@@ -204,6 +204,12 @@
     const togglePwdDialog = (cond) => {
       return {type: 'TOGGLE_PWD_DIALOG', cond}
     }
+    const updateOldPassword = (pwd) => {
+      return {type: 'CHANGE_OLD_PWD', pwd}
+    }
+    const updateNewPassword = (pwd) => {
+      return {type: 'CHANGE_NEW_PWD', pwd}
+    }
 
     window.ExpenseManager = window.ExpenseManager || {};
     window.ExpenseManager.actions = {
@@ -265,7 +271,9 @@
       updateFilter,
       updateDone,
 
-      togglePwdDialog
+      togglePwdDialog,
+      updateOldPassword,
+      updateNewPassword
     };
   })();
 </script>

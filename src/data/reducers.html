@@ -376,20 +376,14 @@
     confirmPwd: ""
   }, action) {
       switch (action.type) {
-          case 'APPEND_BURNED_LIST': {
-           var temp = [];
-           for(var i=0; i<state.length;i++)
-              temp.push(state[i])
-
-           var newStuff = action.lists;
-           for(var j=0; j<newStuff.length;j++)
-              temp.push(newStuff[j]);
-           
-           return temp;
-          } 
-
-          case 'FRESH_BURNED_LIST':
-            return action.lists
+          case 'CHANGE_OLD_PWD': 
+            return Object.assign({}, state,
+              {currentPwd: action.pwd}
+            )
+          case 'CHANGE_NEW_PWD': 
+            return Object.assign({}, state,
+              {newPwd: action.pwd}
+            )
 
           default:
               return state;

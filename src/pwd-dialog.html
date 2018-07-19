@@ -9,6 +9,13 @@
 <link rel="import" href="../bower_components/iron-icon/iron-icon.html">
 <link rel="import" href="../bower_components/vaadin-text-field/vaadin-password-field.html">
 
+<!-- ======================================================================= -->
+<!-- Encrypt Library (for Password) -->
+<!-- ======================================================================= -->
+<script src="js/sha256.js"></script>
+<script src="js/hmac-sha256.js"></script>
+<script src="js/enc-base64-min.js"></script>
+
 <dom-module id="pwd-dialog">
   <template>
     <style>
@@ -25,53 +32,44 @@
             <br><br>
         
             <vaadin-password-field whiteBg id="oldPwd" theme="align-left" 
-            value="" label="Password Lama:" 
-            style="--lumo-text-field-size: var(--lumo-size-l);
-                    font-size: var(--lumo-font-size-xl);
-                    margin-top:-35px;
-                    --lumo-font-size-xl: 28px;
-                    --lumo-font-family: Arial;
-                    font-weight: bolder;
-                    --lumo-secondary-text-color: #4d4d4d;">
+                value="{{oldPwd}}" label="Password Lama:" 
+                style="--lumo-text-field-size: var(--lumo-size-l);
+                        font-size: var(--lumo-font-size-xl);
+                        margin-top:-35px;
+                        --lumo-font-size-xl: 28px;
+                        --lumo-font-family: Arial;
+                        font-weight: bolder;
+                        --lumo-secondary-text-color: #4d4d4d;"
+                on-keyup="changeOldPwd">
                 <div slot="prefix"></div>
             </vaadin-password-field>
             <br><br><br><br>
             
             <vaadin-password-field whiteBg id="newPwd" theme="align-left" 
-                value="" label="Password Baru:" 
+                value="{{newPwd}}" label="Password Baru:" 
                 style="--lumo-text-field-size: var(--lumo-size-l);
                     font-size: var(--lumo-font-size-xl);
                     margin-top:-60px;
                     --lumo-font-size-xl: 28px;
                     --lumo-font-family: Arial;
                     font-weight: bolder;
-                    --lumo-secondary-text-color: #4d4d4d;">
+                    --lumo-secondary-text-color: #4d4d4d;"
+                on-keyup="changeNewPwd">
                 <div slot="prefix"></div>
             </vaadin-text-field>
         </center>
         </confirm-dialog>
     
     </div>
-    <!-- 
-    <custom-style>
-      <style is="custom-style" include="demo-pages-shared-styles">
-        .colors {
-          --search-background-color: #233348;
-          --search-text-color: #518ac0;
-          --search-label-color: #b7ccd899;
-          --search-width: 500px;
-          --search-height:47px;
-          --search-border-width: 2px;
-          --search-font-size: 20px;
-        }
-      </style>
-    </custom-style>
-    <paper-search-input id=search shown$=[[showSearch]] 
-      style="margin-left:24px;margin-top:2px" class="colors"
-      on-paper-search-input-execute='doSearch'
-      on-value-changed="checkClear"
-      on-value-cleared='clearSearch'></paper-search-input> 
-    -->
+
+    <iron-ajax id="processChangePwd" 
+          url={{ironUrl}} method="post" 
+          body="{{bodyRequest}}"
+          headers='{{header}}'
+          on-response="eligibleResponse"
+          on-error="onError"
+          timeout=30000>
+      </iron-ajax>
 
   </template>
 
@@ -90,8 +88,44 @@
               shown: {
                 type: Boolean,
                 observer: '_toggleMe'
-              }
+              },
+              ironUrl: {
+                type: String,
+                value: () => CONST.URL.CHANGE_PWD
+              },
+              passwords: {
+                type: Object,
+                statePath: 'password'
+              },
+              bodyRequest: {
+                type: Object
+              },
+              passwords: {
+                type: Object,
+                statePath: 'password',
+                observer: '_updateBodyRequest'
+              },
+              username: {
+                  type: String,
+                  statePath: 'user.data.username'
+              },
+              session: {
+                  type: String,
+                  statePath: 'user.session.jsess'
+              },
+              header: {
+                  type: Object
+              },
           }
+        }
+        
+        ready() {
+            super.ready();
+
+            this.header = {
+                'Content-Type': 'application/json',
+                'JSESSIONID': this.session
+            }
         }
         
         _toggleMe() {
@@ -104,13 +138,41 @@
             }
         }
 
-        closePwdDialog(result) {
-            this.dispatch('togglePwdDialog', false);
-        }
-        
         popChangePwd() {
           this.dispatch('togglePwdDialog', !this.showPwdChange);
         }
+
+        changeOldPwd() {
+            this.dispatch('updateOldPassword', this.calculatePasswordHash(this.oldPwd, this.username))
+        }
+
+        changeNewPwd() {
+            this.dispatch('updateNewPassword', this.calculatePasswordHash(this.newPwd, this.username))
+        }
+
+        closePwdDialog(result) {
+            this.dispatch('togglePwdDialog', false);
+
+            if(result.detail==true){ // if click 'Print Receipt'
+                this.$.processChangePwd.generateRequest();
+            }
+        }
+        
+        _updateBodyRequest() {
+            this.bodyRequest = {
+                oldPassword: this.passwords.currentPwd,
+                newPassword: this.passwords.newPwd,
+                username: this.username
+            }
+        }
+
+        calculatePasswordHash(password, username) {
+            var hashedPass = CryptoJS.SHA256(password.toString()).toString(CryptoJS.enc.Hex);
+            var secret = CryptoJS.SHA256(username).toString(CryptoJS.enc.Hex);
+            var hash = CryptoJS.HmacSHA256(hashedPass, secret);
+            var hashInBase64 = CryptoJS.enc.Base64.stringify(hash);
+            return hashInBase64;
+        };
       }
 
       customElements.define(PwdDialogElement.is, PwdDialogElement);
