@@ -213,7 +213,10 @@
     const pwdChangedSuccess = (status) => {
       return {type: 'PWD_CHANGED', status}
     }
-
+    const changePasswordPage = (page) => {
+      return {type: 'CHANGE_PWD_PAGE', page}
+    }
+    
     window.ExpenseManager = window.ExpenseManager || {};
     window.ExpenseManager.actions = {
       login,
@@ -278,6 +281,7 @@
       updateOldPassword,
       updateNewPassword,
       pwdChangedSuccess,
+      changePasswordPage,
       
     };
   })();

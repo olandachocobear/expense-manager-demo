@@ -40,7 +40,7 @@
       alertTitle: '',
       pwdDialogVisible: false,
       confirmPwdVisible: false,
-      pwdDialogPage: 1
+      pwdDialogPage: 0
     }, action) {
       switch (action.type) {
 
@@ -96,6 +96,10 @@
             pwdDialogVisible: action.cond
         })
 
+        case 'CHANGE_PWD_PAGE':
+          return Object.assign({}, state, {
+            pwdDialogPage: action.page
+          })
         default:
           return state;
       }

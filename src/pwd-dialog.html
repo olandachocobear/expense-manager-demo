@@ -29,7 +29,7 @@
         on-result="closePwdDialog"
         background="#e6e6e6" 
         modal=true
-        step-msg="OK"
+        step-msg="Ganti"
         step-dialog
         checking={{checkStatus}}>
 
@@ -154,7 +154,7 @@
               },
               currentPage: {
                   type: String,
-                  value: () => 0
+                  statePath: 'uiState.pwdDialogPage'
               },
               changeSuccess: {
                   type: Boolean,
@@ -187,9 +187,13 @@
         _toggleMe() {
             if (this.shown){
                 this.$.pwdDialog.show({
-                delay: 10,
-                confirm: "OK",
-                cancel: "Batal"
+                    delay: 10,
+                    confirm: "OK",
+                    cancel: "Batal",
+                    // onResult: (result) => {
+                    //     alert(result);
+                    //     this.dispatch('changePasswordPage', 0);
+                    // }
                 })
             }
         }
@@ -226,6 +230,8 @@
 
         closePwdDialog(result) {
             this.dispatch('togglePwdDialog', false);
+            this.dispatch('changePasswordPage', 0);
+            this.$.pwdDialog.setAttribute('step-dialog', true);
 
             if(result.detail==true){ // if click 'Print Receipt'
                 this.$.processChangePwd.generateRequest();
