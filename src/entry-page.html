@@ -104,7 +104,10 @@
 <!-- ======================================================================= -->
 <!-- Adding new dialog for `Change Password` -->
 <!-- ======================================================================= -->
-    <pwd-dialog shown=[[showPwdDialog]]></pwd-dialog>
+    <pwd-dialog shown=[[showPwdDialog]]
+                change-success=[[changeStatus]]
+    >
+    </pwd-dialog>
     
     <confirm-dialog id="dialog" on-result="closeAlert" modal=true>
       <center>
@@ -244,10 +247,21 @@
             showPwdDialog: {
               type: Boolean,
               statePath: 'uiState.pwdDialogVisible'
+            },
+            changeStatus: {
+              type: Boolean,
+              statePath: 'passwords.changeSuccess',
+              observer: 'changePwdDialog'
             }
           };
         }
         
+        changePwdDialog() {
+          if (this.changeStatus){
+            console.log("Changing button for pass dialog");
+          }
+        }
+
         closeAlert(result) {
           this.dispatch('hideAlert')
           if(this.alertTitle == 'Success') {

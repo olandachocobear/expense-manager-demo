@@ -9,6 +9,8 @@
 <link rel="import" href="../bower_components/iron-icon/iron-icon.html">
 <link rel="import" href="../bower_components/vaadin-text-field/vaadin-password-field.html">
 
+<link rel="import" href="../bower_components/iron-swipeable-pages/iron-swipeable-pages.html">
+<link rel="import" href="../bower_components/paper-tabs/paper-tabs.html">
 <!-- ======================================================================= -->
 <!-- Encrypt Library (for Password) -->
 <!-- ======================================================================= -->
@@ -22,45 +24,79 @@
       
     </style>
 
-    <div>
+
     <confirm-dialog id="pwdDialog" 
         on-result="closePwdDialog"
         background="#e6e6e6" 
-        modal=true>
-        <center>
-            <h2 style=margin-top:-17px >Ubah Password</h2>
-            <br><br>
-        
-            <vaadin-password-field whiteBg id="oldPwd" theme="align-left" 
-                value="{{oldPwd}}" label="Password Lama:" 
-                style="--lumo-text-field-size: var(--lumo-size-l);
-                        font-size: var(--lumo-font-size-xl);
-                        margin-top:-35px;
-                        --lumo-font-size-xl: 28px;
-                        --lumo-font-family: Arial;
-                        font-weight: bolder;
-                        --lumo-secondary-text-color: #4d4d4d;"
-                on-keyup="changeOldPwd">
-                <div slot="prefix"></div>
-            </vaadin-password-field>
-            <br><br><br><br>
-            
-            <vaadin-password-field whiteBg id="newPwd" theme="align-left" 
-                value="{{newPwd}}" label="Password Baru:" 
-                style="--lumo-text-field-size: var(--lumo-size-l);
-                    font-size: var(--lumo-font-size-xl);
-                    margin-top:-60px;
-                    --lumo-font-size-xl: 28px;
-                    --lumo-font-family: Arial;
-                    font-weight: bolder;
-                    --lumo-secondary-text-color: #4d4d4d;"
-                on-keyup="changeNewPwd">
-                <div slot="prefix"></div>
-            </vaadin-text-field>
-        </center>
-        </confirm-dialog>
+        modal=true
+        step-msg="OK"
+        step-dialog
+        checking={{checkStatus}}>
+
+        <div style=padding-right:20px;>
+                
+            <iron-swipeable-pages 
+                id="pwdDialogPages"
+                on-selected-changed="_onSelectedChanged"
+                selected="{{currentPage}}"
+                style="height:260px; margin-top: -11px">
+
+                <div id="pwdFormPage" 
+                    style="padding: 0 15px 0 0">
+                    <center>
+                        <h2 style="text-decoration: underline;
+                            color:#444;
+                            font-size:22px;
+                            margin-top:5px">Ubah Password</h2>
+                        <br><br>
+                    
+                        <vaadin-password-field whiteBg id="oldPwd" theme="align-left" 
+                            value="{{oldPwd}}" label="Password Lama:" 
+                            style="--lumo-text-field-size: var(--lumo-size-l);
+                                    font-size: var(--lumo-font-size-xl);
+                                    margin-top:-33px;
+                                    --lumo-font-size-xl: 28px;
+                                    --lumo-font-family: Arial;
+                                    font-weight: bolder;
+                                    --lumo-secondary-text-color: #4d4d4d;
+                                    width:100%"
+                            on-keyup="changeOldPwd">
+                            <div slot="prefix"></div>
+                        </vaadin-password-field>
+                        <br><br><br><br>
+                        
+                        <vaadin-password-field whiteBg id="newPwd" theme="align-left" 
+                            value="{{newPwd}}" label="Password Baru:" 
+                            style="--lumo-text-field-size: var(--lumo-size-l);
+                                font-size: var(--lumo-font-size-xl);
+                                margin-top:-52px;
+                                --lumo-font-size-xl: 28px;
+                                --lumo-font-family: Arial;
+                                font-weight: bolder;
+                                --lumo-secondary-text-color: #4d4d4d;
+                                width:100%"
+                            on-keyup="changeNewPwd">
+                            <div slot="prefix"></div>
+                        </vaadin-text-field>
+                    </center>
+                </div>  
+                
+                <div id="pwdResultPage" style="overflow: hidden">
+                    <center>
+                    <h3 style=margin-top:-3px;color:#444;font-size:17px> Alright.. Your password has changed!</h3>
+                        <img src="https://i.gifer.com/55tE.gif"
+                            style="margin-top:4px"
+                            height=240>                    
+                    </center>
+                </div>  
+            </iron-swipeable-pages>
     
-    </div>
+        </div>
+    
+        
+        
+    </confirm-dialog>
+    
 
     <iron-ajax id="processChangePwd" 
           url={{ironUrl}} method="post" 
@@ -116,6 +152,26 @@
               header: {
                   type: Object
               },
+              currentPage: {
+                  type: String,
+                  value: () => 0
+              },
+              changeSuccess: {
+                  type: Boolean,
+                  statePath: 'passwords.changeSuccess',
+                  observer: 'changePage'
+              },
+              checking: {
+                  type: Boolean,
+                  notify: true,
+                  observer: 'checkingStatus'
+              },
+              checkStatus: {
+                  type: Boolean,
+                  notify: true,
+                  value: () => false,
+                  observer: 'checkingCommenced'
+              }
           }
         }
         
@@ -132,12 +188,30 @@
             if (this.shown){
                 this.$.pwdDialog.show({
                 delay: 10,
-                confirm: "Ganti",
+                confirm: "OK",
                 cancel: "Batal"
                 })
             }
         }
 
+        changePage() {
+            // if(this.changeSuccess)
+                // this.$.pwdDialogPages._selectPage('pwdResultPage')
+                this.$.pwdDialogPages.selected = 1;
+                this.$.pwdDialog.removeAttribute('step-dialog');
+        }
+        
+        checkingCommenced() {
+            console.log(this.checkStatus);
+            // simulate change Pass success
+            if(this.checkStatus) {
+                let $this = this;
+                setTimeout( _ => {
+                    $this.dispatch('pwdChangedSuccess', true);
+                    $this.changeSuccess = false;
+                }, 2000);
+            }
+        }
         popChangePwd() {
           this.dispatch('togglePwdDialog', !this.showPwdChange);
         }

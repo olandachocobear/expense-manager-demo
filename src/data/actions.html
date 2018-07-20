@@ -210,6 +210,9 @@
     const updateNewPassword = (pwd) => {
       return {type: 'CHANGE_NEW_PWD', pwd}
     }
+    const pwdChangedSuccess = (status) => {
+      return {type: 'PWD_CHANGED', status}
+    }
 
     window.ExpenseManager = window.ExpenseManager || {};
     window.ExpenseManager.actions = {
@@ -273,7 +276,9 @@
 
       togglePwdDialog,
       updateOldPassword,
-      updateNewPassword
+      updateNewPassword,
+      pwdChangedSuccess,
+      
     };
   })();
 </script>

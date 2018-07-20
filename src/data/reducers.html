@@ -373,7 +373,9 @@
   function pwdReducer( state={
     currentPwd: "",
     newPwd: "",
-    confirmPwd: ""
+    confirmPwd: "",
+    changeSuccess: false,
+    checkingPassword: false,
   }, action) {
       switch (action.type) {
           case 'CHANGE_OLD_PWD': 
@@ -385,6 +387,11 @@
               {newPwd: action.pwd}
             )
 
+          case 'PWD_CHANGED':
+            return Object.assign({}, state,
+              {changeSuccess: action.status}
+            )
+            
           default:
               return state;
       }

@@ -23,7 +23,9 @@
     "metaui": "git://github.com/isuwang/metaui.git#^0.1.1",
     "iron-scroll-threshold": "PolymerElements/iron-scroll-threshold#^2.0.0",
     "paper-search-input": "git://github.com/vic10us/paper-search-input#^2.0.1",
-    "confirm-dialog": "^0.2.0"
+    "confirm-dialog": "^0.2.0",
+    "iron-swipeable-pages": "http://github.com/socceroos/iron-swipeable-pages.git#^2.0.1",
+    "paper-tabs": "^2.1.1"
   },
   "devDependencies": {
     "web-component-tester": "^6.0.0"
