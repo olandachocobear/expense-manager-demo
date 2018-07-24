@@ -30,6 +30,18 @@
         #spinner[shown] {
             visibility: visible;
         }
+        .validation_err {
+            text-align: left;
+            margin: 3px 0 0 2px;
+            font-size: 11px;
+            color: red;
+        }
+        .validation_err[shown] {
+            display: block
+        }
+        .validation_err {
+            display: none;
+        }
     </style>
 
 
@@ -47,7 +59,7 @@
                 id="pwdDialogPages"
                 on-selected-changed="_onSelectedChanged"
                 selected="{{currentPage}}"
-                style="height:260px; margin-top: -11px">
+                style="height:358px; margin-top: -11px">
 
                 <div id="pwdFormPage" 
                     style="padding: 0 15px 0 0">
@@ -62,7 +74,7 @@
                             value="{{oldPwd}}" label="Password Lama:" 
                             style="--lumo-text-field-size: var(--lumo-size-l);
                                     font-size: var(--lumo-font-size-xl);
-                                    margin-top:-33px;
+                                    margin-top:-25px;
                                     --lumo-font-size-xl: 28px;
                                     --lumo-font-family: Arial;
                                     font-weight: bolder;
@@ -99,16 +111,38 @@
                                 width:100%"
                             on-keyup="changeNewPwd">
                             <div slot="prefix"></div>
-                        </vaadin-text-field>
+                        </vaadin-password-field>
+
+                        <p class="validation_err" shown$="[[showLengthAlert]]">
+                            [[error2]]
+                        </p>
+
+                        <vaadin-password-field whiteBg id="confirmPwd" theme="align-left" 
+                            value="{{confirmPwd}}" label="Confirm Password again:" 
+                            style="--lumo-text-field-size: var(--lumo-size-l);
+                                font-size: var(--lumo-font-size-xl);
+                                margin-top:8px;
+                                --lumo-font-size-xl: 28px;
+                                --lumo-font-family: Arial;
+                                font-weight: bolder;
+                                --lumo-secondary-text-color: #4d4d4d;
+                                width:100%"
+                            on-keyup="">
+                            <div slot="prefix"></div>
+                        </vaadin-password-field>
+                        
+                        <p class="validation_err" shown$="[[showUnmatchAlert]]">
+                            [[error1]]
+                        </p>
                     </center>
                 </div>  
                 
                 <div id="pwdResultPage" style="overflow: hidden">
                     <center>
-                    <h3 style=margin-top:-3px;color:#444;font-size:17px> Alright.. Your password has changed!</h3>
+                    <h3 style=margin-top:6px;color:#444;font-size:17px> Alright.. Your password has changed!</h3>
                         <img src="https://i.gifer.com/55tE.gif"
-                            style="margin-top:4px"
-                            height=240>                    
+                            style="margin-top:21px; margin-left: -35px;"
+                            height=280>                    
                     </center>
                 </div>  
             </iron-swipeable-pages>
@@ -192,6 +226,26 @@
                   notify: true,
                   value: () => false,
                   observer: 'checkingCommenced'
+              },
+              confirmPwd: {
+                  type: String,
+                  observer: 'confirmPwdChanged'
+              },
+              showUnmatchAlert: {
+                  type: Boolean,
+                  value: () => false,
+              },
+              showLengthAlert: {
+                  type: Boolean,
+                  value: () => false,
+              },
+              error1: {
+                  type: String,
+                  value: () => CONST.ALERT.DIFF_PASSWORD
+              },
+              error2: {
+                  type: String,
+                  value: () => CONST.ALERT.WRONG_PASSWORD
               }
           }
         }
@@ -205,6 +259,15 @@
             }
         }
         
+        confirmPwdChanged() {
+            console.log(`Password confirmd: ${this.confirmPwd==this.newPwd}`);
+            if (this.confirmPwd==this.newPwd){
+                this.showUnmatchAlert = false
+            }
+            else {
+                this.showUnmatchAlert = true;
+            }
+        }
         _toggleMe() {
             if (this.shown){
                 this.$.pwdDialog.show({
@@ -256,7 +319,8 @@
         }
 
         changeNewPwd() {
-            this.dispatch('updateNewPassword', this.calculatePasswordHash(this.newPwd, this.username))
+            this.dispatch('updateNewPassword', this.calculatePasswordHash(this.newPwd, this.username));
+            this.confirmPwdChanged();
         }
 
         closePwdDialog(result) {
@@ -291,8 +355,11 @@
         passwordAccepted(result) {
             console.log(result.detail.response)
             
-            this.changeSuccess = true;
-            setTimeout(this.doneChecking(), 1000);
+            setTimeout( () => {
+                this.changeSuccess = true;
+                setTimeout( () => this.doneChecking(), 1000);    
+            }, 1000);
+        
         }
 
         passwordError(err) {

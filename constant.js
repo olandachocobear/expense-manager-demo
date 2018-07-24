@@ -41,7 +41,9 @@ window.CONST = {
         BURN_FAILURE_MSG: "",
         INVALID_CODE_MSG: "",
         ALREADY_BURN_MSG: "",
-        ALREADY_ENTRIED_MSG: ""
+        ALREADY_ENTRIED_MSG: "",
+        DIFF_PASSWORD: "Password tidak sama",
+        WRONG_PASSWORD: "Password tidak memenuhi syarat."
     }
 
 };
