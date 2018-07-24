@@ -104,14 +104,21 @@ class NewTransactionLayout extends ExpenseManager.ReduxMixin(Polymer.Element) {
         },
         header: {
             type: Object
-        }
-        
+        },
+        marketingMsg: {
+            type: String
+        },
+        msgBuffer: {
+            type: String
+        }        
     };
     }
 
     ready() {
         super.ready();
         
+        this.marketingMsg = "";
+        this.msgBuffer = "";
         this.header = {
             "Content-Type": "application/json",
             "JSESSIONID": this.userSession
@@ -271,8 +278,48 @@ class NewTransactionLayout extends ExpenseManager.ReduxMixin(Polymer.Element) {
             this.displayRemaining = false
     }
 
+    styleMsg(className) {
+        var currentMsg = this.msgBuffer;
+
+        var newMsg = `<div class=${className}>${currentMsg}</div>`;
+
+        this.marketingMsg += newMsg;
+        this.msgBuffer = '';
+    }
+
+    parseMarketingMsg(msg) {
+        var specialChars = ["|", "^", '[', ']', '{'];
+
+        for(i=0; i<msg.length; i++){
+            if (specialChars.indexOf(msg[i]) >= 0)
+            {
+                switch (msg[i]) {
+                    case '|':
+                        styleMsg("small-left");
+                        break;
+                    case '|':
+                        styleMsg("medium-left");
+                        break;
+                    case '|':
+                        styleMsg("small-center");
+                        break;
+                    case '|':
+                        styleMsg("medium-center");
+                        break;
+                    case '|':
+                        styleMsg("large-center");
+                        break;
+                }
+            }
+            else
+                this.msgBuffer += msg[i];
+        }
+    }
+
     eligibleResponse(result) {
         console.log(result.detail.response);
+
+        parseMarketingMsg(result.detail.response.marketingMsg)
 
         //this.createCache(); --> nomore showing on top of popup,
                         // wait until user click the close button..
@@ -309,7 +356,8 @@ class NewTransactionLayout extends ExpenseManager.ReduxMixin(Polymer.Element) {
     }
     
     createCache(){
-        var {trxNumber,trxAmount,remaining} = this.trans_detail
+        // to convert from current trans_detail to lastTx state 
+        var {trxNumber,trxAmount,remaining, marketingMsg} = this.trans_detail
         var {vouchers} = this.trx
         
         var cachedTrx = {trxNumber,trxAmount,remaining,vouchers}

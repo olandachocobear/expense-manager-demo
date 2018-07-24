@@ -164,7 +164,8 @@
                     {id: 5},
                     {id: 6},
                     {id: 7},
-                  ]
+                  ],
+        marketingMsg: ""
       }, action){
         switch (action.type) {
           case 'UPDATE_TXABLE':
@@ -180,6 +181,11 @@
           case 'UPDATE_REMAINING':
               return Object.assign({}, state, {
                 remaining: action.amt
+            });
+
+          case 'UPDATE_MKT_MSG':
+              return Object.assign({}, state, {
+                marketingMsg: action.msg
             });
 
           case 'TEST_REMOVE':

@@ -11,6 +11,9 @@
 
 <link rel="import" href="../bower_components/iron-swipeable-pages/iron-swipeable-pages.html">
 <link rel="import" href="../bower_components/paper-tabs/paper-tabs.html">
+
+<link rel="import" href="../bower_components/d2l-loading-spinner/d2l-loading-spinner.html">
+
 <!-- ======================================================================= -->
 <!-- Encrypt Library (for Password) -->
 <!-- ======================================================================= -->
@@ -21,7 +24,12 @@
 <dom-module id="pwd-dialog">
   <template>
     <style>
-      
+        #spinner {
+            visibility: hidden;
+        }
+        #spinner[shown] {
+            visibility: visible;
+        }
     </style>
 
 
@@ -65,6 +73,20 @@
                         </vaadin-password-field>
                         <br><br><br><br>
                         
+
+                        <div id=spinner shown$="[[checkStatus]]">
+                            <d2l-loading-spinner 
+                                size=60 style="
+                                    position: absolute;
+                                    background: whitesmoke;
+                                    margin-top: -65px;
+                                    margin-left: -10%;
+                                    padding: 2px 3px;
+                                    z-index:9999">
+                            </d2l-loading-spinner>
+                        </div>
+                        
+
                         <vaadin-password-field whiteBg id="newPwd" theme="align-left" 
                             value="{{newPwd}}" label="Password Baru:" 
                             style="--lumo-text-field-size: var(--lumo-size-l);
@@ -96,14 +118,13 @@
         
         
     </confirm-dialog>
-    
-
+        
     <iron-ajax id="processChangePwd" 
           url={{ironUrl}} method="post" 
           body="{{bodyRequest}}"
           headers='{{header}}'
-          on-response="eligibleResponse"
-          on-error="onError"
+          on-response="passwordAccepted"
+          on-error="passwordError"
           timeout=30000>
       </iron-ajax>
 
@@ -199,23 +220,33 @@
         }
 
         changePage() {
-            // if(this.changeSuccess)
+            if(this.changeSuccess) {
                 // this.$.pwdDialogPages._selectPage('pwdResultPage')
                 this.$.pwdDialogPages.selected = 1;
                 this.$.pwdDialog.removeAttribute('step-dialog');
+                this.changeSuccess = false
+            }
         }
         
         checkingCommenced() {
             console.log(this.checkStatus);
+            
             // simulate change Pass success
             if(this.checkStatus) {
                 let $this = this;
+                
+                this.$.processChangePwd.generateRequest();
+            
+                /* Temporary procedure for simulate backend call */
+                /*
                 setTimeout( _ => {
                     $this.dispatch('pwdChangedSuccess', true);
                     $this.changeSuccess = false;
                 }, 2000);
+                */
             }
         }
+
         popChangePwd() {
           this.dispatch('togglePwdDialog', !this.showPwdChange);
         }
@@ -233,9 +264,12 @@
             this.dispatch('changePasswordPage', 0);
             this.$.pwdDialog.setAttribute('step-dialog', true);
 
+            /* moved to `checkingCommenced` */
+            /*
             if(result.detail==true){ // if click 'Print Receipt'
                 this.$.processChangePwd.generateRequest();
             }
+            */
         }
         
         _updateBodyRequest() {
@@ -253,6 +287,24 @@
             var hashInBase64 = CryptoJS.enc.Base64.stringify(hash);
             return hashInBase64;
         };
+
+        passwordAccepted(result) {
+            console.log(result.detail.response)
+            
+            this.changeSuccess = true;
+            setTimeout(this.doneChecking(), 1000);
+        }
+
+        passwordError(err) {
+            console.log(err.detail.error)
+            alert ('Password lama salah')
+
+            setTimeout( () => this.doneChecking(), 500);
+        }
+
+        doneChecking() {
+            this.checkStatus = false;
+        }
       }
 
       customElements.define(PwdDialogElement.is, PwdDialogElement);

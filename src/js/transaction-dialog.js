@@ -4,6 +4,7 @@ function _logOut(e){
     // window.location.assign("https://www.google.com");
     (e)=>e.stopPropagation()
 }
+
 (function() {
 /**
  * @memberof ExpenseManager

@@ -217,6 +217,10 @@
       return {type: 'CHANGE_PWD_PAGE', page}
     }
     
+    const addMarketingMsg = (msg) => {
+      return {type: 'UPDATE_MKT_MSG', msg}
+    }
+    
     window.ExpenseManager = window.ExpenseManager || {};
     window.ExpenseManager.actions = {
       login,
@@ -282,6 +286,8 @@
       updateNewPassword,
       pwdChangedSuccess,
       changePasswordPage,
+
+      addMarketingMsg,
       
     };
   })();
