@@ -23,7 +23,11 @@ window.CONST = {
         LIST_ORIG: "Original Amount",
         LIST_VALUE: "Voucher Amount",
         LIST_REMAIN: "Remaining Amount",
-        LIST_TRX: "Invoice #"
+        LIST_TRX: "Invoice #",
+        CHANGE_PWD: "Ganti Password",
+        OLD_PWD: "Password Lama:",
+        NEW_PWD: "Password Baru:",
+        CONFIRM_PWD: "Confirm Password Again:"
     },
     ROOT: "https://evoucher-dev.kartuku.co.id/loyalty-web-api/web/3.0",
     // ROOT: "http://172.30.35.64:8080/web/3.0",
@@ -36,6 +40,7 @@ window.CONST = {
     },
     LOYALTY_HOME: "http://evoucher-dev.kartuku.co.id/loyalty-web/",
     DELAY: 700,
+    PWD_LENGTH: 6,
     ALERT: {
         BURN_SUCCESS_MSG: "Voucher yang dimasukkan berhasil di-burn.",
         BURN_FAILURE_MSG: "",
@@ -43,7 +48,7 @@ window.CONST = {
         ALREADY_BURN_MSG: "",
         ALREADY_ENTRIED_MSG: "",
         DIFF_PASSWORD: "Password tidak sama",
-        WRONG_PASSWORD: "Password tidak memenuhi syarat."
+        WRONG_PASSWORD: "Panjang password tidak memenuhi syarat.",
     }
 
 };

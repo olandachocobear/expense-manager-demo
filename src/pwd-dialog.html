@@ -13,12 +13,11 @@
 
 <link rel="import" href="../bower_components/d2l-loading-spinner/d2l-loading-spinner.html">
 
+<script src="../constant.js"></script>
+
 <!-- ======================================================================= -->
 <!-- Encrypt Library (for Password) -->
 <!-- ======================================================================= -->
-<script src="js/sha256.js"></script>
-<script src="js/hmac-sha256.js"></script>
-<script src="js/enc-base64-min.js"></script>
 
 <dom-module id="pwd-dialog">
   <template>
@@ -66,11 +65,11 @@
                         <h2 style="text-decoration: underline;
                             color:#444;
                             font-size:22px;
-                            margin-top:5px">Ubah Password</h2>
+                            margin-top:5px">[[dialogHeader]]</h2>
                         <br><br>
                     
                         <vaadin-password-field whiteBg id="oldPwd" theme="align-left" 
-                            value="{{oldPwd}}" label="Password Lama:" 
+                            value="{{oldPwd}}" label="[[oldPwdLabel]]" 
                             style="--lumo-text-field-size: var(--lumo-size-l);
                                     font-size: var(--lumo-font-size-xl);
                                     margin-top:-25px;
@@ -99,7 +98,7 @@
                         
 
                         <vaadin-password-field whiteBg id="newPwd" theme="align-left" 
-                            value="{{newPwd}}" label="Password Baru:" 
+                            value="{{newPwd}}" label="[[newPwdLabel]]" 
                             style="--lumo-text-field-size: var(--lumo-size-l);
                                 font-size: var(--lumo-font-size-xl);
                                 margin-top:-52px;
@@ -117,7 +116,7 @@
                         </p>
 
                         <vaadin-password-field whiteBg id="confirmPwd" theme="align-left" 
-                            value="{{confirmPwd}}" label="Confirm Password again:" 
+                            value="{{confirmPwd}}" label="[[confirmPwdLabel]]" 
                             style="--lumo-text-field-size: var(--lumo-size-l);
                                 font-size: var(--lumo-font-size-xl);
                                 margin-top:8px;
@@ -245,7 +244,27 @@
               error2: {
                   type: String,
                   value: () => CONST.ALERT.WRONG_PASSWORD
-              }
+              },
+              error3: {
+                  type: String,
+                  value: () => CONST.ALERT.SHORT_PASSWORD
+              },
+              dialogHeader: {
+                  type: String,
+                  value: () => CONST.LABEL.CHANGE_PWD
+              },
+              oldPwdLabel: {
+                  type: String,
+                  value: () => CONST.LABEL.OLD_PWD
+              },
+              newPwdLabel: {
+                  type: String,
+                  value: () => CONST.LABEL.NEW_PWD
+              },
+              confirmPwdLabel: {
+                  type: String,
+                  value: () => CONST.LABEL.CONFIRM_PWD
+              },
           }
         }
         
@@ -263,7 +282,7 @@
             if (this.confirmPwd==this.newPwd){
                 this.showUnmatchAlert = false
             }
-            else {
+            else if (this.confirmPwd !=''){
                 this.showUnmatchAlert = true;
             }
         }
@@ -320,6 +339,11 @@
         changeNewPwd() {
             this.dispatch('updateNewPassword', this.calculatePasswordHash(this.newPwd, this.username));
             this.confirmPwdChanged();
+
+            if(this.newPwd.length < CONST.PWD_LENGTH)
+                this.showLengthAlert = true;
+            else    
+                this.showLengthAlert = false;
         }
 
         closePwdDialog(result) {
