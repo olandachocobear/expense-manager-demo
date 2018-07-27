@@ -49,7 +49,8 @@
         modal=true
         step-msg="Ganti"
         step-dialog
-        checking={{checkStatus}}>
+        checking={{checkStatus}}
+        stepdisabled={{stepEnabled}}>
 
         <div style=padding-right:20px;>
                 
@@ -174,6 +175,10 @@
         
         static get properties() {
           return {
+              stepEnabled: {
+                type: Boolean,
+                value: () => true
+              },
               shown: {
                 type: Boolean,
                 observer: '_toggleMe'
@@ -281,10 +286,13 @@
             console.log(`Password confirmd: ${this.confirmPwd==this.newPwd}`);
             if (this.confirmPwd==this.newPwd){
                 this.showUnmatchAlert = false
+                // alert('confirmed!' + (!this.showLengthAlert && !this.showUnmatchAlert))
             }
             else if (this.confirmPwd !=''){
                 this.showUnmatchAlert = true;
             }
+            // alert (`1unmatch? ${this.showUnmatchAlert}, length? ${this.showLengthAlert}`)
+            this.stepEnabled = !(!this.showLengthAlert && !this.showUnmatchAlert) || this.confirmPwd==''
         }
         _toggleMe() {
             if (this.shown){
@@ -340,10 +348,17 @@
             this.dispatch('updateNewPassword', this.calculatePasswordHash(this.newPwd, this.username));
             this.confirmPwdChanged();
 
-            if(this.newPwd.length < CONST.PWD_LENGTH)
+            if(this.newPwd.length < CONST.PWD_LENGTH){
                 this.showLengthAlert = true;
-            else    
+            }
+            else  {
                 this.showLengthAlert = false;
+            }
+
+            // alert (`2 unmatch? ${this.showUnmatchAlert}, length? ${this.showLengthAlert}`)
+
+            this.stepEnabled = !(!this.showLengthAlert && !this.showUnmatchAlert) || this.confirmPwd==''
+
         }
 
         closePwdDialog(result) {
