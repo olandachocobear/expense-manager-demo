@@ -366,14 +366,18 @@
             this.dispatch('changePasswordPage', 0);
             this.$.pwdDialog.setAttribute('step-dialog', true);
 
-            /* moved to `checkingCommenced` */
-            /*
             if(result.detail==true){ // if click 'Print Receipt'
-                this.$.processChangePwd.generateRequest();
+                //this.$.processChangePwd.generateRequest();
+                this.resetPwdDialog();
             }
-            */
         }
-        
+
+        resetPwdDialog() {
+            this.oldPwd = "";
+            this.confirmPwd = "";
+            this.newPwd = "";
+        }
+
         _updateBodyRequest() {
             this.bodyRequest = {
                 oldPassword: this.passwords.currentPwd,
