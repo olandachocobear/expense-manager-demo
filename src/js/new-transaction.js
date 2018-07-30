@@ -319,7 +319,7 @@ class NewTransactionLayout extends ExpenseManager.ReduxMixin(Polymer.Element) {
     eligibleResponse(result) {
         console.log(result.detail.response);
 
-        parseMarketingMsg(result.detail.response.marketingMsg)
+        // parseMarketingMsg(result.detail.response.marketingMsg)
 
         //this.createCache(); --> nomore showing on top of popup,
                         // wait until user click the close button..
@@ -329,7 +329,7 @@ class NewTransactionLayout extends ExpenseManager.ReduxMixin(Polymer.Element) {
         //this.dispatch('updateErrorCode', 200);
 
         //new Popup Modal 
-        this.dispatch('changeTitleAlert', "Success");
+        this.dispatch('changeTitleAlert', CONST.ALERT.SUCCESS_HEADER);
         this.dispatch('changeHeaderAlert', "");
         this.dispatch('changeMessageAlert', CONST.ALERT.BURN_SUCCESS_MSG); //"Hore! Transaksi Anda berhasil!!");
         this.dispatch('changeAlertIcon', 'happy.png');

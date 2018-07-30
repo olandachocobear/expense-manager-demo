@@ -233,7 +233,7 @@
         // reject the new voucher
         var new_result = result
         new_result.responseCode = Math.random() * 1000;
-        new_result.responseDetailEnglish = "Voucher telah di-entry untuk transaksi ini."
+        new_result.responseDetailEnglish = CONST.ALERT.ALREADY_ENTRIED_MSG
         this.invalidCode(new_result);
         return;
         // this.invalidCode({new={...}})
@@ -270,7 +270,7 @@
       
       // disable the length-checker temporarily
       //if (this.currentVoucher.uniqueCode.length == 12){
-        this.dispatch('changeTitleAlert', "Whoops, something's wrong..");
+        this.dispatch('changeTitleAlert', CONST.ALERT.ERROR_HEADER);
         this.dispatch('changeHeaderAlert', "");
         this.dispatch('changeMessageAlert', result.responseDetailEnglish);
         this.dispatch('changeAlertIcon', 'sad.png');
@@ -298,7 +298,7 @@
       this.dispatch('updateErrorCode', result.responseCode);
 
       //new Popup alert for errors..
-      this.dispatch('changeTitleAlert', "Whoops, something's wrong..");
+      this.dispatch('changeTitleAlert', CONST.ALERT.ERROR_HEADER);
       this.dispatch('changeHeaderAlert', "");
       this.dispatch('changeMessageAlert', result.responseDetailEnglish);
       this.dispatch('changeAlertIcon', 'sad.png');      

@@ -42,11 +42,13 @@ window.CONST = {
     DELAY: 700,
     PWD_LENGTH: 6,
     ALERT: {
-        BURN_SUCCESS_MSG: "Voucher yang dimasukkan berhasil di-burn.",
+        BURN_SUCCESS_MSG: "Voucher yang dimasukkan berhasil ditukar.",
         BURN_FAILURE_MSG: "",
         INVALID_CODE_MSG: "",
         ALREADY_BURN_MSG: "",
-        ALREADY_ENTRIED_MSG: "",
+        ALREADY_ENTRIED_MSG: "Voucher telah di-entry untuk transaksi ini.",
+        ERROR_HEADER: "Whoops, request gagal..",
+        SUCCESS_HEADER: "Success",
         DIFF_PASSWORD: "Password tidak sama",
         WRONG_PASSWORD: "Panjang password tidak memenuhi syarat.",
     }
