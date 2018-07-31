@@ -151,7 +151,7 @@
 
             <vaadin-text-field name="total" 
               prevent-invalid-input pattern="[0-9.]*" value="{{fieldAmount}}" 
-              on-change="detectChanges" label="[[label.ENTRY_TRX_VAL]]" 
+              on-keyup="detectChanges" label="[[label.ENTRY_TRX_VAL]]" 
               required apply-format
               style="--lumo-text-field-size: var(--lumo-size-l);
                     font-size: var(--lumo-font-size-xl);

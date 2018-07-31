@@ -123,7 +123,8 @@
             /**
              * The list of filters modified by user. (visible on forms/text-fields)
              */
-            filters: Object,
+            filters: Object
+            ,
 
             /**
              * The list of available merchants.
@@ -150,8 +151,21 @@
         }
 
         _srcFiltersChanged(srcFilters) {
-          this.filters = Object.assign({}, srcFilters);
+          console.log(this.filters)
+          if (this.filters == {})
+          {
+            this.filters.filters = srcFilters.filters;
+            this.filters.specificVoucher = srcFilters.specificVoucher;
+          }
+          else if (this.filters == undefined){
+            this.filters = {}
+            this.filters.filters = srcFilters.filters;
+            this.filters.specificVoucher = srcFilters.specificVoucher;
+          }
 
+          // this.filters= Object.assign({}, srcFilters);
+          
+          console.log("N E W  F I L T E R S: " + JSON.stringify(this.filters.filters))
           //bugfix Datepicker color turns to red after applying the new value of changed trx detail:
           /*
           this.filters.specificVoucher = this.srcFilters.specificVoucher;
@@ -161,14 +175,19 @@
 
         _filtersChanged() {
           // Ugh. Will do as a object equals
-          if(this.filters.filters.txnStartTransactionDate != '' && this.filters.filters.txnStartTransactionDate != undefined)
-              //alert("changing the StartDAte (" + this.filters.filters.txnStartTransactionDate + ")")
-              this.dispatch('filtersUpdated', this.filters);
-          else if(this.filters.filters.txnEndTransactionDate != '' && this.filters.filters.txnEndTransactionDate != undefined)
-              //alert("changing the EndDate");
-              this.dispatch('filtersUpdated', this.filters);
-
-          if (JSON.stringify(this.filters) !== JSON.stringify(this.srcFilters)) {
+         /*
+          if(this.filters.filters.txnStartTransactionDate != '' && this.filters.filters.txnStartTransactionDate != undefined) {
+              alert("changing the StartDAte (" + this.filters.filters.txnStartTransactionDate + ")")
+              //this.dispatch('filtersUpdated', this.filters);
+              console.log("changed date: " + JSON.stringify(this.filters.filters))
+          }
+          else if(this.filters.filters.txnEndTransactionDate != '' && this.filters.filters.txnEndTransactionDate != undefined) {
+              alert("changing the EndDate" + this.filters.filters.txnStartTransactionDate + ")");
+              //this.dispatch('filtersUpdated', this.filters);
+          }
+         */
+          
+          if (this.filters.specificVoucher !== this.srcFilters.specificVoucher || JSON.stringify(this.filters.filters) !== JSON.stringify(this.srcFilters.filters)) {
             this.dispatch('filtersUpdated', this.filters);
             console.log('changing filters object..');
           }

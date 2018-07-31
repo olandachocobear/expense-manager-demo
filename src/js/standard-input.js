@@ -233,7 +233,7 @@
         // reject the new voucher
         var new_result = result
         new_result.responseCode = Math.random() * 1000;
-        new_result.responseDetailEnglish = CONST.ALERT.ALREADY_ENTRIED_MSG
+        new_result.responseDetailBahasa = CONST.ALERT.ALREADY_ENTRIED_MSG
         this.invalidCode(new_result);
         return;
         // this.invalidCode({new={...}})
@@ -252,12 +252,12 @@
 
       this.dispatch('updateTransactionable', true);
       this._flagVoucherAsValid();
-      this.dispatch('updateErrorMsg', result.responseDetailEnglish);
+      this.dispatch('updateErrorMsg', result.responseDetailBahasa);
       this.dispatch('updateErrorCode', result.responseCode);
     }
     invalidCode(result) {
       this.currentVoucher.onCheck = false;
-      this.currentVoucher.errorMsg = result.responseDetailEnglish;
+      this.currentVoucher.errorMsg = result.responseDetailBahasa;
       this.currentVoucher.errorCode = result.responseCode;
       //add shake
       this.currentVoucher.shake = true;
@@ -272,7 +272,7 @@
       //if (this.currentVoucher.uniqueCode.length == 12){
         this.dispatch('changeTitleAlert', CONST.ALERT.ERROR_HEADER);
         this.dispatch('changeHeaderAlert', "");
-        this.dispatch('changeMessageAlert', result.responseDetailEnglish);
+        this.dispatch('changeMessageAlert', result.responseDetailBahasa);
         this.dispatch('changeAlertIcon', 'sad.png');
         this.dispatch('changeAlertButton', 'Close');
         this.dispatch('showAlert');
@@ -288,19 +288,19 @@
     }
     otherError(result) {
       this.currentVoucher.onCheck = false;
-      this.currentVoucher.errorMsg = result.responseDetailEnglish;
+      this.currentVoucher.errorMsg = result.responseDetailBahasa;
       this.currentVoucher.errorCode = result.responseCode;
       //add shake
       this.currentVoucher.shake = true;
       this.dispatch('updateVoucher', this.currentVoucher);
       this.dispatch('updateTransactionable', false);
-      this.dispatch('updateErrorMsg', result.responseDetailEnglish);
+      this.dispatch('updateErrorMsg', result.responseDetailBahasa);
       this.dispatch('updateErrorCode', result.responseCode);
 
       //new Popup alert for errors..
       this.dispatch('changeTitleAlert', CONST.ALERT.ERROR_HEADER);
       this.dispatch('changeHeaderAlert', "");
-      this.dispatch('changeMessageAlert', result.responseDetailEnglish);
+      this.dispatch('changeMessageAlert', result.responseDetailBahasa);
       this.dispatch('changeAlertIcon', 'sad.png');      
       this.dispatch('changeAlertButton', 'Close');
       this.dispatch('showAlert');

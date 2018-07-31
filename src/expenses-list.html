@@ -421,20 +421,20 @@
             if ( this.filters.specificVoucher!=null)
               this._filterVoucher = this.filters.specificVoucher
 
-            if(this.filters.filters.txnStartTransactionDate!=undefined )
-              if(this.filters.filters.txnStartTransactionDate!='')
-                this._filterStart = this.filters.filters.txnStartTransactionDate + ' 00:00:00'
+            if(this.filters.filters.filters.txnStartTransactionDate!=undefined )
+              if(this.filters.filters.filters.txnStartTransactionDate!='')
+                this._filterStart = this.filters.filters.filters.txnStartTransactionDate + ' 00:00:00'
               else 
                 this._filterStart = ''
               
-            if(this.filters.filters.txnEndTransactionDate!=undefined )
-              if(this.filters.filters.txnStartTransactionDate!='')
-                this._filterEnd = this.filters.filters.txnEndTransactionDate + ' 23:59:59'
+            if(this.filters.filters.filters.txnEndTransactionDate!=undefined )
+              if(this.filters.filters.filters.txnEndTransactionDate!='')
+                this._filterEnd = this.filters.filters.filters.txnEndTransactionDate + ' 23:59:59'
               else
                 this._filterEnd = ''
 
-            if(this.filters.filters.txnTraceNumber!=undefined)
-              this._filterInvoice = this.filters.filters.txnTraceNumber
+            if(this.filters.filters.filters.txnTraceNumber!=undefined)
+              this._filterInvoice = this.filters.filters.filters.txnTraceNumber
             
             this.dispatch('updateDone')
           }
