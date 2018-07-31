@@ -316,6 +316,7 @@
         // }
         
         _showMsg(){
+          // API response returned
           if(this.errorCode!=null){
             switch (this.errorCode){
               case '00': 
@@ -324,8 +325,12 @@
                 return //this.showSuccessToast()
               case "B2": 
                 return this.showWarningToast(this.errorMsg);
+              case 401:
+                return this.showCustomToast(CONST.ALERT.SESS_EXPIRED)
+              case 500:
+                return this.showCustomToast(CONST.ALERT.SYSTEM_ERROR);
               case 66: 
-                return this.showCustomToast("Can't connect. Check your device's connection..")
+                return this.showCustomToast(CONST.ALERT.BAD_CONNECTION);
               default:
                 //this.showErrorToast(this.errorMsg);
             }

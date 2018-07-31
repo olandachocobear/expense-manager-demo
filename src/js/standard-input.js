@@ -322,7 +322,14 @@
           $this.dispatch('updateVoucher', this.currentVoucher)
       }, 1000);
       
-      this.dispatch('updateErrorCode', 66);
+      if (e.target.lastRequest.xhr.status == 401)
+        this.dispatch('updateErrorCode', 401)
+      else if (e.target.lastRequest.xhr.status == 404 || e.target.lastRequest.xhr.status == 0) {
+        this.dispatch('updateErrorCode', 500)
+        // this.dispatch('updateErrorMsg', CONST.ALERT.SYSTEM_ERROR)
+      }
+      else 
+        this.dispatch('updateErrorCode', 66);
 
       //adding attempt of connection..
       if(this.connectionAttempt==3){
